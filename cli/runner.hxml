@@ -1,0 +1,5 @@
+--class-path src
+--library hscript
+--library tuna
+--main CLI
+--neko ../run.n

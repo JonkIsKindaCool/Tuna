@@ -1,0 +1,14 @@
+{
+    "name": "tuna",
+    "url" : "",
+    "license": "MIT",
+    "tags": ["haxe", "cpp", "game"],
+    "description": "A haxelib containing hxcpp bindings for SDL 2.30.2.",
+    "version": "1.0.0",
+    "classPath": "src/",
+    "releasenote": "Ok",
+    "contributors": ["JonkIsKindaCool"],
+    "dependencies": {
+        "hxcpp": ""
+    }
+}
