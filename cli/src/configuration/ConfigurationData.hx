@@ -49,7 +49,8 @@ typedef Asset = {
 	path:String,
 	?rename:String,
 	?exclude:Array<String>,
-	?include:Array<String>
+	?include:Array<String>,
+	?preload:Bool
 }
 
 //idk what android and ios uses xd

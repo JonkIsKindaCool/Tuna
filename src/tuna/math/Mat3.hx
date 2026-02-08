@@ -1,7 +1,7 @@
 package tuna.math;
 
-abstract Mat3(Array<Float>) from Array<Float> to Array<Float> {
-	public function new(?data:Array<Float>) {
+abstract Mat3(Array<Float32>) from Array<Float32> to Array<Float32> {
+	public function new(?data:Array<Float32>) {
 		if (data == null)
 			this = identity();
 		else
@@ -26,7 +26,7 @@ abstract Mat3(Array<Float>) from Array<Float> to Array<Float> {
 
     @:op(A * B)
     public function multiplyScalar(f:Float):Mat3 {
-        var data:Array<Float> = this;
+        var data:Array<Float32> = this;
 
         for (i in 0...data.length){
             data[i] = data[i] * f;
@@ -66,7 +66,7 @@ abstract Mat3(Array<Float>) from Array<Float> to Array<Float> {
 
     public function toString() {
         var string:StringBuf = new StringBuf();
-        var data:Array<Float> = this;
+        var data:Array<Float32> = this;
 
         for (i => v in data){
             string.add(Std.string(v));

@@ -30,6 +30,11 @@ abstract Vec3(BasicVec3) from BasicVec3 to BasicVec3 {
 	public function divideScalar(b:Float) {
 		return new Vec3(this.x / b, this.y / b, this.z / b);
 	}
+
+	@:to
+	public function toArray():Array<Float32> {
+		return [this.x, this.y, this.z];
+	}
 }
 
 @:structInit

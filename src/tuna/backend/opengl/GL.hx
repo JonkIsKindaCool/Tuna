@@ -1,22 +1,34 @@
-package tuna.backend;
+package tuna.backend.opengl;
 
 import haxe.Int64;
 import tuna.math.Mat4;
 import tuna.math.Mat3;
 import tuna.math.Vec3;
 import tuna.math.Vec2;
+import tuna.math.Vec4;
+import haxe.io.Bytes;
+#if cpp
 import cpp.NativeString;
 import cpp.CastCharStar;
 import cpp.RawPointer;
-import haxe.io.Bytes;
 import cpp.ConstCharStar;
 import cpp.Helpers;
 import cpp.Star;
 import cpp.Pointer;
 import cpp.ConstStar;
 import native.glad.Glad;
+#end
+#if (js || html5)
+import js.lib.Uint8Array;
+import js.lib.Int8Array;
+import js.html.webgl.WebGL2RenderingContext;
+#end
 
 class GL {
+	#if (js || html5)
+	public static var context:WebGL2RenderingContext;
+	#end
+
 	public static inline var READ_BUFFER:Int = 3074;
 	public static inline var UNPACK_ROW_LENGTH:Int = 3314;
 	public static inline var UNPACK_SKIP_ROWS:Int = 3315;
@@ -580,54 +592,72 @@ class GL {
 	public static function cullFace(mode:Int) {
 		#if cpp
 		Glad.cullFace(mode);
+		#elseif (js || html5)
+		context.cullFace(mode);
 		#end
 	}
 
 	public static function frontFace(mode:Int) {
 		#if cpp
 		Glad.frontFace(mode);
+		#elseif (js || html5)
+		context.frontFace(mode);
 		#end
 	}
 
 	public static function hint(target:Int, mode:Int) {
 		#if cpp
 		Glad.hint(target, mode);
+		#elseif (js || html5)
+		context.hint(target, mode);
 		#end
 	}
 
 	public static function lineWidth(width:Float) {
 		#if cpp
 		Glad.lineWidth(width);
+		#elseif (js || html5)
+		context.lineWidth(width);
 		#end
 	}
 
 	public static function pointSize(size:Float) {
 		#if cpp
 		Glad.pointSize(size);
+		#elseif (js || html5)
+		throw "pointSize is not supported in WebGL/WebGL2. Set gl_PointSize in the vertex shader.";
 		#end
 	}
 
 	public static function polygonMode(face:Int, mode:Int) {
 		#if cpp
 		Glad.polygonMode(face, mode);
+		#elseif (js || html5)
+		throw "polygonMode is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function scissor(x:Int, y:Int, width:Int, height:Int) {
 		#if cpp
 		Glad.scissor(x, y, width, height);
+		#elseif (js || html5)
+		context.scissor(x, y, width, height);
 		#end
 	}
 
 	public static function texParameterf(target:Int, pname:Int, param:Float) {
 		#if cpp
 		Glad.texParameterf(target, pname, param);
+		#elseif (js || html5)
+		context.texParameterf(target, pname, param);
 		#end
 	}
 
 	public static function texParameteri(target:Int, pname:Int, param:Int) {
 		#if cpp
 		Glad.texParameteri(target, pname, param);
+		#elseif (js || html5)
+		context.texParameteri(target, pname, param);
 		#end
 	}
 
@@ -635,8 +665,9 @@ class GL {
 		#if cpp
 		var arr:Array<GlFloat> = [];
 		Glad.texParameterfv(target, pname, untyped __cpp__("(const float*) {0}", RawPointer.addressOf(arr)));
-
 		return cast arr;
+		#elseif (js || html5)
+		return [];
 		#end
 	}
 
@@ -644,6 +675,8 @@ class GL {
 		#if cpp
 		var ptr:ConstStar<Int> = Pointer.ofArray(params).ptr;
 		Glad.texParameteriv(target, pname, ptr);
+		#elseif (js || html5)
+		throw "texParameteriv is not supported in WebGL. Use texParameteri individually.";
 		#end
 	}
 
@@ -652,6 +685,8 @@ class GL {
 		var pixelsPointer:Pointer<UInt8> = Pointer.ofArray(pixels.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pixelsPointer);
 		Glad.texImage1D(target, level, internalFormat, width, border, format, type, ptr);
+		#elseif (js || html5)
+		throw "texImage1D is not supported in WebGL/WebGL2.";
 		#end
 	}
 
@@ -660,126 +695,175 @@ class GL {
 		var pixelsPointer:Pointer<UInt8> = Pointer.ofArray(pixels.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pixelsPointer);
 		Glad.texImage2D(target, level, internalFormat, width, height, border, format, type, ptr);
+		#elseif (js || html5)
+		if (pixels == null || pixels.length == 0) {
+			context.texImage2D(target, level, internalFormat, width, height, border, format, type, null);
+		} else {
+			var data = new Int8Array(pixels.length);
+			for (i in 0...pixels.length)
+				data[i] = pixels.get(i);
+			context.texImage2D(target, level, internalFormat, width, height, border, format, type, data);
+		}
 		#end
 	}
 
 	public static function drawBuffer(buf:Int) {
 		#if cpp
 		Glad.drawBuffer(buf);
+		#elseif (js || html5)
+		context.drawBuffers([buf]);
 		#end
 	}
 
 	public static function clear(mask:Int) {
 		#if cpp
 		Glad.clear(mask);
+		#elseif (js || html5)
+		context.clear(mask);
 		#end
 	}
 
 	public static function clearColor(red:Float, green:Float, blue:Float, alpha:Float):Void {
 		#if cpp
 		Glad.clearColor(red, green, blue, alpha);
+		#elseif (js || html5)
+		context.clearColor(red, green, blue, alpha);
 		#end
 	}
 
 	public static function clearStencil(s:Int):Void {
 		#if cpp
 		Glad.clearStencil(s);
+		#elseif (js || html5)
+		context.clearStencil(s);
 		#end
 	}
 
 	public static function clearDepth(depth:Float):Void {
 		#if cpp
 		Glad.clearDepth(depth);
+		#elseif (js || html5)
+		context.clearDepth(depth);
 		#end
 	}
 
 	public static function stencilMask(mask:UInt):Void {
 		#if cpp
 		Glad.stencilMask(mask);
+		#elseif (js || html5)
+		context.stencilMask(mask);
 		#end
 	}
 
 	public static function colorMask(red:Bool, green:Bool, blue:Bool, alpha:Bool):Void {
 		#if cpp
 		Glad.colorMask(boolToInt(red), boolToInt(green), boolToInt(blue), boolToInt(alpha));
+		#elseif (js || html5)
+		context.colorMask(red, green, blue, alpha);
 		#end
 	}
 
 	public static function depthMask(flag:Bool):Void {
 		#if cpp
 		Glad.depthMask(boolToInt(flag));
+		#elseif (js || html5)
+		context.depthMask(flag);
 		#end
 	}
 
 	public static function disable(cap:Int):Void {
 		#if cpp
 		Glad.disable(cap);
+		#elseif (js || html5)
+		context.disable(cap);
 		#end
 	}
 
 	public static function enable(cap:Int):Void {
 		#if cpp
 		Glad.enable(cap);
+		#elseif (js || html5)
+		context.enable(cap);
 		#end
 	}
 
 	public static function finish():Void {
 		#if cpp
 		Glad.finish();
+		#elseif (js || html5)
+		context.finish();
 		#end
 	}
 
 	public static function flush():Void {
 		#if cpp
 		Glad.flush();
+		#elseif (js || html5)
+		context.flush();
 		#end
 	}
 
 	public static function blendFunc(sfactor:Int, dfactor:Int):Void {
 		#if cpp
 		Glad.blendFunc(sfactor, dfactor);
+		#elseif (js || html5)
+		context.blendFunc(sfactor, dfactor);
 		#end
 	}
 
 	public static function logicOp(opcode:Int):Void {
 		#if cpp
 		Glad.logicOp(opcode);
+		#elseif (js || html5)
+		throw "logicOp is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function stencilFunc(func:Int, ref:Int, mask:UInt):Void {
 		#if cpp
 		Glad.stencilFunc(func, ref, mask);
+		#elseif (js || html5)
+		context.stencilFunc(func, ref, mask);
 		#end
 	}
 
 	public static function stencilOp(fail:Int, zfail:Int, zpass:Int):Void {
 		#if cpp
 		Glad.stencilOp(fail, zfail, zpass);
+		#elseif (js || html5)
+		context.stencilOp(fail, zfail, zpass);
 		#end
 	}
 
 	public static function depthFunc(func:Int):Void {
 		#if cpp
 		Glad.depthFunc(func);
+		#elseif (js || html5)
+		context.depthFunc(func);
 		#end
 	}
 
 	public static function pixelStoref(pname:Int, param:Float):Void {
 		#if cpp
 		Glad.pixelStoref(pname, param);
+		#elseif (js || html5)
+		throw 'pixelStoref is not supported in WebGL/WebGL2.';
 		#end
 	}
 
 	public static function pixelStorei(pname:Int, param:Int):Void {
 		#if cpp
 		Glad.pixelStorei(pname, param);
+		#elseif (js || html5)
+		context.pixelStorei(pname, param);
 		#end
 	}
 
 	public static function readBuffer(src:Int):Void {
 		#if cpp
 		Glad.readBuffer(src);
+		#elseif (js || html5)
+		context.readBuffer(src);
 		#end
 	}
 
@@ -809,6 +893,17 @@ class GL {
 		Glad.readPixels(x, y, width, height, format, type, ptr);
 
 		return bytes;
+		#elseif (js || html5)
+		var data = new js.lib.Uint8Array(width * height * 4);
+		context.readPixels(x, y, width, height, format, type, data);
+
+		var bytes = Bytes.alloc(data.length);
+		for (i in 0...data.length)
+			bytes.set(i, data[i]);
+
+		return bytes;
+		#else
+		return Bytes.alloc(0);
 		#end
 	}
 
@@ -817,6 +912,10 @@ class GL {
 		var result:GlBool = 0;
 		Glad.getBooleanv(pname, cpp.RawPointer.addressOf(result));
 		return result != 0;
+		#elseif (js || html5)
+		return context.getParameter(pname) != 0;
+		#else
+		return false;
 		#end
 	}
 
@@ -824,14 +923,19 @@ class GL {
 		#if cpp
 		var data:Float = 0;
 		Glad.getDoublev(pname, Pointer.addressOf(data));
-
 		return data;
+		#elseif (js || html5)
+		return context.getParameter(pname);
+		#else
+		return 0;
 		#end
 	}
 
 	public static function getError():Int {
 		#if cpp
 		return Glad.getError();
+		#elseif (js || html5)
+		return context.getError();
 		#else
 		return 0;
 		#end
@@ -842,6 +946,10 @@ class GL {
 		var data:GlFloat = 0;
 		Glad.getFloatv(pname, Pointer.addressOf(data));
 		return data;
+		#elseif (js || html5)
+		return context.getParameter(pname);
+		#else
+		return 0;
 		#end
 	}
 
@@ -850,6 +958,10 @@ class GL {
 		var data:Int = 0;
 		Glad.getIntegerv(pname, Pointer.addressOf(data));
 		return data;
+		#elseif (js || html5)
+		return context.getParameter(pname);
+		#else
+		return 0;
 		#end
 	}
 
@@ -857,13 +969,14 @@ class GL {
 		#if cpp
 		var cstr:ConstStar<GlUByte> = Glad.getString(name);
 		return cstr != null ? ConstCharStar.fromString(cast cstr) : "";
+		#elseif (js || html5)
+		return context.getParameter(name);
 		#else
 		return "";
 		#end
 	}
 
-	public static function getTexImage(target:Int, level:Int, format:Int, type:Int, width:Int, height:Int // ← ¡necesitas estos valores!
-	):Bytes {
+	public static function getTexImage(target:Int, level:Int, format:Int, type:Int, width:Int, height:Int):Bytes {
 		#if cpp
 		var bytesPerPixel:Int = switch (format) {
 			case RGBA: 4;
@@ -891,6 +1004,8 @@ class GL {
 		Glad.getTextureImage(target, level, format, type, bufSize, star);
 
 		return bytes;
+		#elseif (js || html5)
+		throw "getTexImage is not supported in WebGL/WebGL2.";
 		#else
 		return Bytes.alloc(0);
 		#end
@@ -920,6 +1035,9 @@ class GL {
 		Helpers.free(ptr);
 
 		return result;
+		#elseif (js || html5)
+		var val = context.getTexParameter(target, pname);
+		return (val != null) ? [val] : [];
 		#else
 		return [];
 		#end
@@ -949,6 +1067,9 @@ class GL {
 		Helpers.free(ptr);
 
 		return result;
+		#elseif (js || html5)
+		var val = context.getTexParameter(target, pname);
+		return (val != null) ? [val] : [];
 		#else
 		return [];
 		#end
@@ -968,6 +1089,8 @@ class GL {
 		Helpers.free(ptr);
 
 		return result;
+		#elseif (js || html5)
+		throw "getTexLevelParameterfv is not supported in WebGL/WebGL2.";
 		#else
 		return [];
 		#end
@@ -987,13 +1110,18 @@ class GL {
 		Helpers.free(ptr);
 
 		return result;
-		#end
+		#elseif (js || html5)
+		throw "getTexLevelParameteriv is not supported in WebGL/WebGL2.";
+		#else
 		return [];
+		#end
 	}
 
 	public static function isEnabled(cap:Int):Bool {
 		#if cpp
 		return Glad.isEnabled(cap) != 0;
+		#elseif (js || html5)
+		return context.isEnabled(cap);
 		#else
 		return false;
 		#end
@@ -1002,62 +1130,80 @@ class GL {
 	public static function depthRange(n:Float, f:Float):Void {
 		#if cpp
 		Glad.depthRange(n, f);
+		#elseif (js || html5)
+		context.depthRange(n, f);
 		#end
 	}
 
 	public static function viewport(x:Int, y:Int, width:Int, height:Int):Void {
 		#if cpp
 		Glad.viewport(x, y, width, height);
+		#elseif (js || html5)
+		context.viewport(x, y, width, height);
 		#end
 	}
 
 	public static function drawArrays(mode:Int, first:Int, count:Int):Void {
 		#if cpp
 		Glad.drawArrays(mode, first, count);
+		#elseif (js || html5)
+		context.drawArrays(mode, first, count);
 		#end
 	}
 
-	public static function drawElements(mode:Int, first:Int, count:Int, indices:Int):Void {
+	public static function drawElements(mode:Int, count:Int, type:Int, offset:Int):Void {
 		#if cpp
-		Glad.drawElements(mode, first, count, untyped __cpp__("(void*)(uintptr_t)({0})", indices));
+		Glad.drawElements(mode, count, type, untyped __cpp__("(void*)(uintptr_t)({0})", offset));
+		#elseif (js || html5)
+		context.drawElements(mode, count, type, offset);
 		#end
 	}
 
-	public static function polygonOffset(factor:Float32, units:Float32):Void {
+	public static function polygonOffset(factor:Float, units:Float):Void {
 		#if cpp
 		Glad.polygonOffset(factor, units);
+		#elseif (js || html5)
+		context.polygonOffset(factor, units);
 		#end
 	}
 
 	public static function copyTexImage1D(target:Int, level:Int, internalFormat:Int, x:Int, y:Int, width:Int, border:Int):Void {
 		#if cpp
 		Glad.copyTexImage1D(target, level, internalFormat, x, y, width, border);
+		#elseif (js || html5)
+		throw "copyTexImage1D is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function copyTexImage2D(target:Int, level:Int, internalFormat:Int, x:Int, y:Int, width:Int, height:Int, border:Int):Void {
 		#if cpp
 		Glad.copyTexImage2D(target, level, internalFormat, x, y, width, height, border);
+		#elseif (js || html5)
+		context.copyTexImage2D(target, level, internalFormat, x, y, width, height, border);
 		#end
 	}
 
-	public static function copyTexSubImage1D(texture:Int, level:Int, xoffset:GlInt, x:Int, y:Int, width:Int, border:Int):Void {
+	public static function copyTexSubImage1D(target:Int, level:Int, xoffset:Int, x:Int, y:Int, width:Int):Void {
 		#if cpp
-		Glad.copyTexSubImage1D(texture, level, xoffset, x, y, width);
+		Glad.copyTexSubImage1D(target, level, xoffset, x, y, width);
+		#elseif (js || html5)
+		throw "copyTexSubImage1D is not supported in WebGL/WebGL2.";
 		#end
 	}
 
-	public static function copyTexSubImage2D(texture:Int, level:Int, xoffset:GlInt, yoffset:GlInt, internalFormat:Int, x:Int, y:Int, width:Int, height:Int,
-			border:Int):Void {
+	public static function copyTexSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, x:Int, y:Int, width:Int, height:Int):Void {
 		#if cpp
-		Glad.copyTexSubImage2D(texture, level, xoffset, yoffset, x, y, width, height);
+		Glad.copyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
+		#elseif (js || html5)
+		context.copyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 		#end
 	}
 
-	public static function copyTextureSubImage3D(texture:Int, level:Int, xoffset:GlInt, yoffset:GlInt, zoffset:GlInt, internalFormat:Int, x:Int, y:Int,
-			width:Int, height:Int, border:Int):Void {
+	public static function copyTexSubImage3D(target:Int, level:Int, xoffset:Int, yoffset:Int, zoffset:Int, x:Int, y:Int, width:Int, height:Int):Void {
 		#if cpp
-		Glad.copyTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+		Glad.copyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+		#elseif (js || html5)
+		context.copyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
 		#end
 	}
 
@@ -1065,6 +1211,8 @@ class GL {
 		#if cpp
 		var ptr:RawPointer<cpp.Void> = Helpers.arrayToVoid(pixels.getData());
 		Glad.texSubImage1D(target, level, xOffset, width, format, type, ptr);
+		#elseif (js || html5)
+		throw "texSubImage1D is not supported in WebGL/WebGL2.";
 		#end
 	}
 
@@ -1072,18 +1220,37 @@ class GL {
 		#if cpp
 		var ptr:RawPointer<cpp.Void> = Helpers.arrayToVoid(pixels.getData());
 		Glad.texSubImage2D(target, level, xOffset, yOffset, width, height, format, type, ptr);
+		#elseif (js || html5)
+		if (pixels == null || pixels.length == 0) {
+			context.texSubImage2D(target, level, xOffset, yOffset, width, height, format, type, null);
+		} else {
+			var data = new js.lib.Uint8Array(pixels.length);
+			for (i in 0...pixels.length)
+				data[i] = pixels.get(i);
+			context.texSubImage2D(target, level, xOffset, yOffset, width, height, format, type, data);
+		}
 		#end
 	}
 
-	public static function bindTexture(target:Int, texture:Int) {
+	public static function bindTexture(target:Int, texture:GLTexture) {
 		#if cpp
 		Glad.bindTexture(target, texture);
+		#elseif (js || html5)
+		context.bindTexture(target, texture);
 		#end
 	}
 
-	public static function deleteTextures(n:Int, textures:Array<UInt32>) {
+	public static function deleteTextures(n:Int, textures:Array<GLTexture>) {
 		#if cpp
-		Glad.deleteTextures(n, Pointer.ofArray(textures));
+		var t:Array<UInt32> = [];
+		for (i in 0...textures.length)
+			t[i] = textures[i] ?? 0;
+
+		Glad.deleteTextures(n, Pointer.ofArray(t));
+		#elseif (js || html5)
+		for (tex in textures) {
+			context.deleteTexture(tex);
+		}
 		#end
 	}
 
@@ -1097,9 +1264,11 @@ class GL {
 		#if cpp
 		return Glad.isTexture(texture) != 0;
 		#end
+
+		return false;
 	}
 
-	public static function drawRangeElements(mode:Int, start:GlUInt, end:UInt32, count:Int, type:Int, indices:Int):Void {
+	public static function drawRangeElements(mode:Int, start:Int, end:UInt32, count:Int, type:Int, indices:Int):Void {
 		#if cpp
 		Glad.drawRangeElements(mode, start, end, count, type, untyped __cpp__("(void*)(uintptr_t)({0})", indices));
 		#end
@@ -1123,21 +1292,19 @@ class GL {
 		#end
 	}
 
-	public static function copyTexSubImage3D(target:Int, level:Int, xOffset:Int, yOffset:Int, zOffset:Int, x:Int, y:Int, width:Int, height:Int) {
-		#if cpp
-		Glad.copyTexSubImage3D(target, level, xOffset, yOffset, zOffset, x, y, width, height);
-		#end
-	}
-
 	public static function activeTexture(texture:Int) {
 		#if cpp
 		Glad.activeTexture(texture);
+		#elseif (js || html5)
+		context.activeTexture(texture);
 		#end
 	}
 
 	public static function sampleCoverage(value:Float, invert:Bool):Void {
 		#if cpp
 		Glad.sampleCoverage(value, boolToInt(invert));
+		#elseif (js || html5)
+		context.sampleCoverage(value, invert);
 		#end
 	}
 
@@ -1147,6 +1314,9 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.compressedTexImage3D(target, level, internalFormat, width, height, depth, border, imageSize, ptr);
+		#elseif (js || html5)
+		var jsData:Uint8Array = new Uint8Array(data.getData());
+		context.compressedTexImage3D(target, level, internalFormat, width, height, depth, border, jsData);
 		#end
 	}
 
@@ -1155,6 +1325,9 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.compressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, ptr);
+		#elseif (js || html5)
+		var jsData:Uint8Array = new Uint8Array(data.getData());
+		context.compressedTexImage2D(target, level, internalFormat, width, height, border, jsData);
 		#end
 	}
 
@@ -1163,15 +1336,20 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.compressedTexImage1D(target, level, internalFormat, width, border, imageSize, ptr);
+		#elseif (js || html5)
+		throw "compressedTexImage1D is not supported in WebGL/WebGL2.";
 		#end
 	}
 
-	public static function compressedTexSubImage3D(target:Int, level:Int, xOffset:Int, yOffset:Int, zOffset:Int, width:Int, height:Int, depth:Int, format:Int,
-			imageSize:Int, data:Bytes):Void {
+	public static function compressedTexSubImage3D(target:Int, level:Int, xOffset:Int, yOffset:Int, depthOffset:Int, width:Int, height:Int, depth:Int,
+			format:Int, imageSize:Int, data:Bytes):Void {
 		#if cpp
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
-		Glad.compressedTexSubImage3D(target, level, xOffset, yOffset, zOffset, width, height, depth, format, imageSize, ptr);
+		Glad.compressedTexSubImage3D(target, level, xOffset, yOffset, depthOffset, width, height, depth, format, imageSize, ptr);
+		#elseif (js || html5)
+		var jsData:Uint8Array = new Uint8Array(data.getData());
+		context.compressedTexSubImage3D(target, level, xOffset, yOffset, depthOffset, width, height, depth, format, jsData);
 		#end
 	}
 
@@ -1181,6 +1359,9 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.compressedTexSubImage2D(target, level, xOffset, yOffset, width, height, format, imageSize, ptr);
+		#elseif (js || html5)
+		var jsData:Uint8Array = new Uint8Array(data.getData());
+		context.compressedTexSubImage2D(target, level, xOffset, yOffset, width, height, format, jsData);
 		#end
 	}
 
@@ -1189,6 +1370,8 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.compressedTexSubImage1D(target, level, xOffset, width, format, imageSize, ptr);
+		#elseif (js || html5)
+		throw "compressedTexSubImage1D is not supported in WebGL/WebGL2.";
 		#end
 	}
 
@@ -1197,12 +1380,16 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(pixels.getData());
 		var ptr:Star<cpp.Void> = untyped __cpp__("(void*) {0}", pointer);
 		Glad.getCompressedTexImage(target, level, ptr);
+		#elseif (js || html5)
+		throw "getCompressedTexImage is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function blendFuncSeparate(sfactorRGB:Int, dfactorRGB:Int, sfactorAlpha:Int, dfactorAlpha:Int):Void {
 		#if cpp
 		Glad.blendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+		#elseif (js || html5)
+		context.blendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
 		#end
 	}
 
@@ -1210,12 +1397,16 @@ class GL {
 		#if cpp
 		Glad.multiDrawArrays(mode, untyped __cpp__("(const int*) {0}", Pointer.ofArray(first).constRaw),
 			untyped __cpp__("(const int*) {0}", Pointer.ofArray(count).constRaw), drawcount);
+		#elseif (js || html5)
+		throw "multiDrawArrays is not supported in WebGL/WebGL2 (requires extension or WebGL2 multiDraw extension).";
 		#end
 	}
 
 	public static function pointParameterf(pname:Int, param:Float):Void {
 		#if cpp
 		Glad.pointParameterf(pname, param);
+		#elseif (js || html5)
+		throw "pointParameterf is not supported in WebGL/WebGL2.";
 		#end
 	}
 
@@ -1224,116 +1415,161 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(params);
 		var ptr:ConstStar<cpp.Float32> = untyped __cpp__("(const GLfloat*) {0}", pointer);
 		Glad.pointParameterfv(pname, ptr);
+		#elseif (js || html5)
+		throw "pointParameterfv is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function pointParameteri(pname:Int, param:Int):Void {
 		#if cpp
 		Glad.pointParameteri(pname, param);
+		#elseif (js || html5)
+		throw "pointParameteri is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function pointParameteriv(pname:Int, params:Array<Int>):Void {
 		#if cpp
 		Glad.pointParameteriv(pname, untyped __cpp__("(const int*) {0}", Pointer.ofArray(params).constRaw));
+		#elseif (js || html5)
+		throw "pointParameteriv is not supported in WebGL/WebGL2.";
 		#end
 	}
 
 	public static function blendColor(red:Float, green:Float, blue:Float, alpha:Float):Void {
 		#if cpp
 		Glad.blendColor(red, green, blue, alpha);
+		#elseif (js || html5)
+		context.blendColor(red, green, blue, alpha);
 		#end
 	}
 
 	public static function blendEquation(mode:Int):Void {
 		#if cpp
 		Glad.blendEquation(mode);
+		#elseif (js || html5)
+		context.blendEquation(mode);
 		#end
 	}
 
-	public static function genQueries(n:Int, ids:Array<UInt>):Void {
+	public static function genQueries(n:Int, ids:Array<GLQuery>):Void {
 		#if cpp
 		Glad.genQueries(n, untyped __cpp__("(const int*) {0}", Pointer.ofArray(ids).constRaw));
+		#elseif (js || html5)
+		for (i in 0...n) {
+			ids[i] = context.createQuery();
+		}
 		#end
 	}
 
-	public static function deleteQueries(n:Int, ids:Array<UInt>):Void {
+	public static function deleteQueries(n:Int, ids:Array<GLQuery>):Void {
 		#if cpp
 		Glad.deleteQueries(n, untyped __cpp__("(const int*) {0}", Pointer.ofArray(ids).constRaw));
+		#elseif (js || html5)
+		for (id in ids) {
+			context.deleteQuery(id);
+		}
 		#end
 	}
 
-	public static function isQuery(id:UInt):Bool {
+	public static function isQuery(id:GLQuery):Bool {
 		#if cpp
 		return Glad.isQuery(id) != 0;
-		#end
+		#elseif (js || html5)
+		return context.isQuery(id);
+		#else
 		return false;
+		#end
 	}
 
-	public static function beginQuery(target:Int, id:UInt):Void {
+	public static function beginQuery(target:Int, id:GLQuery):Void {
 		#if cpp
 		Glad.beginQuery(target, id);
+		#elseif (js || html5)
+		context.beginQuery(target, id);
 		#end
 	}
 
 	public static function endQuery(target:Int):Void {
 		#if cpp
 		Glad.endQuery(target);
+		#elseif (js || html5)
+		context.endQuery(target);
 		#end
 	}
 
 	public static function getQueryiv(target:Int, pname:Int, params:Array<Int>):Void {
 		#if cpp
 		Glad.getQueryiv(target, pname, Pointer.ofArray(params));
+		#elseif (js || html5)
+		params[0] = context.getQuery(target, pname);
 		#end
 	}
 
-	public static function getQueryObjectiv(id:UInt, pname:Int, params:Array<Int>):Void {
+	public static function getQueryObjectiv(id:GLQuery, pname:Int, params:Array<Int>):Void {
 		#if cpp
 		Glad.getQueryObjectiv(id, pname, Pointer.ofArray(params));
+		#elseif (js || html5)
+		params[0] = context.getQueryParameter(id, pname);
 		#end
 	}
 
-	public static function getQueryObjectuiv(id:UInt, pname:Int, params:Array<UInt>):Void {
+	public static function getQueryObjectuiv(id:GLQuery, pname:Int, params:Array<GLBuffer>):Void {
 		#if cpp
 		Glad.getQueryObjectuiv(id, pname, untyped __cpp__("(const int*) {0}", Pointer.ofArray(params).constRaw));
+		#elseif (js || html5)
+		params[0] = context.getQueryParameter(id, pname);
 		#end
 	}
 
-	public static function bindBuffer(target:Int, buffer:UInt):Void {
+	public static function bindBuffer(target:Int, buffer:GLBuffer):Void {
 		#if cpp
 		Glad.bindBuffer(target, buffer);
+		#elseif (js || html5)
+		context.bindBuffer(target, buffer);
 		#end
 	}
 
-	public static function deleteBuffers(n:Int, buffers:Array<UInt>):Void {
+	public static function deleteBuffers(n:Int, buffers:Array<GLBuffer>):Void {
 		#if cpp
 		Glad.deleteBuffers(n, untyped __cpp__("(const int*) {0}", Pointer.ofArray(buffers).constRaw));
+		#elseif (js || html5)
+		for (buf in buffers) {
+			context.deleteBuffer(buf);
+		}
 		#end
 	}
 
-	public static function genBuffer():Int {
+	public static function genBuffer():GLBuffer {
 		#if cpp
 		var buffer:Int = 0;
 		Glad.genBuffers(1, untyped __cpp__("(const int*) {0}", RawPointer.addressOf(buffer)));
 		return buffer;
-		#end
-
+		#elseif (js || html5)
+		return context.createBuffer();
+		#else
 		return -1;
+		#end
 	}
 
-	public static function isBuffer(buffer:UInt):Bool {
+	public static function isBuffer(buffer:GLBuffer):Bool {
 		#if cpp
 		return Glad.isBuffer(buffer) != 0;
-		#end
+		#elseif (js || html5)
+		return context.isBuffer(buffer);
+		#else
 		return false;
+		#end
 	}
 
-	public static function bufferData(target:Int, size:Int, data:Bytes, usage:GlEnum):Void {
+	public static function bufferData(target:Int, size:Int, data:Bytes, usage:Int):Void {
 		#if cpp
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var star:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		untyped __cpp__("glBufferData({0}, {1}, {2}, {3})", target, untyped __cpp__("(GLsizeiptr) {0}", size), star, usage);
+		#elseif (js || html5)
+		var jsData = data != null ? new js.lib.Uint8Array(data.getData()) : null;
+		context.bufferData(target, jsData, usage);
 		#end
 	}
 
@@ -1342,6 +1578,9 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(data.getData());
 		var star:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		untyped __cpp__("glBufferSubData({0}, {1}, {2}, {3})", target, offset, cast(size, GlSizeIPointer), star);
+		#elseif (js || html5)
+		var jsData = data != null ? new js.lib.Uint8Array(data.getData()) : null;
+		context.bufferSubData(target, offset, jsData);
 		#end
 	}
 
@@ -1352,30 +1591,30 @@ class GL {
 		var star:Star<cpp.Void> = untyped __cpp__("(void*) {0}", pointer);
 		untyped __cpp__("glGetBufferSubData({0}, {1}, {2}, {3})", target, offset, cast(size, GlSizeIPointer), star);
 		return data;
-		#end
+		#elseif (js || html5)
+		throw "getBufferSubData is not supported in WebGL/WebGL2.";
+		#else
 		return Bytes.alloc(0);
+		#end
 	}
-
-	// TODO, i dont know how i could port this
-	public static function mapBuffer(target:Int, access:Int) {}
-
-	public static function unmapBuffer(target:Int) {}
 
 	public static function getBufferParameteriv(target:Int, pname:Int):Int {
 		#if cpp
 		var i:Int = 0;
 		Glad.getBufferParameteriv(target, pname, Pointer.addressOf(i));
 		return i;
-		#end
+		#elseif (js || html5)
+		return context.getBufferParameter(target, pname);
+		#else
 		return 0;
+		#end
 	}
-
-	// TODO, idk xd
-	public static function getBufferPointerv(target:Int, pname:Int) {}
 
 	public static function blendEquationSeparate(modeRGB:Int, modeAlpha:Int) {
 		#if cpp
 		Glad.blendEquationSeparate(modeRGB, modeAlpha);
+		#elseif (js || html5)
+		context.blendEquationSeparate(modeRGB, modeAlpha);
 		#end
 	}
 
@@ -1383,88 +1622,116 @@ class GL {
 		#if cpp
 		var ptr:Pointer<GlEnum> = Pointer.ofArray(buffers);
 		untyped __cpp__("glDrawBuffers({0}, {1})", n, untyped __cpp__("(const unsigned int*) {0}", ptr.constRaw));
+		#elseif (js || html5)
+		context.drawBuffers(buffers);
 		#end
 	}
 
 	public static function stencilOpSeparate(face:Int, sfail:Int, dpfail:Int, dppass:Int) {
 		#if cpp
 		Glad.stencilOpSeparate(face, sfail, dpfail, dppass);
+		#elseif (js || html5)
+		context.stencilOpSeparate(face, sfail, dpfail, dppass);
 		#end
 	}
 
 	public static function stencilFuncSeparate(face:Int, func:Int, ref:Int, mask:Int) {
 		#if cpp
 		Glad.stencilFuncSeparate(face, func, ref, mask);
+		#elseif (js || html5)
+		context.stencilFuncSeparate(face, func, ref, mask);
 		#end
 	}
 
 	public static function stencilMaskSeparate(face:Int, mask:UInt32) {
 		#if cpp
 		Glad.stencilMaskSeparate(face, mask);
+		#elseif (js || html5)
+		context.stencilMaskSeparate(face, mask);
 		#end
 	}
 
-	public static function attachShader(program:Int, shader:Int) {
+	public static function attachShader(program:GLProgram, shader:GLShader) {
 		#if cpp
 		Glad.attachShader(program, shader);
+		#elseif (js || html5)
+		context.attachShader(program, shader);
 		#end
 	}
 
-	public static function bindAttribLocation(program:UInt32, index:UInt32, name:String) {
+	public static function bindAttribLocation(program:GLProgram, index:UInt32, name:String) {
 		#if cpp
 		Glad.bindAttribLocation(program, index, ConstCharStar.fromString(name));
+		#elseif (js || html5)
+		context.bindAttribLocation(program, index, name);
 		#end
 	}
 
-	public static function compileShader(shader:UInt32) {
+	public static function compileShader(shader:GLShader) {
 		#if cpp
 		Glad.compileShader(shader);
+		#elseif (js || html5)
+		context.compileShader(shader);
 		#end
 	}
 
-	public static function createProgram():UInt32 {
+	public static function createProgram():GLProgram {
 		#if cpp
 		return Glad.createProgram();
-		#end
-
+		#elseif (js || html5)
+		return context.createProgram();
+		#else
 		return 0;
+		#end
 	}
 
-	public static function createShader(type:Int):UInt32 {
+	public static function createShader(type:Int):GLShader {
 		#if cpp
 		return Glad.createShader(type);
-		#end
-
+		#elseif (js || html5)
+		return context.createShader(type);
+		#else
 		return 0;
+		#end
 	}
 
-	public static function deleteProgram(program:Int) {
+	public static function deleteProgram(program:GLProgram) {
 		#if cpp
 		Glad.deleteProgram(program);
+		#elseif (js || html5)
+		context.deleteProgram(program);
 		#end
 	}
 
-	public static function deleteShader(shader:Int) {
+	public static function deleteShader(shader:GLShader) {
 		#if cpp
 		Glad.deleteShader(shader);
+		#elseif (js || html5)
+		context.deleteShader(shader);
 		#end
 	}
 
-	public static function detachShader(program:UInt32, shader:UInt32) {
+	public static function detachShader(program:GLProgram, shader:GLShader):Void {
 		#if cpp
 		Glad.detachShader(program, shader);
+		#elseif (js || html5)
+		context.detachShader(program, shader);
 		#end
 	}
 
-	public static function disableVertexAttribArray(index:UInt32) {
+	public static function disableVertexAttribArray(index:UInt):Void {
 		#if cpp
 		Glad.disableVertexAttribArray(index);
+		#elseif (js || html5)
+		context.disableVertexAttribArray(index);
 		#end
 	}
 
 	public static function enableVertexAttribArray(index:UInt32) {
 		#if cpp
 		Glad.enableVertexAttribArray(index);
+		#elseif (js || html5)
+		context.enableVertexAttribArray(index);
 		#end
 	}
 
@@ -1523,709 +1790,753 @@ class GL {
 			return null;
 		}
 	 */
-	public static function getAttribLocation(program:Int, name:String):Int {
+	public static function getAttribLocation(program:GLProgram, name:String):Int {
 		#if cpp
 		return Glad.getAttribLocation(program, ConstCharStar.fromString(name));
-		#end
+		#elseif (js || html5)
+		return context.getAttribLocation(program, name);
+		#else
 		return -1;
+		#end
 	}
 
-	public static function getProgramiv(program:Int, pname:Int):Int {
+	public static function getProgramiv(program:GLProgram, pname:Int):Int {
 		#if cpp
 		var value:Int = 0;
 		Glad.getProgramiv(program, pname, Pointer.addressOf(value));
 		return value;
-		#end
+		#elseif (js || html5)
+		return context.getProgramParameter(program, pname);
+		#else
 		return 0;
+		#end
 	}
 
-	public static function getProgramInfoLog(program:Int, bufSize:Int):String {
+	public static function getProgramInfoLog(program:GLProgram):String {
 		#if cpp
 		var length:Int = 0;
-		var buffer:RawPointer<GlChar> = Helpers.malloc(bufSize, GlChar);
+		Glad.getProgramiv(program, Glad.INFO_LOG_LENGTH, Pointer.addressOf(length));
 
-		Glad.getProgramInfoLog(program, bufSize, untyped __cpp__("(GLsizei *) {0}", RawPointer.addressOf(length)), untyped __cpp__("(char *) {0}", buffer));
+		if (length <= 0)
+			return "";
 
-		var log = NativeString.fromPointer(untyped __cpp__("(const char*) {0}", buffer)).substr(0, length);
+		var buffer:Star<GlChar> = Helpers.malloc(length, GlChar);
+		Glad.getProgramInfoLog(program, length, null, buffer);
 
+		var log:String = NativeString.fromPointer(untyped __cpp__("(const char*) {0}", buffer));
 		Helpers.free(buffer);
 		return log;
-		#end
+		#elseif (js || html5)
+		return context.getProgramInfoLog(program);
+		#else
 		return "";
+		#end
 	}
 
-	public static function getShaderiv(shader:Int, pname:Int):Int {
+	public static function getShaderiv(shader:GLShader, pname:Int):Int {
 		#if cpp
 		var value:Int = 0;
 		Glad.getShaderiv(shader, pname, Pointer.addressOf(value));
 		return value;
-		#end
+		#elseif (js || html5)
+		return context.getShaderParameter(shader, pname);
+		#else
 		return 0;
+		#end
 	}
 
-	public static function getShaderInfoLog(shader:Int, bufSize:Int):String {
+	public static function getShaderInfoLog(shader:GLShader):String {
 		#if cpp
 		var length:Int = 0;
-		var buffer:RawPointer<GlChar> = Helpers.malloc(bufSize, GlChar);
+		Glad.getShaderiv(shader, Glad.INFO_LOG_LENGTH, Pointer.addressOf(length));
 
-		Glad.getProgramInfoLog(shader, bufSize, untyped __cpp__("(GLsizei *) {0}", RawPointer.addressOf(length)), untyped __cpp__("(char *) {0}", buffer));
+		if (length <= 0)
+			return "";
 
-		var log = NativeString.fromPointer(untyped __cpp__("(const char*) {0}", buffer)).substr(0, length);
+		var buffer:Star<GlChar> = Helpers.malloc(length, GlChar);
+		Glad.getShaderInfoLog(shader, length, null, buffer);
 
+		var log:String = NativeString.fromPointer(untyped __cpp__("(const char*) {0}", buffer));
 		Helpers.free(buffer);
 		return log;
-		#end
+		#elseif (js || html5)
+		return context.getShaderInfoLog(shader);
+		#else
 		return "";
+		#end
 	}
 
-	public static function getShaderSource(shader:Int, bufSize:Int):String {
+	public static function getShaderSource(shader:GLShader):String {
 		#if cpp
 		var length:Int = 0;
-		var buffer:RawPointer<GlChar> = Helpers.malloc(bufSize, GlChar);
+		Glad.getShaderiv(shader, Glad.SHADER_SOURCE_LENGTH, Pointer.addressOf(length));
 
-		Glad.getProgramInfoLog(shader, bufSize, untyped __cpp__("(GLsizei *) {0}", RawPointer.addressOf(length)), untyped __cpp__("(char *) {0}", buffer));
+		if (length <= 0)
+			return "";
 
-		var source = NativeString.fromPointer(untyped __cpp__("(const char*) {0}", buffer)).substr(0, length);
+		var buffer:Star<GlChar> = Helpers.malloc(length, GlChar);
+		Glad.getShaderSource(shader, length, null, buffer);
 
+		var source:String = NativeString.fromPointer(untyped __cpp__("(const char*) {0}", buffer));
 		Helpers.free(buffer);
 		return source;
-		#end
+		#elseif (js || html5)
+		return context.getShaderSource(shader);
+		#else
 		return "";
+		#end
 	}
 
-	public static function getUniformLocation(program:Int, name:String):Int {
+	public static function getUniformLocation(program:GLProgram, name:String):GLUniformLocation {
 		#if cpp
 		return Glad.getUniformLocation(program, ConstCharStar.fromString(name));
-		#end
+		#elseif (js || html5)
+		return context.getUniformLocation(program, name);
+		#else
 		return -1;
+		#end
 	}
 
-	public static function getUniformfv(program:Int, location:Int, count:Int):Array<Float32> {
+	public static function getUniformfv(program:GLProgram, location:GLUniformLocation):Array<Float> {
 		#if cpp
-		var arr:Array<GlFloat> = [];
-		arr.resize(count);
-
+		var arr:Array<GlFloat> = [0.0, 0.0, 0.0, 0.0];
 		Glad.getUniformfv(program, location, Pointer.ofArray(arr));
-
-		return arr;
-		#end
+		return cast arr;
+		#elseif (js || html5)
+		var val = context.getUniform(program, location);
+		return Std.isOfType(val, Array) ? cast val : [val];
+		#else
 		return [];
+		#end
 	}
 
-	public static function getUniformiv(program:Int, location:Int, count:Int):Array<Int> {
+	public static function getUniformiv(program:GLProgram, location:GLUniformLocation):Array<Int> {
 		#if cpp
-		var arr:Array<Int> = [];
-		arr.resize(count);
-
+		var arr:Array<Int> = [0, 0, 0, 0];
 		Glad.getUniformiv(program, location, Pointer.ofArray(arr));
-
 		return arr;
-		#end
+		#elseif (js || html5)
+		var val = context.getUniform(program, location);
+		return Std.isOfType(val, Array) ? cast val : [val];
+		#else
 		return [];
+		#end
 	}
 
-	public static function getVertexAttribiv(index:Int, pname:Int):Int {
+	public static function getVertexAttribiv(index:UInt, pname:Int):Int {
 		#if cpp
 		var value:Int = 0;
 		Glad.getVertexAttribiv(index, pname, Pointer.addressOf(value));
 		return value;
-		#end
+		#elseif (js || html5)
+		return context.getVertexAttrib(index, pname);
+		#else
 		return 0;
-	}
-
-	public static function getVertexAttribfv(index:Int, pname:Int):Array<Float32> {
-		#if cpp
-		var arr:Array<Float32> = [0.0, 0.0, 0.0, 0.0];
-		Glad.getVertexAttribfv(index, pname, Pointer.ofArray(arr));
-		return arr;
 		#end
-		return [];
 	}
 
-	public static function getVertexAttribdv(index:Int, pname:Int):Array<Float> {
+	public static function getVertexAttribfv(index:UInt, pname:Int):Array<Float> {
+		#if cpp
+		var arr:Array<GlFloat> = [0.0, 0.0, 0.0, 0.0];
+		Glad.getVertexAttribfv(index, pname, Pointer.ofArray(arr));
+		return cast arr;
+		#elseif (js || html5)
+		var val = context.getVertexAttrib(index, pname);
+		return Std.isOfType(val, Array) ? cast val : [val];
+		#else
+		return [];
+		#end
+	}
+
+	public static function getVertexAttribdv(index:UInt, pname:Int):Array<Float> {
 		#if cpp
 		var arr:Array<Float> = [0.0, 0.0, 0.0, 0.0];
 		Glad.getVertexAttribdv(index, pname, Pointer.ofArray(arr));
 		return arr;
-		#end
+		#elseif (js || html5)
+		var val = context.getVertexAttrib(index, pname);
+		return Std.isOfType(val, Array) ? cast val : [val];
+		#else
 		return [];
+		#end
 	}
 
-	// Idk... again
-	public static function getVertexAttribPointerv() {}
-
-	public static function isProgram(program:UInt32):Bool {
+	public static function isProgram(program:GLProgram):Bool {
 		#if cpp
 		return Glad.isProgram(program) != 0;
-		#end
+		#elseif (js || html5)
+		return context.isProgram(program);
+		#else
 		return false;
+		#end
 	}
 
-	public static function isShader(shader:UInt32):Bool {
+	public static function isShader(shader:GLShader):Bool {
 		#if cpp
 		return Glad.isShader(shader) != 0;
-		#end
+		#elseif (js || html5)
+		return context.isShader(shader);
+		#else
 		return false;
+		#end
 	}
 
-	public static function linkProgram(program:UInt32) {
+	public static function linkProgram(program:GLProgram):Void {
 		#if cpp
 		Glad.linkProgram(program);
+		#elseif (js || html5)
+		context.linkProgram(program);
 		#end
 	}
 
-	public static function useProgram(program:UInt32) {
+	public static function useProgram(program:GLProgram):Void {
 		#if cpp
 		Glad.useProgram(program);
+		#elseif (js || html5)
+		context.useProgram(program);
 		#end
 	}
 
-	public static function validateProgram(program:UInt32) {
+	public static function validateProgram(program:GLProgram):Void {
 		#if cpp
 		Glad.validateProgram(program);
+		#elseif (js || html5)
+		context.validateProgram(program);
 		#end
 	}
 
-	public static function shaderSource(shader:UInt32, source:String) {
+	public static function shaderSource(shader:GLShader, source:String):Void {
 		#if cpp
 		var src:ConstCharStar = ConstCharStar.fromString(source);
 		Glad.shaderSource(shader, 1, untyped __cpp__("&{0}", src), null);
+		#elseif (js || html5)
+		context.shaderSource(shader, source);
 		#end
 	}
 
-	public static function uniform1f(loc:Int, v:Float) {
+	public static function uniform1fv(location:GLUniformLocation, value:Array<Float32>):Void {
 		#if cpp
-		Glad.uniform1f(loc, v);
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniform1fv(location, value.length, ptr);
+		#elseif (js || html5)
+		context.uniform1fv(location, value);
 		#end
 	}
 
-	public static function uniform2f(loc:Int, v:Vec2) {
+	public static function uniform2fv(location:GLUniformLocation, value:Vec2):Void {
 		#if cpp
-		Glad.uniform2f(loc, v.x, v.y);
-		#end
-	}
-
-	public static function uniform3f(loc:Int, v:Vec3) {
-		#if cpp
-		Glad.uniform3f(loc, v.x, v.y, v.z);
-		#end
-	}
-
-	// Vec4 → array[4]
-	public static function uniform4f(loc:Int, v:Array<Float>) {
-		#if cpp
-		Glad.uniform4f(loc, v[0], v[1], v[2], v[3]);
-		#end
-	}
-
-	public static function uniform1i(loc:Int, v:Int) {
-		#if cpp
-		Glad.uniform1i(loc, v);
-		#end
-	}
-
-	public static function uniform2i(loc:Int, v:Vec2) {
-		#if cpp
-		Glad.uniform2i(loc, Std.int(v.x), Std.int(v.y));
-		#end
-	}
-
-	public static function uniform3i(loc:Int, v:Vec3) {
-		#if cpp
-		Glad.uniform3i(loc, Std.int(v.x), Std.int(v.y), Std.int(v.z));
-		#end
-	}
-
-	public static function uniform4i(loc:Int, v:Array<Int>) {
-		#if cpp
-		Glad.uniform4i(loc, v[0], v[1], v[2], v[3]);
-		#end
-	}
-
-	public static function uniform1fv(loc:Int, data:Array<Float32>) {
-		#if cpp
+		var data:Array<Float32> = value.toArray();
 		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(data));
-		Glad.uniform1fv(loc, data.length, ptr);
+		Glad.uniform2fv(location, 1, ptr);
+		#elseif (js || html5)
+		context.uniform2fv(location, value);
 		#end
 	}
 
-	public static function uniform2fv(loc:Int, data:Array<Float32>) {
+	public static function uniform3fv(location:GLUniformLocation, value:Vec3):Void {
 		#if cpp
+		var data:Array<Float32> = value.toArray();
 		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(data));
-		Glad.uniform2fv(loc, Std.int(data.length / 2), ptr);
+		Glad.uniform3fv(location, 1, ptr);
+		#elseif (js || html5)
+		context.uniform3fv(location, value);
 		#end
 	}
 
-	public static function uniform3fv(loc:Int, data:Array<Float32>) {
+	public static function uniform4fv(location:GLUniformLocation, value:Vec4):Void {
 		#if cpp
+		var data:Array<Float32> = value.toArray();
 		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(data));
-		Glad.uniform3fv(loc, Std.int(data.length / 3), ptr);
+		Glad.uniform4fv(location, 1, ptr);
+		#elseif (js || html5)
+		context.uniform4fv(location, value);
 		#end
 	}
 
-	public static function uniform4fv(loc:Int, data:Array<Float32>) {
+	public static function uniformMatrix3fv(location:GLUniformLocation, transpose:Bool, value:Mat3):Void {
 		#if cpp
-		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(data));
-		Glad.uniform4fv(loc, Std.int(data.length / 4), ptr);
-		#end
-	}
-
-	public static function uniformMatrix3fv(loc:Int, mat:Array<Float>, transpose:Bool = false) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(9, cpp.Float32);
-
+		var buf:RawPointer<Float32> = Helpers.malloc(9, Float32);
 		for (i in 0...9)
-			buf[i] = mat[i];
-
-		Glad.uniformMatrix3fv(loc, 1, boolToInt(transpose), untyped __cpp__("(const float*) {0}", buf));
-
+			buf[i] = value[i];
+		Glad.uniformMatrix3fv(location, 1, boolToInt(transpose), untyped __cpp__("(const float*) {0}", buf));
 		Helpers.free(buf);
+		#elseif (js || html5)
+		context.uniformMatrix3fv(location, transpose, value);
 		#end
 	}
 
-	public static function uniformMatrix4fv(loc:Int, mat:Mat4, transpose:Bool = false) {
+	public static function uniformMatrix4fv(location:GLUniformLocation, transpose:Bool, mat:Mat4):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(16, cpp.Float32);
-
+		var buf:RawPointer<Float32> = Helpers.malloc(16, Float32);
 		for (i in 0...16)
 			buf[i] = mat[i];
-
-		Glad.uniformMatrix4fv(loc, 1, boolToInt(transpose), untyped __cpp__("(const float*) {0}", buf));
+		Glad.uniformMatrix4fv(location, 1, boolToInt(transpose), untyped __cpp__("(const float*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		context.uniformMatrix4fv(location, transpose, mat);
 		#end
 	}
 
-	public static function vertexAttrib1f(index:Int, x:Float) {
+	public static function vertexAttrib1f(index:UInt, x:Float):Void {
 		#if cpp
 		Glad.vertexAttrib1f(index, x);
+		#elseif (js || html5)
+		context.vertexAttrib1f(index, x);
 		#end
 	}
 
-	public static function vertexAttrib1fv(index:Int, v:Array<Float>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib1fv(index, untyped __cpp__("(const float*) {0}", untyped __cpp__("(const float*) {0}", buf)));
-		#end
-	}
-
-	public static function vertexAttrib1d(index:Int, x:Float) {
-		#if cpp
-		Glad.vertexAttrib1d(index, x);
-		#end
-	}
-
-	public static function vertexAttrib1dv(index:Int, v:Array<Float>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib1dv(index, untyped __cpp__("(const GLdouble*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib1s(index:Int, x:Int) {
-		#if cpp
-		Glad.vertexAttrib1s(index, x);
-		#end
-	}
-
-	public static function vertexAttrib1sv(index:Int, v:Array<Int>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib1sv(index, untyped __cpp__("(const GLshort*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib2f(index:Int, v:Vec2) {
+	public static function vertexAttrib2f(index:UInt, v:Vec2):Void {
 		#if cpp
 		Glad.vertexAttrib2f(index, v.x, v.y);
+		#elseif (js || html5)
+		context.vertexAttrib2f(index, v.x, v.y);
 		#end
 	}
 
-	public static function vertexAttrib2fv(index:Int, v:Array<Float>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib2fv(index, untyped __cpp__("(const float*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib2d(index:Int, v:Vec2) {
-		#if cpp
-		Glad.vertexAttrib2d(index, v.x, v.y);
-		#end
-	}
-
-	public static function vertexAttrib2dv(index:Int, v:Array<Float>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib2dv(index, untyped __cpp__("(const GLdouble*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib2s(index:Int, v:Vec2) {
-		#if cpp
-		Glad.vertexAttrib2s(index, Std.int(v.x), Std.int(v.y));
-		#end
-	}
-
-	public static function vertexAttrib2sv(index:Int, v:Array<Int>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib2sv(index, untyped __cpp__("(const GLshort*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib3f(index:Int, v:Vec3) {
+	public static function vertexAttrib3f(index:UInt, v:Vec3):Void {
 		#if cpp
 		Glad.vertexAttrib3f(index, v.x, v.y, v.z);
+		#elseif (js || html5)
+		context.vertexAttrib3f(index, v.x, v.y, v.z);
 		#end
 	}
 
-	public static function vertexAttrib3fv(index:Int, v:Array<Float>) {
+	public static function vertexAttrib4f(index:UInt, v:Vec4):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
+		Glad.vertexAttrib4f(index, v.x, v.y, v.z, v.w);
+		#elseif (js || html5)
+		context.vertexAttrib4f(index, v.x, v.y, v.z, v.w);
+		#end
+	}
 
-		for (i in 0...v.length)
-			buf[i] = v[i];
+	public static function vertexAttrib1fv(index:UInt, values:Array<Float32>):Void {
+		#if cpp
+		var buf:RawPointer<Float32> = Helpers.malloc(values.length, Float32);
+		for (i in 0...values.length)
+			buf[i] = values[i];
+		Glad.vertexAttrib1fv(index, untyped __cpp__("(const float*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		context.vertexAttrib1fv(index, values);
+		#end
+	}
 
+	public static function vertexAttrib2fv(index:UInt, values:Vec2):Void {
+		#if cpp
+		var data:Array<Float32> = values.toArray();
+		var buf:RawPointer<Float32> = Helpers.malloc(data.length, Float32);
+		for (i in 0...data.length)
+			buf[i] = data[i];
+		Glad.vertexAttrib2fv(index, untyped __cpp__("(const float*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		context.vertexAttrib2fv(index, values);
+		#end
+	}
+
+	public static function vertexAttrib3fv(index:UInt, values:Vec3):Void {
+		#if cpp
+		var data:Array<Float32> = values.toArray();
+		var buf:RawPointer<Float32> = Helpers.malloc(data.length, Float32);
+		for (i in 0...data.length)
+			buf[i] = data[i];
 		Glad.vertexAttrib3fv(index, untyped __cpp__("(const float*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		context.vertexAttrib3fv(index, values);
 		#end
 	}
 
-	public static function vertexAttrib3d(index:Int, v:Vec3) {
+	public static function vertexAttrib4fv(index:UInt, values:Vec4):Void {
 		#if cpp
-		Glad.vertexAttrib3d(index, v.x, v.y, v.z);
-		#end
-	}
-
-	public static function vertexAttrib3dv(index:Int, v:Array<Float>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib3dv(index, untyped __cpp__("(const GLdouble*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib3s(index:Int, v:Vec3) {
-		#if cpp
-		Glad.vertexAttrib3s(index, Std.int(v.x), Std.int(v.y), Std.int(v.z));
-		#end
-	}
-
-	public static function vertexAttrib3sv(index:Int, v:Array<Int>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
-		Glad.vertexAttrib3sv(index, untyped __cpp__("(const GLshort*) {0}", buf));
-		#end
-	}
-
-	public static function vertexAttrib4f(index:Int, v:Array<Float>) {
-		#if cpp
-		Glad.vertexAttrib4f(index, v[0], v[1], v[2], v[3]);
-		#end
-	}
-
-	public static function vertexAttrib4fv(index:Int, v:Array<Float>) {
-		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var data:Array<Float32> = values.toArray();
+		var buf:RawPointer<Float32> = Helpers.malloc(data.length, Float32);
+		for (i in 0...data.length)
+			buf[i] = data[i];
 		Glad.vertexAttrib4fv(index, untyped __cpp__("(const float*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		context.vertexAttrib4fv(index, values);
 		#end
 	}
 
-	public static function vertexAttrib4d(index:Int, v:Array<Float>) {
+	public static function vertexAttrib4d(index:UInt, x:Float, y:Float, z:Float, w:Float):Void {
 		#if cpp
-		Glad.vertexAttrib4d(index, v[0], v[1], v[2], v[3]);
+		Glad.vertexAttrib4d(index, x, y, z, w);
+		#elseif (js || html5)
+		context.vertexAttrib4f(index, x, y, z, w);
 		#end
 	}
 
-	public static function vertexAttrib4dv(index:Int, v:Array<Float>) {
+	public static function vertexAttrib4dv(index:UInt, values:Vec4):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
+		var v:Array<Float32> = values.toArray();
+		var buf:RawPointer<Float32> = Helpers.malloc(v.length, Float32);
 		for (i in 0...v.length)
 			buf[i] = v[i];
-
 		Glad.vertexAttrib4dv(index, untyped __cpp__("(const GLdouble*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		context.vertexAttrib4fv(index, values);
 		#end
 	}
 
-	public static function vertexAttrib4s(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4s(index:UInt, x:Int, y:Int, z:Int, w:Int):Void {
 		#if cpp
-		Glad.vertexAttrib4s(index, v[0], v[1], v[2], v[3]);
+		Glad.vertexAttrib4s(index, x, y, z, w);
+		#elseif (js || html5)
+		context.vertexAttrib4f(index, x, y, z, w);
 		#end
 	}
 
-	public static function vertexAttrib4sv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4sv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4sv(index, untyped __cpp__("(const GLshort*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		throw 'vertexAttrib4sv is not supported in WebGL/WebGL2';
 		#end
 	}
 
-	public static function vertexAttrib4Nbv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4Nbv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4Nbv(index, untyped __cpp__("(const GLbyte*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4Nsv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4Nsv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4Nsv(index, untyped __cpp__("(const GLshort*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4Niv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4Niv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4Niv(index, untyped __cpp__("(const GLint*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4Nub(index:Int, x:Int, y:Int, z:Int, w:Int) {
+	public static function vertexAttrib4Nub(index:UInt, x:Int, y:Int, z:Int, w:Int):Void {
 		#if cpp
 		Glad.vertexAttrib4Nub(index, x, y, z, w);
+		#elseif (js || html5)
+		context.vertexAttrib4f(index, x, y, z, w);
 		#end
 	}
 
-	public static function vertexAttrib4Nubv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4Nubv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4Nubv(index, untyped __cpp__("(const GLubyte*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4Nuiv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4Nuiv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4Nuiv(index, untyped __cpp__("(const GLuint*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4Nusv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4Nusv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4Nusv(index, untyped __cpp__("(const GLushort*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4bv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4bv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4bv(index, untyped __cpp__("(const GLbyte*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4iv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4iv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4iv(index, untyped __cpp__("(const GLint*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4ubv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4ubv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4ubv(index, untyped __cpp__("(const GLubyte*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4uiv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4uiv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4uiv(index, untyped __cpp__("(const GLuint*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttrib4usv(index:Int, v:Array<Int>) {
+	public static function vertexAttrib4usv(index:UInt, values:Array<Int16>):Void {
 		#if cpp
-		var buf:RawPointer<cpp.Float32> = Helpers.malloc(v.length, cpp.Float32);
-
-		for (i in 0...v.length)
-			buf[i] = v[i];
-
+		var buf:RawPointer<Int16> = Helpers.malloc(values.length, Int16);
+		for (i in 0...values.length)
+			buf[i] = values[i];
 		Glad.vertexAttrib4usv(index, untyped __cpp__("(const GLushort*) {0}", buf));
+		Helpers.free(buf);
+		#elseif (js || html5)
+		if (values.length >= 4) {
+			context.vertexAttrib4f(index, values[0], values[1], values[2], values[3]);
+		}
 		#end
 	}
 
-	public static function vertexAttribPointer(index:Int, size:Int, type:Int, normalized:Bool, stride:Int, offset:Int) {
+	public static function vertexAttribPointer(index:UInt, size:Int, type:Int, normalized:Bool, stride:Int, offset:Int):Void {
 		#if cpp
 		Glad.vertexAttribPointer(index, size, type, boolToInt(normalized), stride, untyped __cpp__("(void*) (uintptr_t) {0}", offset));
+		#elseif (js || html5)
+		context.vertexAttribPointer(index, size, type, normalized, stride, offset);
 		#end
 	}
 
-	// TODO
-	public static function uniformMatrix2x3fv(location:Int, count:Int, transpose:Bool, value:Array<GlFloat>) {};
+	public static function uniformMatrix2x3fv(location:GLUniformLocation, transpose:Bool, value:Array<Float32>):Void {
+		#if cpp
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniformMatrix2x3fv(location, 1, boolToInt(transpose), ptr);
+		#elseif (js || html5)
+		context.uniformMatrix2x3fv(location, transpose, value);
+		#end
+	}
 
-	public static function uniformMatrix3x2fv(location:Int, count:Int, transpose:Bool, value:Array<GlFloat>) {};
+	public static function uniformMatrix3x2fv(location:GLUniformLocation, transpose:Bool, value:Array<Float32>):Void {
+		#if cpp
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniformMatrix3x2fv(location, 1, boolToInt(transpose), ptr);
+		#elseif (js || html5)
+		context.uniformMatrix3x2fv(location, transpose, value);
+		#end
+	}
 
-	public static function uniformMatrix2x4fv(location:Int, count:Int, transpose:Bool, value:Array<GlFloat>) {};
+	public static function uniformMatrix2x4fv(location:GLUniformLocation, transpose:Bool, value:Array<Float32>):Void {
+		#if cpp
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniformMatrix2x4fv(location, 1, boolToInt(transpose), ptr);
+		#elseif (js || html5)
+		context.uniformMatrix2x4fv(location, transpose, value);
+		#end
+	}
 
-	public static function uniformMatrix4x2fv(location:Int, count:Int, transpose:Bool, value:Array<GlFloat>) {};
+	public static function uniformMatrix4x2fv(location:GLUniformLocation, transpose:Bool, value:Array<Float32>):Void {
+		#if cpp
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniformMatrix4x2fv(location, 1, boolToInt(transpose), ptr);
+		#elseif (js || html5)
+		context.uniformMatrix4x2fv(location, transpose, value);
+		#end
+	}
 
-	public static function uniformMatrix3x4fv(location:Int, count:Int, transpose:Bool, value:Array<GlFloat>) {};
+	public static function uniformMatrix3x4fv(location:GLUniformLocation, transpose:Bool, value:Array<Float32>):Void {
+		#if cpp
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniformMatrix3x4fv(location, 1, boolToInt(transpose), ptr);
+		#elseif (js || html5)
+		context.uniformMatrix3x4fv(location, transpose, value);
+		#end
+	}
 
-	public static function uniformMatrix4x3fv(location:Int, count:Int, transpose:Bool, value:Array<GlFloat>) {};
+	public static function uniformMatrix4x3fv(location:GLUniformLocation, transpose:Bool, value:Array<Float32>):Void {
+		#if cpp
+		var ptr:ConstStar<Float32> = untyped __cpp__("(const float*) {0}", Pointer.ofArray(value));
+		Glad.uniformMatrix4x3fv(location, 1, boolToInt(transpose), ptr);
+		#elseif (js || html5)
+		context.uniformMatrix4x3fv(location, transpose, value);
+		#end
+	}
 
-	public static function colorMaski(index:Int, r:Bool, g:Bool, b:Bool, a:Bool) {
+	public static function colorMaski(index:UInt, r:Bool, g:Bool, b:Bool, a:Bool):Void {
 		#if cpp
 		Glad.colorMaski(index, boolToInt(r), boolToInt(g), boolToInt(b), boolToInt(a));
+		#elseif (js || html5)
+		#if debug
+		trace("colorMaski not supported in WebGL; using global colorMask instead");
+		#end
+		context.colorMask(r, g, b, a);
 		#end
 	}
 
-	public static function getBooleani(target:Int, index:Int):Bool {
+	public static function getBooleani_v(target:Int, index:UInt):Bool {
 		#if cpp
 		var v:GlBool = 0;
 		Glad.getBooleani_v(target, index, Pointer.addressOf(v));
 		return v != 0;
-		#end
+		#elseif (js || html5)
 		return false;
+		#else
+		return false;
+		#end
 	}
 
-	public static function getIntegeri(target:Int, index:Int):Int {
+	public static function getIntegeri_v(target:Int, index:UInt):Int {
 		#if cpp
 		var v:Int = 0;
 		Glad.getIntegeri_v(target, index, Pointer.addressOf(v));
 		return v;
-		#end
+		#elseif (js || html5)
+		return context.getIndexedParameter(target, index);
+		#else
 		return 0;
+		#end
 	}
 
-	public static function enablei(target:Int, index:Int) {
+	public static function enablei(target:Int, index:UInt):Void {
 		#if cpp
 		Glad.enablei(target, index);
+		#elseif (js || html5)
 		#end
 	}
 
-	public static function disablei(target:Int, index:Int) {
+	public static function disablei(target:Int, index:UInt):Void {
 		#if cpp
 		Glad.disablei(target, index);
+		#elseif (js || html5)
 		#end
 	}
 
-	public static function isEnabledi(target:Int, index:Int):Bool {
+	public static function isEnabledi(target:Int, index:UInt):Bool {
 		#if cpp
 		return Glad.isEnabledi(target, index) != 0;
-		#end
+		#elseif (js || html5)
 		return false;
+		#else
+		return false;
+		#end
 	}
 
-	public static function beginTransformFeedback(primitiveMode:Int) {
+	public static function beginTransformFeedback(primitiveMode:Int):Void {
 		#if cpp
 		Glad.beginTransformFeedback(primitiveMode);
+		#elseif (js || html5)
+		context.beginTransformFeedback(primitiveMode);
 		#end
 	}
 
-	public static function endTransformFeedback() {
+	public static function endTransformFeedback():Void {
 		#if cpp
 		Glad.endTransformFeedback();
+		#elseif (js || html5)
+		context.endTransformFeedback();
 		#end
 	}
 
-	public static function bindBufferRange(target:Int, index:Int, buffer:Int, offset:Int, size:Int64) {
+	public static function bindBufferRange(target:Int, index:UInt, buffer:GLBuffer, offset:Int, size:Int64):Void {
 		#if cpp
 		Glad.bindBufferRange(target, index, buffer, offset, untyped __cpp__("(long int){0}", size));
+		#elseif (js || html5)
+		context.bindBufferRange(target, index, buffer, offset, cast size);
 		#end
 	}
 
-	public static function bindBufferBase(target:Int, index:Int, buffer:Int) {
+	public static function bindBufferBase(target:Int, index:UInt, buffer:GLBuffer):Void {
 		#if cpp
 		Glad.bindBufferBase(target, index, buffer);
+		#elseif (js || html5)
+		context.bindBufferBase(target, index, buffer);
 		#end
 	}
 
-	public static function genVertexArray():Int {
+	public static function genVertexArray():GLVertexArray {
 		#if cpp
 		var vao:Int = 0;
 		Glad.genVertexArrays(1, untyped __cpp__("(const int*) {0}", RawPointer.addressOf(vao)));
 		return vao;
-		#end
+		#elseif (js || html5)
+		return context.createVertexArray();
+		#else
 		return 0;
+		#end
 	}
 
-	public static function bindVertexArray(vao:Int) {
+	public static function bindVertexArray(vao:GLVertexArray):Void {
 		#if cpp
 		Glad.bindVertexArray(vao);
+		#elseif (js || html5)
+		context.bindVertexArray(vao);
 		#end
 	}
 
-	private static function boolToInt(v:Bool) {
+	private static function boolToInt(v:Bool):Int {
 		return v ? 1 : 0;
 	}
 }

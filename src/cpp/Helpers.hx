@@ -4,24 +4,8 @@ import cpp.RawConstPointer;
 import cpp.RawPointer;
 import cpp.UInt64;
 
-/**
- * C Arrays can access and set values at specific
- * indexes of the array, but you cannot instantiate
- * one like a normal Haxe array.
- * 
- * Example usage:
- * 
- * ```haxe
- * var keyStates:CArray<KeyState> = SDL.getKeyboardStates();
- * trace(keyStates[0]); // Prints out either `true` or `false`.
- * ```
- */
 typedef CArray<T> = RawPointer<T>;
 
-/**
- * C Const Arrays are similar to C Arrays,
- * Except they cannot be modified.
- */
 typedef CConstArray<T> = RawConstPointer<T>;
 
 @:include("stdio.h")

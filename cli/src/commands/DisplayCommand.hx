@@ -67,8 +67,11 @@ class DisplayCommand {
 		switch (target) {
 			case "cpp", "linux", "mac", "windows":
 				configurationFile.add("--cpp " + Path.join([userPath, Configuration.build.output, target, "native"]) + "\n");
+			case "html5":
+				configurationFile.add("-D html5\n");
+				configurationFile.add("--js " + Path.join([userPath, Configuration.build.output, target, "main.js"]) + "\n");
 			default:
-				throw 'Targer $target isnt supported';
+				throw 'Target $target isnt supported';
 		}
 
 		if (!FileSystem.exists(Path.join([userPath, Configuration.build.output])))

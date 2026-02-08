@@ -1,5 +1,6 @@
 package;
 
+import commands.SetupCommand;
 import commands.BuildCommand;
 import commands.DisplayCommand;
 import configuration.Configuration;
@@ -25,8 +26,11 @@ class CLI {
 				BuildCommand.build(args, getHaxelibPath(), path);
 			case "test":
 				DisplayCommand.display(args, getHaxelibPath(), path);
+				BuildCommand.build(args, getHaxelibPath(), path);
 			case "help":
 				HelpCommand.command();
+			case "setup":
+				SetupCommand.setup();
 			case "display":
 				DisplayCommand.display(args, getHaxelibPath(), path);
 			default:

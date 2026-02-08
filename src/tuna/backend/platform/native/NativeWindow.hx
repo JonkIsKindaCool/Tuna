@@ -1,13 +1,13 @@
 package tuna.backend.platform.native;
 
+import tuna.backend.opengl.GL;
 #if cpp
 import native.sdl.Types;
 import native.sdl.SDL;
-import tuna.backend.window.Window;
 import tuna.utils.Color;
 import native.glad.Glad;
 
-class NativeWindow implements Window {
+class NativeWindow implements IWindow {
 	public var title(get, set):String;
 	public var x(get, set):Int;
 	public var y(get, set):Int;

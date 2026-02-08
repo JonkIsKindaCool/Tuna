@@ -1,9 +1,9 @@
-package tuna.backend.opengl;
+package tuna.utils;
 
 import haxe.io.Bytes;
 
 @:forward
-abstract FloatArrayBuffer(Bytes) to Bytes {
+abstract FloatArrayBytes(Bytes) to Bytes {
     public static inline var FLOAT_SIZE:Int = 4;
     public function new(data:Array<Float>) {
         var bytes:Bytes = Bytes.alloc(FLOAT_SIZE * data.length);

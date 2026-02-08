@@ -30,6 +30,11 @@ abstract Vec2(BasicVec2) from BasicVec2 to BasicVec2 {
 	public function divideScalar(b:Float):Vec2 {
 		return new Vec2(this.x / b, this.y / b);
 	}
+
+	@:to
+	public function toArray():Array<Float32> {
+		return [this.x, this.y];
+	}
 }
 
 @:structInit

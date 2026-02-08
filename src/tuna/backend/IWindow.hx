@@ -1,9 +1,8 @@
-// tuna/backend/window/Window.hx
-package tuna.backend.window;
+package tuna.backend;
 
 import tuna.utils.Color;
 
-interface Window {
+interface IWindow {
 	public var title(get, set):String;
 
 	public var x(get, set):Int;

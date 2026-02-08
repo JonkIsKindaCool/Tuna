@@ -1,9 +1,7 @@
 package tuna.math;
 
-import cpp.Float32;
-
-abstract Mat4(Array<Float>) from Array<Float> to Array<Float> {
-	public function new(?data:Array<Float>) {
+abstract Mat4(Array<Float32>) from Array<Float32> to Array<Float32> {
+	public function new(?data:Array<Float32>) {
 		if (data == null)
 			this = identity();
 		else
@@ -12,7 +10,7 @@ abstract Mat4(Array<Float>) from Array<Float> to Array<Float> {
 
 	@:op(A * B)
 	public function multiply(m:Mat4) {
-		var data:Array<Float> = this;
+		var data:Array<Float32> = this;
 
 		for (i => v in data) {
 			data[i] = data[i] * m[i];
