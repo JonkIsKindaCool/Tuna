@@ -1,6 +1,6 @@
 package;
 
-import tuna.fs.FileSystem;
+import tuna.io.FileSystem;
 import tuna.core.Application;
 
 class ApplicationMain {

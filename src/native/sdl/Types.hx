@@ -1837,6 +1837,9 @@ extern class SDLRawEvent {
     @:native("mouse")
     var mouse:SDLMouseWheelEvent;
 
+    @:native("wheel")
+    var wheel:SDLMouseWheelEvent;
+
     @:native("jaxis")
     var jAxis:SDLJoyAxisEvent;
 

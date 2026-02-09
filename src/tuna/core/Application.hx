@@ -1,5 +1,9 @@
 package tuna.core;
 
+import tuna.input.Mouse;
+import tuna.input.MouseCode;
+import tuna.input.KeyCode;
+import tuna.input.Keyboard;
 import tuna.utils.Time;
 import tuna.backend.IPlatform;
 import tuna.backend.platform.native.NativePlatform;
@@ -8,7 +12,15 @@ class Application {
 	public var platform:IPlatform;
 	public var fps:Int = 60;
 
-	public function new() {}
+	public function new() {
+		Keyboard.keyDown.add(onKeyDown);
+		Keyboard.keyUp.add(onKeyUp);
+
+		Mouse.moveSignal.add(onMove);
+		Mouse.clickDownSignal.add(onClickDown);
+		Mouse.clickUpSignal.add(onClickUp);
+		Mouse.scrollSignal.add(onScroll);
+	}
 
 	public function init() {}
 
@@ -31,8 +43,19 @@ class Application {
 		Time.sleep(1000 / fps);
 	}
 
-	public function update(dt:Float) {
-	}
+	public function update(dt:Float) {}
 
 	public function draw() {}
+
+	public function onKeyDown(key:KeyCode) {}
+
+	public function onKeyUp(key:KeyCode) {}
+
+	public function onMove(x:Float, y:Float, delX:Float, delY:Float) {}
+
+	public function onClickDown(type:MouseCode) {}
+
+	public function onClickUp(type:MouseCode) {}
+
+	public function onScroll(del:Float) {}
 }

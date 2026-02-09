@@ -6,6 +6,7 @@ import tuna.utils.Color;
 import js.html.CanvasElement;
 import js.Browser;
 
+@:allow(tuna.backend.platform.web.WebPlatform)
 class WebWindow implements IWindow {
 	public var title(get, set):String;
 	public var x(get, set):Int;

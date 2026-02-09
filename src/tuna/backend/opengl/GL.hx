@@ -1991,7 +1991,7 @@ class GL {
 
 	public static function useProgram(program:GLProgram):Void {
 		#if cpp
-		Glad.useProgram(program);
+		Glad.useProgram(program ?? 0);
 		#elseif (js || html5)
 		context.useProgram(program);
 		#end
