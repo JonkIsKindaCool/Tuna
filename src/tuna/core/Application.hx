@@ -1,5 +1,6 @@
 package tuna.core;
 
+import tuna.backend.IAudioBackend;
 import tuna.input.Mouse;
 import tuna.input.MouseCode;
 import tuna.input.KeyCode;
@@ -12,7 +13,16 @@ class Application {
 	public var platform:IPlatform;
 	public var fps:Int = 60;
 
+	public static var audioBackend:IAudioBackend;
+
 	public function new() {
+		#if cpp
+		audioBackend = new tuna.backend.audio.native.NativeAudioBackend();
+		#elseif (js || html5) 
+		#end
+
+		audioBackend.init();
+
 		Keyboard.keyDown.add(onKeyDown);
 		Keyboard.keyUp.add(onKeyUp);
 

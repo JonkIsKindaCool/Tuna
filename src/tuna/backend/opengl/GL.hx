@@ -2430,7 +2430,7 @@ class GL {
 		Glad.colorMaski(index, boolToInt(r), boolToInt(g), boolToInt(b), boolToInt(a));
 		#elseif (js || html5)
 		#if debug
-		trace("colorMaski not supported in WebGL; using global colorMask instead");
+		throw "colorMaski not supported in WebGL; using global colorMask instead";
 		#end
 		context.colorMask(r, g, b, a);
 		#end

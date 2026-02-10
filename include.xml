@@ -10,11 +10,14 @@
 		<compilerflag value="-I${haxelib:tuna}/vendor/include" />
 		<compilerflag value="-I${haxelib:tuna}" />
 		<file name="${haxelib:tuna}/vendor/src/glad.c" />
+
+		<compilerflag value="-I${haxelib:tuna}/vendor/openal/include" />
 	</files>
 
 	<files id="__main__">
 		<compilerflag value="-I${haxelib:tuna}/vendor/include/sdl2" />
 		<compilerflag value="-I${haxelib:tuna}/vendor/src/sdl2" />
+		<compilerflag value="-I${haxelib:tuna}/vendor/openal/include" />
 		<compilerflag value="-I${haxelib:tuna}" />
 	</files>
 
@@ -23,6 +26,8 @@
 		<!-- TODO: figure out static linking properly -->
 		<copyFile name="SDL2.dll" from="${haxelib:tuna}/vendor/lib/Windows/x64" toolid="exe"
 			overwrite="true" />
+		<copyFile name="OpenAL32.dll" from="${haxelib:tuna}/vendor/openal/lib/Windows/x64"
+			toolId="exe" overwrite="true" if="windows" />
 	</section>
 
 	<target id="haxe">
@@ -36,6 +41,7 @@
 		<!--64
 		bit only-->
 		<section if="windows" unless="mingw">
+			<lib name="${haxelib:tuna}/vendor/openal/lib/Windows/x64/OpenAL32.lib" />
 			<lib name="${haxelib:tuna}/vendor/lib/Windows/x64/SDL2.lib" />
 		</section>
 
@@ -45,9 +51,11 @@
 
 		<section if="linux || android">
 			<lib name="-lSDL2" />
+			<lib name="-lopenal"/>
 		</section>
 
 		<section if="macos || ios">
+			<vflag name="-framework" value="OpenAL" />
 			<vflag name="-framework" value="OpenGL" />
 			<vflag name="-framework" value="Cocoa" />
 		</section>

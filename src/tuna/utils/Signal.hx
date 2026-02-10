@@ -33,7 +33,6 @@ class Signal<T> {
 			try {
 				f(arg);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -75,7 +74,6 @@ class Signal2<T1, T2> {
 			try {
 				f(arg1, arg2);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -117,7 +115,6 @@ class Signal3<T1, T2, T3> {
 			try {
 				f(arg1, arg2, arg3);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -159,7 +156,6 @@ class Signal4<T1, T2, T3, T4> {
 			try {
 				f(arg1, arg2, arg3, arg4);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -201,7 +197,6 @@ class Signal5<T1, T2, T3, T4, T5> {
 			try {
 				f(arg1, arg2, arg3, arg4, arg5);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -243,7 +238,6 @@ class Signal6<T1, T2, T3, T4, T5, T6> {
 			try {
 				f(arg1, arg2, arg3, arg4, arg5, arg6);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -285,7 +279,6 @@ class Signal7<T1, T2, T3, T4, T5, T6, T7> {
 			try {
 				f(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -327,7 +320,6 @@ class Signal8<T1, T2, T3, T4, T5, T6, T7, T8> {
 			try {
 				f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -369,7 +361,6 @@ class Signal9<T1, T2, T3, T4, T5, T6, T7, T8, T9> {
 			try {
 				f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}
@@ -411,7 +402,6 @@ class Signal10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> {
 			try {
 				f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
 			} catch (e) {
-				#if debug trace('Signal error: $e'); #end
 			}
 		}
 	}

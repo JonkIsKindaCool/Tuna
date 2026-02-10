@@ -1,2 +1,2 @@
 --class-path src
---js bin/main.js
+--cpp bin/cpp

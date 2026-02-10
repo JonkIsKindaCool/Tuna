@@ -9,24 +9,12 @@ import sys.thread.Thread;
 import sys.thread.Deque;
 #end
 
-/**
- * Promise<T> cross-platform simple y funcional (js + sys)
- * 
- * - En JS: usa Promise nativo y chaining real
- * - En sys: usa thread + cola de callbacks (pump manual si no hay event loop)
- * 
- * Uso:
- *   new Promise((resolve, reject) -> { ... resolve(value); })
- *   .then(v -> trace(v))
- *   .catchError(e -> trace("Error: " + e));
- */
 class Promise<T> {
 	#if js
 	public var native:JsPromise<T>;
 	#end
 
 	#if sys
-	// mantengo tu implementación sys original aquí (no la cambio por ahora)
 	private var result:T = null;
 	private var error:Dynamic = null;
 	private var done:Bool = false;
@@ -146,10 +134,6 @@ class Promise<T> {
 		}
 	}
 
-	/**
-	 * Llama esto en tu main loop / update / event loop
-	 * Ej: en OpenFL/Heaps: en el update o en un Thread que chequee cada frame
-	 */
 	public static function pump():Void {
 		#if sys
 		while (true) {
@@ -162,8 +146,6 @@ class Promise<T> {
 	}
 	#end
 
-	// Helpers estáticos útiles
-
 	public static function resolve<T>(value:T):Promise<T> {
 		return new Promise((res, _) -> res(value));
 	}
@@ -173,7 +155,6 @@ class Promise<T> {
 	}
 
 	#if js
-	// Para debug en browser
 	public function inspect(label:String = "Promise"):Promise<T> {
 		native.then(v -> trace('$label resolved: $v')).catchError(e -> trace('$label rejected: $e'));
 		return this;
