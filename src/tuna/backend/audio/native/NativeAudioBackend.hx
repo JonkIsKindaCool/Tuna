@@ -8,9 +8,7 @@ class NativeAudioBackend implements IAudioBackend {
 	public static var device:Device;
 	public static var context:Context;
 
-	public function new() {}
-
-	public function init() {
+	public function new() {
 		device = ALC.openDevice(null);
 		if (device == null)
 			trace("No device");

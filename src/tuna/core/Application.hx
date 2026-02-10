@@ -19,9 +19,8 @@ class Application {
 		#if cpp
 		audioBackend = new tuna.backend.audio.native.NativeAudioBackend();
 		#elseif (js || html5) 
+		audioBackend = new tuna.backend.audio.web.WebAudioBackend();
 		#end
-
-		audioBackend.init();
 
 		Keyboard.keyDown.add(onKeyDown);
 		Keyboard.keyUp.add(onKeyUp);

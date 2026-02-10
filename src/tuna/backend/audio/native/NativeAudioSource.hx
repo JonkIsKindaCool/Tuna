@@ -8,8 +8,13 @@ import native.al.AL;
 class NativeAudioSource implements AudioSource {
 	public var buffer:AudioBuffer;
 	public var volume(get, set):Float;
+	public var pitch(get, set):Float;
+	public var loop(get, set):Bool;
+	public var playing(get, never):Bool;
+	public var time(get, set):Float;
+    public var duration(get, never):Float;
 
-	public var _alSource:UInt32;
+	private var _alSource:UInt32;
 
 	public function new(buffer:AudioBuffer) {
 		this.buffer = buffer;
@@ -17,27 +22,79 @@ class NativeAudioSource implements AudioSource {
 		AL.genSources(1, RawPointer.addressOf(_alSource));
 		AL.sourcei(_alSource, AL.BUFFER, cast(buffer, NativeAudioBuffer).data);
 		volume = 1;
+		pitch = 1;
+		loop = false;
 	}
 
 	public function play() {
 		AL.sourcePlay(_alSource);
-		var state:Int = 0;
-		AL.getSourcei(_alSource, AL.SOURCE_STATE, RawPointer.addressOf(state));
+	}
+
+	public function pause() {
+		AL.sourcePause(_alSource);
+	}
+
+	public function stop() {
+		AL.sourceStop(_alSource);
 	}
 
 	public function destroy() {
+		AL.sourcei(_alSource, AL.BUFFER, 0);
 		AL.deleteSources(1, RawPointer.addressOf(_alSource));
 	}
 
-	public function set_volume(value:Float):Float {
+	private function set_volume(value:Float):Float {
 		AL.sourcef(_alSource, AL.GAIN, Math.max(0, Math.min(1, value)));
-		return volume;
+		return value;
 	}
 
-	public function get_volume():Float {
+	private function get_volume():Float {
 		var value:Single = 0;
 		AL.getSourcef(_alSource, AL.GAIN, RawPointer.addressOf(value));
 		return value;
+	}
+
+	private function set_pitch(value:Float):Float {
+		AL.sourcef(_alSource, AL.PITCH, Math.max(0.5, Math.min(2.0, value)));
+		return value;
+	}
+
+	private function get_pitch():Float {
+		var value:Single = 0;
+		AL.getSourcef(_alSource, AL.PITCH, RawPointer.addressOf(value));
+		return value;
+	}
+
+	private function set_loop(value:Bool):Bool {
+		AL.sourcei(_alSource, AL.LOOPING, value ? AL.TRUE : AL.FALSE);
+		return value;
+	}
+
+	private function get_loop():Bool {
+		var value:Int = 0;
+		AL.getSourcei(_alSource, AL.LOOPING, RawPointer.addressOf(value));
+		return value == AL.TRUE;
+	}
+
+	private function get_playing():Bool {
+		var state:Int = 0;
+		AL.getSourcei(_alSource, AL.SOURCE_STATE, RawPointer.addressOf(state));
+		return state == AL.PLAYING;
+	}
+
+	private function set_time(value:Float):Float {
+		AL.sourcef(_alSource, AL.SEC_OFFSET, value / 1000);
+		return value;
+	}
+
+	private function get_time():Float {
+		var value:Single = 0;
+		AL.getSourcef(_alSource, AL.SEC_OFFSET, RawPointer.addressOf(value));
+		return value * 1000;
+	}
+
+	private function get_duration():Float {
+		return buffer.duration;
 	}
 }
 #end

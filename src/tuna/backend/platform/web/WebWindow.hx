@@ -4,6 +4,7 @@ import tuna.backend.opengl.GL;
 #if (js || html5)
 import tuna.utils.Color;
 import js.html.CanvasElement;
+import js.html.CanvasRenderingContext2D;
 import js.Browser;
 
 @:allow(tuna.backend.platform.web.WebPlatform)
@@ -26,11 +27,14 @@ class WebWindow implements IWindow {
 	public static var allowHighDPI:Bool = false;
 
 	var canvas:CanvasElement;
+	var preCanvas:CanvasElement;
 	var _title:String;
 	var _width:Int;
 	var _height:Int;
 	var _visible:Bool = true;
 	var _fullscreen:Bool = false;
+
+	var ctx2d:CanvasRenderingContext2D;
 
 	public function new(width:Int, height:Int, title:String) {
 		_width = width;
@@ -41,7 +45,12 @@ class WebWindow implements IWindow {
 		canvas.width = width;
 		canvas.height = height;
 		canvas.style.display = 'block';
-		Browser.document.body.appendChild(canvas);
+
+		preCanvas = Browser.document.createCanvasElement();
+		preCanvas.width = width;
+		preCanvas.height = height;
+		preCanvas.style.display = 'block';
+		Browser.document.body.appendChild(preCanvas);
 
 		Browser.document.title = title;
 
@@ -55,6 +64,8 @@ class WebWindow implements IWindow {
 		};
 
 		GL.context = canvas.getContextWebGL2(contextOptions);
+		ctx2d = preCanvas.getContext2d();
+
 		if (GL.context == null) {
 			GL.context = canvas.getContext('experimental-webgl', contextOptions);
 		}
@@ -65,7 +76,19 @@ class WebWindow implements IWindow {
 		GL.clear(GL.COLOR_BUFFER_BIT);
 	}
 
-	public function render() {
+	public function render() {}
+
+	public static dynamic function drawBootScreen(w:WebWindow, ctx:CanvasRenderingContext2D) {
+		ctx.clearRect(0, 0, w.width, w.height);
+
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 0, w.width, w.height);
+
+		ctx.fillStyle = "white";
+		ctx.font = "32px sans-serif";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillText("Click to start", w.width / 2, w.height / 2);
 	}
 
 	public function set_fullscreen(value:Bool):Bool {

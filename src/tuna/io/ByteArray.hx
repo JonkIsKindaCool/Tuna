@@ -33,7 +33,6 @@ abstract ByteArray(Bytes) from Bytes to Bytes {
 		return value;
 	}
 
-	// Helpers útiles
 	public inline function resize(newLength:Int):Void {
 		var old = this;
 		this = Bytes.alloc(newLength);
