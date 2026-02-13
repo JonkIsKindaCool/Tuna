@@ -1,0 +1,36 @@
+<xml>
+
+	<files id="toolkit-neko">
+
+		<compilerflag value="-Ilibs/neko/vm/" />
+		<compilerflag value="-DNEKO_STANDALONE=1" />
+
+		<file name="libs/neko/libs/std/buffer.c" />
+		<file name="libs/neko/libs/std/date.c" />
+		<file name="libs/neko/libs/std/file.c" />
+		<file name="libs/neko/libs/std/init.c" />
+		<file name="libs/neko/libs/std/int32.c" />
+		<file name="libs/neko/libs/std/math.c" />
+		<file name="libs/neko/libs/std/misc.c" />
+		<file name="libs/neko/libs/std/process.c" />
+		<file name="libs/neko/libs/std/random.c" />
+		<file name="libs/neko/libs/std/serialize.c" />
+		<file name="libs/neko/libs/std/socket.c" />
+		<file name="libs/neko/libs/std/string.c" />
+		<file name="libs/neko/libs/std/sys.c" />
+		<file name="libs/neko/libs/std/thread.c" />
+		<file name="libs/neko/vm/alloc.c" />
+		<file name="libs/neko/vm/builtins.c" />
+		<file name="libs/neko/vm/callback.c" />
+		<file name="libs/neko/vm/hash.c" />
+		<file name="libs/neko/vm/interp.c" />
+		<file name="libs/neko/vm/jit_x86.c" />
+		<file name="libs/neko/vm/load.c" />
+		<file name="libs/neko/vm/module.c" />
+		<file name="libs/neko/vm/objtable.c" />
+		<file name="libs/neko/vm/others.c" />
+		<file name="libs/neko/vm/threads.c" />
+
+	</files>
+
+</xml>

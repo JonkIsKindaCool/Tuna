@@ -1,33 +1,92 @@
-<xml version="1.0" encoding="utf-8">
+<?xml version="1.0" encoding="utf-8"?>
 
-	<set name="NDLL_NAME" value="tuna" />
+<xml>
+	<set name="NAME" value="tuna" />
 
 	<include name="${HXCPP}/build-tool/BuildCommon.xml" />
+
+	<include name="libs/neko.xml" />
+	<include name="libs/openal.xml" />
+	<include name="libs/sdl3.xml" />
+	<include name="libs/glad.xml" />
 
 	<set name="HXCPP_CPP11" value="1" />
 	<set name="DEBUGEXTRA" value="-debug" if="fulldebug" />
 	<set name="HASHLINK" value="1" if="hashlink" />
 
-	<section if="LIME_HASHLINK">
-
-		<compilerflag value="-DLIME_HASHLINK" />
-
+	<section if="HASHLINK">
+		<compilerflag value="-DHASHLINK" />
 	</section>
-
 
 	<files id="tuna">
 		<compilerflag value="-Iinclude" />
+		<compilerflag value="-Ilibs/glad/include/" />
+		<compilerflag value="-Ilibs/hashlink/include/" />
 		<compilerflag value="-I${HL_PATH}/src" if="HASHLINK" />
+		<compilerflag value="-fPIC" if="linux" />
 
+		<depend name="libs/glad/include/glad/gl.h" />
+		<depend name="libs/glad/include/KHR/khrplatform.h" />
+
+		<file name="libs/glad/src/gl.c" />
 		<file name="src/tuna/NativePlatform.cpp" />
+		<file name="src/tuna/NativeWindow.cpp" />
 	</files>
 
-	<target id="NDLL" output="${NDLL_NAME}" tool="linker" toolid="${STD_MODULE_LINK}">
+	<target id="NDLL" output="${NAME}" tool="linker" toolid="${STD_MODULE_LINK}"
+		unless="HASHLINK">
 		<outdir name="../ndll/${BINDIR}" />
 		<ext value=".ndll" />
+		
+		<!-- ✅ ESTO ES LO IMPORTANTE -->
 		<files id="tuna" />
+		<files id="toolkit-neko" />
+		<files id="toolkit-openal" />
+		<files id="toolkit-sdl3" />    <!-- ✅ Incluir aquí, no en <files id="tuna"> -->
+		<files id="toolkit-glad" />
 
-		<lib name="-lhl" if="HASHLINK" />
+		<section if="linux">
+			<lib name="-lGL" />
+			<lib name="-lX11" />
+			<lib name="-lXext" />
+			<lib name="-lXrandr" />
+			<lib name="-lXi" />
+			<lib name="-lXxf86vm" />
+			<lib name="-lXcursor" />
+			<lib name="-lXinerama" />
+			<lib name="-ldl" />
+			<lib name="-lpthread" />
+			<lib name="-lm" />
+		</section>
+	</target>
+
+	<target id="HDLL" output="${NAME}" tool="linker" toolid="${STD_MODULE_LINK}"
+		if="HASHLINK">
+		<outdir name="../hdll/${BINDIR}" />
+		<ext value=".hdll" />
+		
+		<!-- ✅ MISMO PATRÓN PARA HDLL -->
+		<files id="tuna" />
+		<files id="toolkit-neko" />
+		<files id="toolkit-openal" />
+		<files id="toolkit-sdl3" />
+		<files id="toolkit-glad" />
+
+		<section if="linux">
+			<lib name="-lGL" />
+			<lib name="-lX11" />
+			<lib name="-lXext" />
+			<lib name="-lXrandr" />
+			<lib name="-lXi" />
+			<lib name="-lXxf86vm" />
+			<lib name="-lXcursor" />
+			<lib name="-lXinerama" />
+			<lib name="-ldl" />
+			<lib name="-lpthread" />
+			<lib name="-lm" />
+			<lib name="-L${HL_PATH}" />
+			<lib name="-lhl" />
+		</section>
 	</target>
 
 	<target id="default">

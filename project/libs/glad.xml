@@ -1,0 +1,8 @@
+<xml>
+    <files id="toolkit-glad">
+        <compilerflag value="-Ilibs/glad/include/" />
+        <depend name="libs/glad/include/glad/gl.h" />
+        <depend name="libs/glad/include/KHR/khrplatform.h" />
+        <file name="libs/glad/src/gl.c" />
+    </files>
+</xml>

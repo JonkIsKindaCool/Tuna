@@ -1,0 +1,158 @@
+<xml>
+
+    <section if="android LIME_OPENALSOFT">
+        <error value="NDK version 20 or higher is required." unless="NDKV20+" />
+    </section>
+
+    <files id="toolkit-openal">
+
+        <compilerflag value="-std=c++11" if="android" />
+
+        <compilerflag value="-Ilibs/openal-soft/" />
+        <compilerflag value="-Ilibs/custom/openal/alc/" />
+        <compilerflag value="-Ilibs/openal-soft/alc/" />
+        <compilerflag value="-Ilibs/custom/openal/build/" />
+        <compilerflag value="-Ilibs/openal-soft/common/" />
+        <compilerflag value="-Ilibs/custom/openal/include/" />
+        <compilerflag value="-Ilibs/openal-soft/include/" />
+        <compilerflag value="-DAL_LIBTYPE_STATIC" if="native_toolkit_openal_static" />
+
+        <compilerflag value="-DAL_ALEXT_PROTOTYPES" />
+        <compilerflag value="-D_LARGEFILE_SOURCE" />
+        <compilerflag value="-D_LARGE_FILES" />
+        <compilerflag value="-DNOMINMAX" />
+
+        <file name="libs/openal-soft/al/auxeffectslot.cpp" />
+        <file name="libs/openal-soft/al/buffer.cpp" />
+        <file name="libs/openal-soft/al/effect.cpp" />
+        <file name="libs/openal-soft/al/error.cpp" />
+        <file name="libs/openal-soft/al/event.cpp" />
+        <file name="libs/openal-soft/al/extension.cpp" />
+        <file name="libs/openal-soft/al/filter.cpp" />
+        <file name="libs/openal-soft/al/listener.cpp" />
+        <file name="libs/openal-soft/al/source.cpp" />
+        <file name="libs/openal-soft/al/state.cpp" />
+        <file name="libs/openal-soft/alc/alc.cpp" />
+        <file name="libs/openal-soft/alc/alconfig.cpp" />
+        <file name="libs/openal-soft/alc/alu.cpp" />
+        <file name="libs/openal-soft/alc/ambdec.cpp" />
+        <file name="libs/openal-soft/alc/backends/base.cpp" />
+        <file name="libs/openal-soft/alc/backends/loopback.cpp" />
+        <file name="libs/openal-soft/alc/backends/null.cpp" />
+        <file name="libs/openal-soft/alc/backends/wave.cpp" />
+        <file name="libs/openal-soft/alc/bformatdec.cpp" />
+        <file name="libs/openal-soft/alc/bs2b.cpp" />
+        <file name="libs/openal-soft/alc/converter.cpp" />
+        <file name="libs/openal-soft/alc/effects/autowah.cpp" />
+        <file name="libs/openal-soft/alc/effects/chorus.cpp" />
+        <file name="libs/openal-soft/alc/effects/compressor.cpp" />
+        <file name="libs/openal-soft/alc/effects/dedicated.cpp" />
+        <file name="libs/openal-soft/alc/effects/distortion.cpp" />
+        <file name="libs/openal-soft/alc/effects/echo.cpp" />
+        <file name="libs/openal-soft/alc/effects/equalizer.cpp" />
+        <file name="libs/openal-soft/alc/effects/fshifter.cpp" />
+        <file name="libs/openal-soft/alc/effects/modulator.cpp" />
+        <file name="libs/openal-soft/alc/effects/null.cpp" />
+        <file name="libs/openal-soft/alc/effects/pshifter.cpp" />
+        <file name="libs/openal-soft/alc/effects/reverb.cpp" />
+        <file name="libs/openal-soft/alc/effects/vmorpher.cpp" />
+        <file name="libs/openal-soft/alc/helpers.cpp" />
+        <file name="libs/openal-soft/alc/hrtf.cpp" />
+        <file name="libs/openal-soft/alc/mastering.cpp" />
+        <file name="libs/openal-soft/alc/panning.cpp" />
+        <file name="libs/openal-soft/alc/ringbuffer.cpp" />
+        <file name="libs/openal-soft/alc/uhjfilter.cpp" />
+        <file name="libs/openal-soft/alc/voice.cpp" />
+        <file name="libs/openal-soft/common/alcomplex.cpp" />
+        <file name="libs/openal-soft/common/alexcpt.cpp" />
+        <file name="libs/openal-soft/common/almalloc.cpp" />
+        <file name="libs/openal-soft/common/alstring.cpp" />
+        <file name="libs/openal-soft/common/dynload.cpp" />
+        <file name="libs/openal-soft/common/polyphase_resampler.cpp" />
+        <file name="libs/openal-soft/common/strutils.cpp" />
+        <file name="libs/openal-soft/common/threads.cpp" />
+
+        <compilerflag value="-mmmx" if="linux || mac || mingw" unless="rpi || HXCPP_ARM64" />
+        <compilerflag value="-msse" if="linux || mac || mingw" unless="rpi || HXCPP_ARM64" />
+        <compilerflag value="-msse2" if="linux || mac || mingw" unless="rpi || HXCPP_ARM64" />
+        <compilerflag value="-msse3" if="linux || mac || mingw" unless="rpi || HXCPP_ARM64" />
+        <compilerflag value="-mssse3" if="linux || mac || mingw" unless="rpi || HXCPP_ARM64" />
+
+        <section if="NATIVE_TOOLKIT_HAVE_SDL">
+
+            <compilerflag value="-Ilibs/custom/sdl/include/" />
+            <compilerflag value="-Ilibs/sdl/include/" />
+            <compilerflag value="-Ilibs/sdl/include/configs/default/" unless="windows || mac || linux || rpi" />
+            <compilerflag value="-Ilibs/sdl/include/configs/linux/" if="linux" unless="rpi" />
+            <compilerflag value="-Ilibs/sdl/include/configs/mac/" if="mac" />
+            <compilerflag value="-Ilibs/sdl/include/configs/rpi/" if="rpi" />
+            <compilerflag value="-Ilibs/sdl/include/configs/windows/" if="windows" />
+
+            <compilerflag value="-DHAVE_SDL2" />
+            <file name="libs/openal-soft/alc/backends/sdl2.cpp" />
+
+        </section>
+
+        <section if="linux">
+
+            <compilerflag value="-D_POSIX_C_SOURCE=200112L" />
+            <compilerflag value="-D_XOPEN_SOURCE=500" />
+            <compilerflag value="-mfpu=neon" if="rpi" unless="HXCPP_ARM64" />
+            <compilerflag value="-fcommon" />
+
+            <file name="libs/openal-soft/alc/backends/alsa.cpp" />
+            <file name="libs/openal-soft/alc/backends/oss.cpp" />
+            <file name="libs/openal-soft/alc/backends/pulseaudio.cpp" />
+
+        </section>
+
+        <section if="mac">
+
+            <file name="libs/openal-soft/alc/backends/coreaudio.cpp" />
+
+        </section>
+
+        <section if="windows">
+
+            <file name="libs/openal-soft/alc/backends/dsound.cpp" />
+            <file name="libs/openal-soft/alc/backends/wasapi.cpp" />
+            <file name="libs/openal-soft/alc/backends/winmm.cpp" />
+            <file name="libs/openal-soft/alc/uiddefs.cpp" />
+
+            <compilerflag value="-DWIN32" />
+            <compilerflag value="-D_WINDOWS" />
+            <compilerflag value="-D_WIN32" />
+            <compilerflag value="-D_WIN32_WINNT=0x0502" />
+            <compilerflag value="-Drestrict=" />
+            <compilerflag value="-D_CRT_SECURE_NO_WARNINGS" if="isMsvc" />
+            <compilerflag value="-D_CRT_NONSTDC_NO_DEPRECATE" if="isMsvc" />
+            <compilerflag value="-wd4098" if="isMsvc" />
+            <compilerflag value="-Dstrcasecmp=_stricmp" />
+            <compilerflag value="-Dstrncasecmp=_strnicmp" />
+
+        </section>
+
+        <section unless="windows">
+
+            <!--
+            <compilerflag value="-Winline -Wall" />
+            <compilerflag value="-Wextra" />
+            <compilerflag value="-Werror" />
+            -->
+            <compilerflag value="-fPIC" />
+            <compilerflag value="-fvisibility=hidden" />
+            <compilerflag value="-pthread" />
+
+        </section>
+
+        <section if="android">
+
+            <compilerflag value="-fsigned-char" />
+
+            <file name="libs/openal-soft/alc/backends/opensl.cpp" />
+
+        </section>
+
+    </files>
+
+</xml>
