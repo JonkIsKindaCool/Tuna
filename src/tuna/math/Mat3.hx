@@ -1,6 +1,9 @@
 package tuna.math;
 
 abstract Mat3(Array<Float32>) from Array<Float32> to Array<Float32> {
+	public var x(get, set):Float;
+	public var y(get, set):Float;
+
 	public function new(?data:Array<Float32>) {
 		if (data == null)
 			this = identity();
@@ -17,23 +20,22 @@ abstract Mat3(Array<Float32>) from Array<Float32> to Array<Float32> {
 		];
 	}
 
-    @:op(A * B)
-    public function multiplyVec3(v:Vec3):Vec3 {
-        return new Vec3(this[0] * v.x + this[1] * v.y + this[2] * v.z,
-            this[3] * v.x + this[4] * v.y + this[5] * v.z,
-            this[6] * v.x + this[7] * v.y + this[8] * v.z);
-    }
+	@:op(A * B)
+	public function multiplyVec3(v:Vec3):Vec3 {
+		return new Vec3(this[0] * v.x + this[1] * v.y + this[2] * v.z, this[3] * v.x + this[4] * v.y + this[5] * v.z,
+			this[6] * v.x + this[7] * v.y + this[8] * v.z);
+	}
 
-    @:op(A * B)
-    public function multiplyScalar(f:Float):Mat3 {
-        var data:Array<Float32> = this;
+	@:op(A * B)
+	public function multiplyScalar(f:Float):Mat3 {
+		var data:Array<Float32> = this;
 
-        for (i in 0...data.length){
-            data[i] = data[i] * f;
-        }
+		for (i in 0...data.length) {
+			data[i] = data[i] * f;
+		}
 
-        return data;
-    }
+		return data;
+	}
 
 	public function transpose():Mat3 {
 		return [
@@ -64,16 +66,32 @@ abstract Mat3(Array<Float32>) from Array<Float32> to Array<Float32> {
 		];
 	}
 
-    public function toString() {
-        var string:StringBuf = new StringBuf();
-        var data:Array<Float32> = this;
+	public function toString() {
+		var string:StringBuf = new StringBuf();
+		var data:Array<Float32> = this;
 
-        for (i => v in data){
-            string.add(Std.string(v));
-            if (i != data.length - 1)
-                string.addChar(",".code);
-        }
-        
-        return 'Mat3(${string.toString()})';
-    }
+		for (i => v in data) {
+			string.add(Std.string(v));
+			if (i != data.length - 1)
+				string.addChar(",".code);
+		}
+
+		return 'Mat3(${string.toString()})';
+	}
+
+	function set_x(v:Float):Float {
+		return this[2] = v;
+	}
+
+	function get_x():Float {
+		return this[2];
+	}
+
+	function set_y(v:Float):Float {
+		return this[5] = v;
+	}
+
+	function get_y():Float {
+		return this[5];
+	}
 }

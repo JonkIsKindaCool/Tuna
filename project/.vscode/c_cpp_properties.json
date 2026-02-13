@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "hxcpp + SDL + OpenAL",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/jonk/Documentos/haxelib/hxcpp/4,3,2/include"     
+            ],
+            "defines": [
+                "HX_LINUX",           // o HX_WINDOWS / HX_MACOS según tu OS
+                "__linux__",          // ayuda con algunas macros
+                "GLAD_GLAPI_EXPORT"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

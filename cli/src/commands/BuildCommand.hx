@@ -41,10 +41,15 @@ class BuildCommand {
 			var srcBinary:String = Path.join([userPath, Configuration.build.output, target, "native", "ApplicationMain"]);
 			var destBinary:String = Path.join([targetPath, Configuration.app.name]);
 
+			var srcNdll:String = Path.join([haxelibPath, "native", "ndll", "libtuna.ndll"]);
+			var destNdll:String = Path.join([targetPath, "tuna.ndll"]);
+
 			if (!FileSystem.exists(srcBinary)) {
 				Sys.println('Binary not found: $srcBinary');
 				Sys.exit(1);
 			}
+
+			Sys.println(Sys.systemName());
 
 			File.saveBytes(destBinary, File.getBytes(srcBinary));
 		} else if (target == "html5") {

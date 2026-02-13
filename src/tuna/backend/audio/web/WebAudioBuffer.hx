@@ -15,6 +15,10 @@ class WebAudioBuffer implements AudioBuffer {
 			information = AudioFormats.parseWave(bytes);
 		}
 
+		if (bytes.getString(0, 4).toLowerCase().indexOf("ogg") != -1) {
+			information = AudioFormats.parseOgg(bytes);
+		}
+
 		if (information == null)
 			throw "Unsopported audio format.";
 

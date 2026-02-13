@@ -1,5 +1,8 @@
 package tuna.backend.audio;
 
+import stb.format.vorbis.data.Header as OggHeader;
+import haxe.io.BytesOutput;
+import stb.format.vorbis.Reader as OggReader;
 import haxe.Int32;
 import haxe.io.Bytes;
 
@@ -41,6 +44,41 @@ class AudioFormats {
 			bitsPerSample: bitsPerSample,
 			size: dataSize,
 			data: rawData
+		};
+	}
+
+	public static function parseOgg(bytes:Bytes):AudioData {
+		var reader:OggReader = OggReader.openFromBytes(bytes);
+		if (reader == null || reader.header == null) {
+			throw "Couldn't parse ogg file";
+		}
+
+		var header:OggHeader = reader.header;
+
+		var output:BytesOutput = new BytesOutput();
+
+		var totalSamplesPerChannel:Int = 0;
+		var chunkSamples:Int;
+
+		do {
+			chunkSamples = reader.read(output, 65536, header.channel, header.sampleRate, false);
+			totalSamplesPerChannel += chunkSamples;
+		} while (chunkSamples > 0);
+
+		var pcmBytes:Bytes = output.getBytes();
+
+		var expectedSize = totalSamplesPerChannel * header.channel * 2;
+		if (pcmBytes.length != expectedSize) {
+			trace('Warning: size mismatch? expected $expectedSize, got ${pcmBytes.length}');
+		}
+
+		return {
+			audioFormat: 1,
+			numChannels: header.channel,
+			sampleRate: header.sampleRate,
+			bitsPerSample: 16,
+			size: pcmBytes.length,
+			data: pcmBytes
 		};
 	}
 }

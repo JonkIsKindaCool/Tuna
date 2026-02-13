@@ -9,6 +9,7 @@
     "releasenote": "Ok",
     "contributors": ["JonkIsKindaCool"],
     "dependencies": {
-        "hxcpp": ""
+        "hxcpp": "",
+        "format": ""
     }
 }

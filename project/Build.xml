@@ -1,0 +1,38 @@
+<xml version="1.0" encoding="utf-8">
+
+	<set name="NDLL_NAME" value="tuna" />
+
+	<include name="${HXCPP}/build-tool/BuildCommon.xml" />
+
+	<set name="HXCPP_CPP11" value="1" />
+	<set name="DEBUGEXTRA" value="-debug" if="fulldebug" />
+	<set name="HASHLINK" value="1" if="hashlink" />
+
+	<section if="LIME_HASHLINK">
+
+		<compilerflag value="-DLIME_HASHLINK" />
+
+	</section>
+
+
+	<files id="tuna">
+		<compilerflag value="-Iinclude" />
+		<compilerflag value="-I${HL_PATH}/src" if="HASHLINK" />
+
+		<file name="src/tuna/NativePlatform.cpp" />
+	</files>
+
+	<target id="NDLL" output="${NDLL_NAME}" tool="linker" toolid="${STD_MODULE_LINK}">
+		<outdir name="../ndll/${BINDIR}" />
+		<ext value=".ndll" />
+		<files id="tuna" />
+
+		<lib name="-lhl" if="HASHLINK" />
+	</target>
+
+	<target id="default">
+		<target id="HDLL" if="HASHLINK" />
+		<target id="NDLL" unless="HASHLINK" />
+	</target>
+
+</xml>

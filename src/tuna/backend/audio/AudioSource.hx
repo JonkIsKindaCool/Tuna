@@ -10,6 +10,9 @@ interface AudioSource {
 	public var playing(get, never):Bool;
 	public var time(get, set):Float;
 	public var duration(get, never):Float;
+	public var positionX(get, set):Float;
+	public var positionY(get, set):Float;
+	public var positionZ(get, set):Float;
 
 	public function play():Void;
 	public function pause():Void;

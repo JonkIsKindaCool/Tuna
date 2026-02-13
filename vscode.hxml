@@ -1,2 +1,3 @@
 --class-path src
---js bin/main.js
+--library format
+--cpp bin/cpp

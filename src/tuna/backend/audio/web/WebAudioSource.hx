@@ -1,8 +1,10 @@
 package tuna.backend.audio.web;
 
+import js.html.audio.PannerNode;
 import js.html.audio.AudioBufferSourceNode;
 import js.html.audio.GainNode;
 
+#if js
 class WebAudioSource implements AudioSource {
 	public var buffer:AudioBuffer;
 
@@ -15,6 +17,7 @@ class WebAudioSource implements AudioSource {
 
 	private var _source:AudioBufferSourceNode;
 	private var _gain:GainNode;
+	private var _panner:PannerNode;
 
 	private var _volume:Float = 1;
 	private var _pitch:Float = 1;
@@ -24,11 +27,26 @@ class WebAudioSource implements AudioSource {
 	private var _offset:Float = 0;
 	private var _playing:Bool = false;
 
+	public var positionX(get, set):Float;
+	public var positionY(get, set):Float;
+	public var positionZ(get, set):Float;
+
 	public function new(buffer:AudioBuffer) {
 		this.buffer = buffer;
 
 		_gain = WebAudioBackend.context.createGain();
 		_gain.connect(WebAudioBackend.context.destination);
+
+		_panner = WebAudioBackend.context.createPanner();
+		_panner.panningModel = HRTF;
+		_panner.distanceModel = INVERSE;
+		_panner.refDistance = 2.0; 
+		_panner.maxDistance = 200.0; 
+		_panner.rolloffFactor = 2.0;
+		_panner.positionX.value = 0;
+		_panner.positionY.value = 0;
+		_panner.positionZ.value = 0;
+		_panner.connect(WebAudioBackend.context.destination);
 
 		volume = 1;
 		pitch = 1;
@@ -40,7 +58,7 @@ class WebAudioSource implements AudioSource {
 		_source.buffer = buffer.data;
 		_source.loop = _loop;
 		_source.playbackRate.value = _pitch;
-		_source.connect(_gain);
+		_source.connect(_gain).connect(_panner);
 
 		_source.onended = function(_) {
 			if (!_loop) {
@@ -139,4 +157,29 @@ class WebAudioSource implements AudioSource {
 	private function get_duration():Float {
 		return buffer.duration * 1000;
 	}
+
+	public function set_positionX(value:Float):Float {
+		return _panner.positionX.value = value;
+	}
+
+	public function get_positionX():Float {
+		return _panner.positionX.value;
+	}
+
+	public function set_positionY(value:Float):Float {
+		return _panner.positionY.value = value;
+	}
+
+	public function get_positionY():Float {
+		return _panner.positionY.value;
+	}
+
+	public function set_positionZ(value:Float):Float {
+		return _panner.positionZ.value = value;
+	}
+
+	public function get_positionZ():Float {
+		return _panner.positionZ.value;
+	}
 }
+#end

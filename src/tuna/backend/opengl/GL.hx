@@ -1,5 +1,6 @@
 package tuna.backend.opengl;
 
+import tuna.graphics.Texture;
 import haxe.Int64;
 import tuna.math.Mat4;
 import tuna.math.Mat3;
@@ -699,9 +700,7 @@ class GL {
 		if (pixels == null || pixels.length == 0) {
 			context.texImage2D(target, level, internalFormat, width, height, border, format, type, null);
 		} else {
-			var data = new Int8Array(pixels.length);
-			for (i in 0...pixels.length)
-				data[i] = pixels.get(i);
+			var data = new Uint8Array(pixels.getData());
 			context.texImage2D(target, level, internalFormat, width, height, border, format, type, data);
 		}
 		#end
@@ -1260,9 +1259,22 @@ class GL {
 		#end
 	}
 
-	public static function isTexture(texture:UInt32):Bool {
+	public static function genTexture():GLTexture {
+		#if cpp
+		var tex:UInt32 = 0;
+		Glad.genTextures(1, Pointer.addressOf(tex));
+		return tex;
+		#elseif (js || html5)
+		return context.createTexture();
+		#end
+		return null;
+	}
+
+	public static function isTexture(texture:GLTexture):Bool {
 		#if cpp
 		return Glad.isTexture(texture) != 0;
+		#elseif (js || html5)
+		return context.isTexture(texture);
 		#end
 
 		return false;
@@ -1271,6 +1283,8 @@ class GL {
 	public static function drawRangeElements(mode:Int, start:Int, end:UInt32, count:Int, type:Int, indices:Int):Void {
 		#if cpp
 		Glad.drawRangeElements(mode, start, end, count, type, untyped __cpp__("(void*)(uintptr_t)({0})", indices));
+		#elseif (js || html5)
+		return context.drawRangeElements(mode, start, end, count, type, 0);
 		#end
 	}
 
@@ -1280,6 +1294,9 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(pixels.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.texImage3D(target, level, internalFormat, width, height, depth, border, format, type, ptr);
+		#elseif (js || html5)
+		var jsData:Uint8Array = new Uint8Array(pixels.getData());
+		return context.texImage3D(target, level, internalFormat, width, height, depth, border, format, type, jsData);
 		#end
 	}
 
@@ -1289,6 +1306,9 @@ class GL {
 		var pointer:RawPointer<cpp.Void> = Helpers.arrayToVoid(pixels.getData());
 		var ptr:ConstStar<cpp.Void> = untyped __cpp__("(const void*) {0}", pointer);
 		Glad.texSubImage3D(target, level, xOffset, yOffset, zOffset, width, height, depth, format, type, ptr);
+		#elseif (js || html5)
+		var jsData:Uint8Array = new Uint8Array(pixels.getData());
+		return context.texSubImage3D(target, level, xOffset, yOffset, zOffset, width, height, depth, format, type, jsData);
 		#end
 	}
 

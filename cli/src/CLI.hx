@@ -49,12 +49,29 @@ class CLI {
 		Sys.setCwd(oldPath);
 	}
 
-	static function getHaxelibPath() {
-		var process:Process = new Process("haxelib", ["path", "tuna"]);
-		var out:String = process.stdout.readLine().replace("src/", "");
-		process.kill();
+	static function getHaxelibPath():String {
+		try {
+			var proc = new sys.io.Process("haxelib", ["path", "tuna"]);
+			var lines = proc.stdout.readAll().toString().split("\n");
+			proc.close();
 
-		return out;
+			for (line in lines) {
+				line = line.trim();
+				if (line == "" || line.startsWith("-D") || line.startsWith("--"))
+					continue;
+				if (line.toLowerCase().contains("tuna") && !line.toLowerCase().contains("ndll")  && !line.toLowerCase().contains("hdll")  && !line.toLowerCase().contains("cli")) {
+					if (line.endsWith("src/") || line.endsWith("src")) {
+						line = line.substr(0, line.length - (line.endsWith("/") ? 4 : 3));
+					}
+					return line.trim();
+				}
+			}
+
+			return Path.join([Sys.getCwd(), ""]);
+		} catch (e:Dynamic) {
+			Sys.println("error getting tuna path: " + e);
+			return Sys.getCwd(); 
+		}
 	}
 
 	static function main() {

@@ -1,0 +1,16 @@
+[submodule "project/lib/sdl"]
+	path = project/lib/sdl
+	url = https://github.com/libsdl-org/SDL
+	shallow = true
+[submodule "project/lib/openal"]
+	path = project/lib/openal
+	url = https://github.com/kcat/openal-soft
+	shallow = true
+[submodule "project/lib/neko"]
+	path = project/lib/neko
+	url = https://github.com/HaxeFoundation/neko
+	shallow = true
+[submodule "project/lib/hashlink"]
+	path = project/lib/hashlink
+	url = https://github.com/HaxeFoundation/hashlink
+	shallow = true

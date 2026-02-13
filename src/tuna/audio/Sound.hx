@@ -20,13 +20,17 @@ class Sound {
 	public var time(get, set):Float;
 	public var duration(get, never):Float;
 
+	public var positionX(get, set):Float;
+	public var positionY(get, set):Float;
+	public var positionZ(get, set):Float;
+
 	public function new(file:SoundAsset) {
 		if (Std.isOfType(file, AudioBuffer)) {
 			buffer = cast file;
 		} else {
-			buffer = Application.audioBackend.createBuffer(Assets.loadBytes(file));
+			buffer = Application.instance.audioBackend.createBuffer(Assets.loadBytes(file));
 		}
-		source = Application.audioBackend.createSource(buffer);
+		source = Application.instance.audioBackend.createSource(buffer);
 		source.play();
 	}
 
@@ -75,4 +79,22 @@ class Sound {
 
 	inline function get_duration():Float
 		return source.duration;
+
+	inline function get_positionX():Float
+		return source.positionX;
+
+	inline function set_positionX(value:Float):Float
+		return source.positionX = value;
+
+	inline function get_positionY():Float
+		return source.positionY;
+
+	inline function set_positionY(value:Float):Float
+		return source.positionY = value;
+
+	inline function get_positionZ():Float
+		return source.positionZ;
+
+	inline function set_positionZ(value:Float):Float
+		return source.positionZ = value;
 }

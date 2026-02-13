@@ -9,12 +9,16 @@ import haxe.io.Bytes;
 class NativeAudioBuffer implements AudioBuffer {
 	public var data:UInt32;
 	public var duration(get, never):Float;
-    public var information:AudioData;
+	public var information:AudioData;
 
 	public function new(bytes:Bytes) {
 		var information:AudioData = null;
 		if (bytes.getString(0, 4) == "RIFF" || bytes.getString(8, 4) == "WAVE" || bytes.getString(12, 4) == "fmt ") {
 			information = AudioFormats.parseWave(bytes);
+		}
+
+		if (bytes.getString(0, 4).toLowerCase().indexOf("ogg") != -1) {
+			information = AudioFormats.parseOgg(bytes);
 		}
 
 		if (information == null)

@@ -1,5 +1,6 @@
 package tuna.core;
 
+import tuna.backend.opengl.GL;
 import tuna.backend.IAudioBackend;
 import tuna.input.Mouse;
 import tuna.input.MouseCode;
@@ -13,19 +14,22 @@ class Application {
 	public var platform:IPlatform;
 	public var fps:Int = 60;
 
-	public static var audioBackend:IAudioBackend;
+	public var audioBackend:IAudioBackend;
+
+	public static var instance:Application;
 
 	public function new() {
+		instance = this;
 		#if cpp
 		audioBackend = new tuna.backend.audio.native.NativeAudioBackend();
-		#elseif (js || html5) 
+		#elseif (js || html5)
 		audioBackend = new tuna.backend.audio.web.WebAudioBackend();
 		#end
 
 		Keyboard.keyDown.add(onKeyDown);
 		Keyboard.keyUp.add(onKeyUp);
 
-		Mouse.moveSignal.add(onMove);
+		Mouse.moveSignal.add(onMouseMove);
 		Mouse.clickDownSignal.add(onClickDown);
 		Mouse.clickUpSignal.add(onClickUp);
 		Mouse.scrollSignal.add(onScroll);
@@ -60,11 +64,15 @@ class Application {
 
 	public function onKeyUp(key:KeyCode) {}
 
-	public function onMove(x:Float, y:Float, delX:Float, delY:Float) {}
+	public function onMouseMove(x:Float, y:Float, delX:Float, delY:Float) {}
 
 	public function onClickDown(type:MouseCode) {}
 
 	public function onClickUp(type:MouseCode) {}
 
 	public function onScroll(del:Float) {}
+
+	public function onResize(width:Int, height:Int) {
+		GL.viewport(0, 0, width, height);
+	}
 }

@@ -11,7 +11,7 @@ class DisplayCommand {
 	public static function display(args:Array<String>, haxelibPath:String, userPath:String) {
 		var target:String = args[1];
 		Configuration.init(userPath, args);
-
+		
 		var configurationFile:StringBuf = new StringBuf();
 
 		if (Configuration.meta.defines != null) {

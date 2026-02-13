@@ -12,7 +12,11 @@ class NativeAudioSource implements AudioSource {
 	public var loop(get, set):Bool;
 	public var playing(get, never):Bool;
 	public var time(get, set):Float;
-    public var duration(get, never):Float;
+	public var duration(get, never):Float;
+
+	@:isVar public var positionX(get, set):Float;
+	@:isVar public var positionY(get, set):Float;
+	@:isVar public var positionZ(get, set):Float;
 
 	private var _alSource:UInt32;
 
@@ -21,6 +25,11 @@ class NativeAudioSource implements AudioSource {
 		_alSource = 0;
 		AL.genSources(1, RawPointer.addressOf(_alSource));
 		AL.sourcei(_alSource, AL.BUFFER, cast(buffer, NativeAudioBuffer).data);
+		AL.source3f(_alSource, AL.POSITION, 0, 0, 0);
+
+		AL.sourcef(_alSource, AL.REFERENCE_DISTANCE, 1.0);
+		AL.sourcef(_alSource, AL.MAX_DISTANCE, 50.0);
+		AL.sourcef(_alSource, AL.ROLLOFF_FACTOR, 3.0);
 		volume = 1;
 		pitch = 1;
 		loop = false;
@@ -95,6 +104,36 @@ class NativeAudioSource implements AudioSource {
 
 	private function get_duration():Float {
 		return buffer.duration;
+	}
+
+	public function set_positionX(value:Float):Float {
+		positionX = value;
+		AL.source3f(_alSource, AL.POSITION, positionX, positionY, positionZ);
+		return value;
+	}
+
+	public function get_positionX():Float {
+		return positionX;
+	}
+
+	public function set_positionY(value:Float):Float {
+		positionY = value;
+		AL.source3f(_alSource, AL.POSITION, positionX, positionY, positionZ);
+		return value;
+	}
+
+	public function get_positionY():Float {
+		return positionY;
+	}
+
+	public function set_positionZ(value:Float):Float {
+		positionZ = value;
+		AL.source3f(_alSource, AL.POSITION, positionX, positionY, positionZ);
+		return value;
+	}
+
+	public function get_positionZ():Float {
+		return positionZ;
 	}
 }
 #end
