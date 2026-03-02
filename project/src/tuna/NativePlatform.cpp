@@ -39,10 +39,11 @@ namespace tuna
 
     void init()
     {
-        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_CAMERA | SDL_INIT_EVENTS | SDL_INIT_GAMEPAD | SDL_INIT_HAPTIC | SDL_INIT_JOYSTICK | SDL_INIT_SENSOR) != 0)
+        if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_CAMERA | SDL_INIT_EVENTS | SDL_INIT_GAMEPAD | SDL_INIT_HAPTIC | SDL_INIT_JOYSTICK | SDL_INIT_SENSOR))
         {
             fprintf(stderr, "[C++] SDL_Init Error: %s\n", SDL_GetError());
             fflush(stderr);
+            exit(0);
             return;
         }
 

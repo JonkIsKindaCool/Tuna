@@ -9,10 +9,10 @@ import haxe.io.Bytes;
 class AudioFormats {
 	public static function parseWave(bytes:Bytes):AudioData {
 		var subchunk1Size:Int32 = bytes.getInt32(16);
-		var audioFormat:UInt16 = bytes.getUInt16(20);
-		var numChannels:UInt16 = bytes.getUInt16(22);
+		var audioFormat:UInt = bytes.getUInt16(20);
+		var numChannels:UInt = bytes.getUInt16(22);
 		var sampleRate:Int32 = bytes.getInt32(24);
-		var bitsPerSample:UInt16 = bytes.getUInt16(34);
+		var bitsPerSample:UInt = bytes.getUInt16(34);
 		var pos:Int = 20 + subchunk1Size;
 
 		var dataOffset:Int = -1;

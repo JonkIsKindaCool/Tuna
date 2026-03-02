@@ -1,13 +1,13 @@
 package tuna.backend.audio.native;
 
-import native.al.AL;
+import tuna.backend.audio.openal.AL;
+import tuna.backend.audio.openal.ALC;
 #if cpp
 import haxe.io.Bytes;
-import native.al.ALC;
 
 class NativeAudioBackend implements IAudioBackend {
-	public static var device:Device;
-	public static var context:Context;
+	public static var device:Dynamic;
+	public static var context:Dynamic;
 
 	@:isVar public var listenerPositionX(get, set):Float;
 	@:isVar public var listenerPositionY(get, set):Float;
@@ -18,7 +18,7 @@ class NativeAudioBackend implements IAudioBackend {
 		if (device == null)
 			trace("No device");
 
-		context = ALC.createContext(device);
+		context = ALC.createContext(device, []);
 		var err:Int = ALC.getError(device);
 		if (err != ALC.NO_ERROR)
 			trace("ALC error: " + err);

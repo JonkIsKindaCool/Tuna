@@ -1465,7 +1465,7 @@ class GL {
 		#end
 	}
 
-	public static function stencilMaskSeparate(Int) {
+	public static function stencilMaskSeparate(face:Int, mask:Int) {
 		#if (cpp || hl)
 		NativeOpenGLCFFI.gl_stencilMaskSeparate(face, mask);
 		#elseif (js || html5)

@@ -1,7 +1,7 @@
 package tuna.backend.cffi;
 
 @:build(tuna.backend.macro.CFFIMacro.build("tuna"))
-class NativeOpenAL {
+class NativeOpenALCFFI {
     public static function al_getError():Int;
     public static function al_enable(capability:Int):Void;
     public static function al_disable(capability:Int):Void;

@@ -1,9 +1,9 @@
 package tuna.backend.audio.native;
 
+import tuna.backend.audio.openal.AL;
 #if cpp
 import cpp.UInt32;
 import cpp.RawPointer;
-import native.al.AL;
 
 class NativeAudioSource implements AudioSource {
 	public var buffer:AudioBuffer;
@@ -23,7 +23,7 @@ class NativeAudioSource implements AudioSource {
 	public function new(buffer:AudioBuffer) {
 		this.buffer = buffer;
 		_alSource = 0;
-		AL.genSources(1, RawPointer.addressOf(_alSource));
+		_alSource = AL.genSources(1)[0];
 		AL.sourcei(_alSource, AL.BUFFER, cast(buffer, NativeAudioBuffer).data);
 		AL.source3f(_alSource, AL.POSITION, 0, 0, 0);
 
@@ -49,7 +49,7 @@ class NativeAudioSource implements AudioSource {
 
 	public function destroy() {
 		AL.sourcei(_alSource, AL.BUFFER, 0);
-		AL.deleteSources(1, RawPointer.addressOf(_alSource));
+		AL.deleteSources(1, [_alSource]);
 	}
 
 	private function set_volume(value:Float):Float {
@@ -59,7 +59,7 @@ class NativeAudioSource implements AudioSource {
 
 	private function get_volume():Float {
 		var value:Single = 0;
-		AL.getSourcef(_alSource, AL.GAIN, RawPointer.addressOf(value));
+		value = AL.getSourcef(_alSource, AL.GAIN);
 		return value;
 	}
 
@@ -70,7 +70,7 @@ class NativeAudioSource implements AudioSource {
 
 	private function get_pitch():Float {
 		var value:Single = 0;
-		AL.getSourcef(_alSource, AL.PITCH, RawPointer.addressOf(value));
+		value = AL.getSourcef(_alSource, AL.PITCH);
 		return value;
 	}
 
@@ -81,13 +81,13 @@ class NativeAudioSource implements AudioSource {
 
 	private function get_loop():Bool {
 		var value:Int = 0;
-		AL.getSourcei(_alSource, AL.LOOPING, RawPointer.addressOf(value));
+		value = AL.getSourcei(_alSource, AL.LOOPING);
 		return value == AL.TRUE;
 	}
 
 	private function get_playing():Bool {
 		var state:Int = 0;
-		AL.getSourcei(_alSource, AL.SOURCE_STATE, RawPointer.addressOf(state));
+		state = AL.getSourcei(_alSource, AL.SOURCE_STATE);
 		return state == AL.PLAYING;
 	}
 
@@ -98,7 +98,7 @@ class NativeAudioSource implements AudioSource {
 
 	private function get_time():Float {
 		var value:Single = 0;
-		AL.getSourcef(_alSource, AL.SEC_OFFSET, RawPointer.addressOf(value));
+		value = AL.getSourcef(_alSource, AL.SEC_OFFSET);
 		return value * 1000;
 	}
 

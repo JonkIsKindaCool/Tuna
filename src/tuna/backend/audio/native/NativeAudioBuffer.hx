@@ -1,8 +1,8 @@
 package tuna.backend.audio.native;
 
+import tuna.backend.audio.openal.AL;
 #if cpp
 import cpp.RawPointer;
-import native.al.AL;
 import tuna.backend.audio.AudioFormats.AudioData;
 import haxe.io.Bytes;
 
@@ -26,28 +26,26 @@ class NativeAudioBuffer implements AudioBuffer {
 
 		#if cpp
 		data = 0;
-		AL.genBuffers(1, RawPointer.addressOf(data));
-		var arr:Array<UInt8> = information.data.getData();
-		var ptr:cpp.Star<cpp.Void> = untyped __cpp__("(void*) {0}", cpp.Pointer.ofArray(arr));
-		AL.bufferData(data, getOpenALFormat(information.numChannels, information.bitsPerSample), ptr, information.size, information.sampleRate);
+		var data:Int = AL.genBuffers(1)[0];
+		AL.bufferData(data, getOpenALFormat(information.numChannels, information.bitsPerSample), information.data, information.size, information.sampleRate);
 		#end
 	}
 
 	public function destroy() {
-		AL.deleteBuffers(1, RawPointer.addressOf(data));
+		AL.deleteBuffers(1, [data]);
 	}
 
 	public static function getOpenALFormat(channels:Int, bitsPerSample:Int):Int {
 		if (channels == 1) {
 			if (bitsPerSample == 8)
-				return native.al.AL.FORMAT_MONO8;
+				return AL.FORMAT_MONO8;
 			if (bitsPerSample == 16)
-				return native.al.AL.FORMAT_MONO16;
+				return AL.FORMAT_MONO16;
 		} else if (channels == 2) {
 			if (bitsPerSample == 8)
-				return native.al.AL.FORMAT_STEREO8;
+				return AL.FORMAT_STEREO8;
 			if (bitsPerSample == 16)
-				return native.al.AL.FORMAT_STEREO16;
+				return AL.FORMAT_STEREO16;
 		}
 
 		return 0;
@@ -59,10 +57,10 @@ class NativeAudioBuffer implements AudioBuffer {
 		var bits:Int = 0;
 		var frequency:Int = 0;
 
-		AL.getBufferi(data, AL.SIZE, RawPointer.addressOf(sizeInBytes));
-		AL.getBufferi(data, AL.CHANNELS, RawPointer.addressOf(channels));
-		AL.getBufferi(data, AL.BITS, RawPointer.addressOf(bits));
-		AL.getBufferi(data, AL.FREQUENCY, RawPointer.addressOf(frequency));
+		sizeInBytes = AL.getBufferi(data, AL.SIZE);
+		channels = AL.getBufferi(data, AL.CHANNELS);
+		bits = AL.getBufferi(data, AL.BITS);
+		frequency = AL.getBufferi(data, AL.FREQUENCY);
 
 		var lengthInSamples:Float = sizeInBytes * 8 / (channels * bits);
 		return (lengthInSamples / frequency) * 1000;

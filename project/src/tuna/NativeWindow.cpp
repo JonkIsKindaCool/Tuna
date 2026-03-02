@@ -16,13 +16,11 @@ namespace tuna
 
     void window_init(value width, value height, value title, value allowHighDPI)
     {
-        // 1. Configurar atributos de OpenGL (Igual que antes)
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-        // 2. Crear la ventana usando Propiedades (Más robusto en SDL3)
         SDL_PropertiesID props = SDL_CreateProperties();
         SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, val_string(title));
         SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, val_int(width));
@@ -35,27 +33,27 @@ namespace tuna
         }
 
         window = SDL_CreateWindowWithProperties(props);
-        SDL_DestroyProperties(props); // Limpiar las propiedades tras crear la ventana
+        SDL_DestroyProperties(props);
 
         if (!window)
         {
-            // Esto te dirá exactamente qué falló (ej. "Direct3D not available" o "GL context fail")
-            std::cout << "SDL3 Window Error: " << SDL_GetError() << std::endl;
+            fprintf(stderr, "[C++] SDL3 Window Error: %s\n", SDL_GetError());
+            fflush(stderr);
             exit(0);
         }
 
-        // 3. Crear el contexto
         context = SDL_GL_CreateContext(window);
         if (!context)
         {
-            std::cout << "SDL3 OpenGL Context Error: " << SDL_GetError() << std::endl;
+            fprintf(stderr, "[C++] SDL3 OpenGL Context Error: %s\n", SDL_GetError());
+            fflush(stderr);
             exit(0);
         }
 
-        // Cargar GLAD
         if (!gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress))
         {
-            std::cout << "Error initializing opengl con GLAD." << std::endl;
+            fprintf(stderr, "Couldn't initialize opengl with glad.\n");
+            fflush(stderr);
             exit(0);
         }
 
