@@ -1,11 +1,13 @@
 package tuna.core;
 
+import tuna.events.types.MouseEvent;
+import tuna.events.types.KeyboardEvent;
+import tuna.events.types.Event;
+import tuna.events.EventDispatcher;
 import tuna.backend.opengl.GL;
 import tuna.backend.IAudioBackend;
-import tuna.input.Mouse;
 import tuna.input.MouseCode;
 import tuna.input.KeyCode;
-import tuna.input.Keyboard;
 import tuna.utils.Time;
 import tuna.backend.IPlatform;
 import tuna.backend.platform.native.NativePlatform;
@@ -26,13 +28,13 @@ class Application {
 		audioBackend = new tuna.backend.audio.web.WebAudioBackend();
 		#end
 
-		Keyboard.keyDown.add(onKeyDown);
-		Keyboard.keyUp.add(onKeyUp);
+		EventDispatcher.addEventListener(Event.KEY_DOWN, onKeyDown);
+		EventDispatcher.addEventListener(Event.KEY_UP, onKeyUp);
 
-		Mouse.moveSignal.add(onMouseMove);
-		Mouse.clickDownSignal.add(onClickDown);
-		Mouse.clickUpSignal.add(onClickUp);
-		Mouse.scrollSignal.add(onScroll);
+		EventDispatcher.addEventListener(Event.MOUSE_MOVE, onMouseMove);
+		EventDispatcher.addEventListener(Event.MOUSE_CLICK_DOWN, onClickDown);
+		EventDispatcher.addEventListener(Event.MOUSE_CLICK_UP, onClickUp);
+		EventDispatcher.addEventListener(Event.MOUSE_SCROLL, onScroll);
 	}
 
 	public function init() {}
@@ -60,17 +62,17 @@ class Application {
 
 	public function draw() {}
 
-	public function onKeyDown(key:KeyCode) {}
+	public function onKeyDown(ev:KeyboardEvent) {}
 
-	public function onKeyUp(key:KeyCode) {}
+	public function onKeyUp(ev:KeyboardEvent) {}
 
-	public function onMouseMove(x:Float, y:Float, delX:Float, delY:Float) {}
+	public function onMouseMove(ev:MouseMoveEvent) {}
 
-	public function onClickDown(type:MouseCode) {}
+	public function onClickDown(ev:MouseClickEvent) {}
 
-	public function onClickUp(type:MouseCode) {}
+	public function onClickUp(ev:MouseClickEvent) {}
 
-	public function onScroll(del:Float) {}
+	public function onScroll(ev:MouseScrollEvent) {}
 
 	public function onResize(width:Int, height:Int) {
 		GL.viewport(0, 0, width, height);

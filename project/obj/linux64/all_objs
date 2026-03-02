@@ -1,3 +1,7 @@
 "obj/linux64/7fc05de8_NativeWindow.o"
-"obj/linux64/93c24ee9_gl.o"
+"obj/linux64/0b65e42c_OpenAL.o"
+"obj/linux64/6eeac968_gl.o"
 "obj/linux64/7fc05de8_NativePlatform.o"
+"obj/linux64/d57a72d3_CFFI.o"
+"obj/linux64/09c15e72_OpenGL.o"
+"obj/linux64/0b65e42c_OpenALC.o"

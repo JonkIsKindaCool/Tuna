@@ -20,7 +20,6 @@ class CFFIMacro {
 					final funcName = f.name;
 					final argCount = func.args.length;
 
-					// Generamos los argumentos que se pasan a la función nativa
 					final callArgs = [for (arg in func.args) macro $i{arg.name}];
 
 					switch target {
@@ -53,15 +52,13 @@ class CFFIMacro {
 							};
 
 						case "hl":
-							// HashLink usa metadatos :hlNative
 							if (f.meta == null) f.meta = [];
 							f.meta.push({
 								name: ":hlNative",
-								params: [macro $v{"hl_" + lib}, macro $v{funcName}],
+								params: [macro $v{lib}, macro $v{"hl_" + funcName}],
 								pos: f.pos
 							});
 
-							// Stub temporal (necesario para que compile antes de linkear)
 							func.expr = makeDefaultReturn(func.ret);
 
 						default:

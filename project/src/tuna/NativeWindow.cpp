@@ -2,118 +2,71 @@
 
 namespace tuna
 {
-    void init(int width, int height, HxString title, bool depthBuffer, bool stencilBuffer, bool allowHighDPI)
+    void window_enableDepthBuffer(value val)
     {
+        if (val_bool(val))
+            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    }
+
+    void window_enableStencilBuffer(value val)
+    {
+        if (val_bool(val))
+            SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+    }
+
+    void window_init(value width, value height, value title, value allowHighDPI)
+    {
+        // 1. Configurar atributos de OpenGL (Igual que antes)
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-        if (depthBuffer)
-            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
-        if (stencilBuffer)
-            SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-        SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-        SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-        SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-        SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-        int flags = SDL_WINDOW_OPENGL;
+        // 2. Crear la ventana usando Propiedades (Más robusto en SDL3)
+        SDL_PropertiesID props = SDL_CreateProperties();
+        SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, val_string(title));
+        SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, val_int(width));
+        SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER, val_int(height));
+        SDL_SetBooleanProperty(props, SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN, true);
 
-        if (allowHighDPI)
-            flags |= SDL_WINDOW_HIGH_PIXEL_DENSITY;
+        if (val_bool(allowHighDPI))
+        {
+            SDL_SetBooleanProperty(props, SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN, true);
+        }
 
-        window = SDL_CreateWindow(title.c_str(), width, height, flags);
+        window = SDL_CreateWindowWithProperties(props);
+        SDL_DestroyProperties(props); // Limpiar las propiedades tras crear la ventana
 
         if (!window)
         {
-            std::cout << "Couldn't create the window " << SDL_GetError() << std::endl;
+            // Esto te dirá exactamente qué falló (ej. "Direct3D not available" o "GL context fail")
+            std::cout << "SDL3 Window Error: " << SDL_GetError() << std::endl;
             exit(0);
         }
 
+        // 3. Crear el contexto
         context = SDL_GL_CreateContext(window);
         if (!context)
         {
-            std::cout << "Couldn't create opengl context " << SDL_GetError() << std::endl;
+            std::cout << "SDL3 OpenGL Context Error: " << SDL_GetError() << std::endl;
             exit(0);
         }
 
-        if (!gladLoadGL(SDL_GL_GetProcAddress))
+        // Cargar GLAD
+        if (!gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress))
         {
-            std::cout << "Error initializing opengl." << std::endl;
+            std::cout << "Error initializing opengl con GLAD." << std::endl;
             exit(0);
         }
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         SDL_GL_MakeCurrent(window, context);
     }
 
-    HL_PRIM void HL_NAME(hl_init)(int width, int height, vstring *title, bool depthBuffer, bool stencilBuffer, bool allowHighDPI)
+    void set_bg(value r, value g, value b)
     {
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-        if (depthBuffer)
-            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
-        if (stencilBuffer)
-            SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-        SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-        SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-        SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-        SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
-        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-        int flags = SDL_WINDOW_OPENGL;
-
-        if (allowHighDPI)
-            flags |= SDL_WINDOW_HIGH_PIXEL_DENSITY;
-
-        window = SDL_CreateWindow(hl_to_utf8(title->bytes), width, height, flags);
-
-        if (!window)
-        {
-            std::cout << "Couldn't create the window " << SDL_GetError() << std::endl;
-            exit(0);
-        }
-
-        context = SDL_GL_CreateContext(window);
-        if (!context)
-        {
-            std::cout << "Couldn't create opengl context " << SDL_GetError() << std::endl;
-            exit(0);
-        }
-
-        if (!gladLoadGL(SDL_GL_GetProcAddress))
-        {
-            std::cout << "Error initializing opengl." << std::endl;
-            exit(0);
-        }
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-        SDL_GL_MakeCurrent(window, context);
-    }
-
-    void set_bg(int r, int g, int b)
-    {
-        bgR = r;
-        bgG = g;
-        bgB = b;
-    }
-
-    HL_PRIM void HL_NAME(hl_set_bg)(int r, int g, int b)
-    {
-        set_bg(r, g, b);
+        bgR = val_int(r);
+        bgG = val_int(g);
+        bgB = val_int(b);
     }
 
     void clear()
@@ -122,250 +75,142 @@ namespace tuna
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    HL_PRIM void HL_NAME(hl_clear)()
-    {
-        clear();
-    }
-
     void render()
     {
         SDL_GL_SwapWindow(window);
     }
 
-    HL_PRIM void HL_NAME(hl_render)()
+    value set_fullscreen(value value)
     {
-        render();
-    }
-
-    bool set_fullscreen(bool value)
-    {
-        SDL_SetWindowFullscreen(window, value);
+        SDL_SetWindowFullscreen(window, val_bool(value));
         return value;
     }
 
-    HL_PRIM bool HL_NAME(hl_set_fullscreen)(bool value)
+    value get_fullscreen()
     {
-        return set_fullscreen(value);
+        return alloc_bool((SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) != 0);
     }
 
-    bool get_fullscreen()
+    value set_maximized(value value)
     {
-        return (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) != 0;
-    }
-
-    HL_PRIM bool HL_NAME(hl_get_fullscreen)()
-    {
-        return get_fullscreen();
-    }
-
-    bool set_maximized(bool value)
-    {
-        if (value)
+        if (val_bool(value))
             SDL_MaximizeWindow(window);
         else
             SDL_RestoreWindow(window);
         return value;
     }
 
-    HL_PRIM bool HL_NAME(hl_set_maximized)(bool value)
+    value get_maximized()
     {
-        return set_maximized(value);
+        return alloc_bool((SDL_GetWindowFlags(window) & SDL_WINDOW_MAXIMIZED) != 0);
     }
 
-    bool get_maximized()
+    value set_borderless(value value)
     {
-        return (SDL_GetWindowFlags(window) & SDL_WINDOW_MAXIMIZED) != 0;
-    }
-
-    HL_PRIM bool HL_NAME(hl_get_maximized)()
-    {
-        return get_maximized();
-    }
-
-    bool set_borderless(bool value)
-    {
-        SDL_SetWindowBordered(window, !value);
+        SDL_SetWindowBordered(window, val_bool(value));
         return value;
     }
 
-    HL_PRIM bool HL_NAME(hl_set_borderless)(bool value)
+    value get_borderless()
     {
-        return set_borderless(value);
+        return alloc_bool((SDL_GetWindowFlags(window) & SDL_WINDOW_BORDERLESS) != 0);
     }
 
-    bool get_borderless()
+    value set_resizable(value value)
     {
-        return (SDL_GetWindowFlags(window) & SDL_WINDOW_BORDERLESS) != 0;
-    }
-
-    HL_PRIM bool HL_NAME(hl_get_borderless)()
-    {
-        return get_borderless();
-    }
-
-    bool set_resizable(bool value)
-    {
-        SDL_SetWindowResizable(window, value);
+        SDL_SetWindowResizable(window, val_bool(value));
         return value;
     }
 
-    HL_PRIM bool HL_NAME(hl_set_resizable)(bool value)
+    value get_resizable()
     {
-        return set_resizable(value);
+        return alloc_bool((SDL_GetWindowFlags(window) & SDL_WINDOW_RESIZABLE) != 0);
     }
 
-    bool get_resizable()
+    value set_visibility(value value)
     {
-        return (SDL_GetWindowFlags(window) & SDL_WINDOW_RESIZABLE) != 0;
-    }
-
-    HL_PRIM bool HL_NAME(hl_get_resizable)()
-    {
-        return get_resizable();
-    }
-
-    bool set_visibility(bool value)
-    {
-        if (value)
+        if (val_bool(value))
             SDL_ShowWindow(window);
         else
             SDL_HideWindow(window);
         return value;
     }
 
-    HL_PRIM bool HL_NAME(hl_set_visibility)(bool value)
+    value get_visibility()
     {
-        return set_visibility(value);
+        return alloc_bool((SDL_GetWindowFlags(window) & SDL_WINDOW_HIDDEN) == 0);
     }
 
-    bool get_visibility()
-    {
-        return (SDL_GetWindowFlags(window) & SDL_WINDOW_HIDDEN) == 0;
-    }
-
-    HL_PRIM bool HL_NAME(hl_get_visibility)()
-    {
-        return get_visibility();
-    }
-
-    int set_width(int value)
-    {
-        int h = get_height();
-        SDL_SetWindowSize(window, value, h);
-        return value;
-    }
-
-    HL_PRIM int HL_NAME(hl_set_width)(int value)
-    {
-        return set_width(value);
-    }
-
-    int get_width()
+    value set_width(value value)
     {
         int w, h;
         SDL_GetWindowSize(window, &w, &h);
-        return w;
-    }
-
-    HL_PRIM int HL_NAME(hl_get_width)()
-    {
-        return get_width();
-    }
-
-    int set_height(int value)
-    {
-        int w = get_width();
-        SDL_SetWindowSize(window, w, value);
+        SDL_SetWindowSize(window, val_int(value), h);
         return value;
     }
 
-    HL_PRIM int HL_NAME(hl_set_height)(int value)
-    {
-        return set_height(value);
-    }
-
-    int get_height()
+    value get_width()
     {
         int w, h;
         SDL_GetWindowSize(window, &w, &h);
-        return h;
+        return alloc_int(w);
     }
 
-    HL_PRIM int HL_NAME(hl_get_height)()
+    value set_height(value value)
     {
-        return get_height();
-    }
-
-    int set_x(int value)
-    {
-        int yPos = get_y();
-        SDL_SetWindowPosition(window, value, yPos);
+        int w, h;
+        SDL_GetWindowSize(window, &w, &h);
+        SDL_SetWindowSize(window, w, val_int(value));
         return value;
     }
 
-    HL_PRIM int HL_NAME(hl_set_x)(int value)
+    value get_height()
     {
-        return set_x(value);
+        int w, h;
+        SDL_GetWindowSize(window, &w, &h);
+        return alloc_int(h);
     }
 
-    int get_x()
+    value set_x(value value)
     {
         int x, y;
         SDL_GetWindowPosition(window, &x, &y);
-        return x;
-    }
-
-    HL_PRIM int HL_NAME(hl_get_x)()
-    {
-        return get_x();
-    }
-
-    int set_y(int value)
-    {
-        int xPos = get_x();
-        SDL_SetWindowPosition(window, xPos, value);
+        SDL_SetWindowPosition(window, val_int(value), y);
         return value;
     }
 
-    HL_PRIM int HL_NAME(hl_set_y)(int value)
-    {
-        return set_y(value);
-    }
-
-    int get_y()
+    value get_x()
     {
         int x, y;
         SDL_GetWindowPosition(window, &x, &y);
-        return y;
+        return alloc_int(x);
     }
 
-    HL_PRIM int HL_NAME(hl_get_y)()
+    value set_y(value value)
     {
-        return get_y();
-    }
-
-    HxString set_title(HxString value)
-    {
-        SDL_SetWindowTitle(window, value.c_str());
+        int x, y;
+        SDL_GetWindowPosition(window, &x, &y);
+        SDL_SetWindowPosition(window, x, val_int(value));
         return value;
     }
 
-    HL_PRIM vstring *HL_NAME(hl_set_title)(vstring *value)
+    value get_y()
     {
-        SDL_SetWindowTitle(window, hl_to_utf8(value->bytes));
+        int x, y;
+        SDL_GetWindowPosition(window, &x, &y);
+        return alloc_int(y);
+    }
+
+    value set_title(value value)
+    {
+        SDL_SetWindowTitle(window, val_string(value));
         return value;
     }
 
-    HxString get_title()
+    value get_title()
     {
         const char *title = SDL_GetWindowTitle(window);
-        return HxString(title);
-    }
-
-    HL_PRIM vstring *HL_NAME(hl_get_title)()
-    {
-        const char *title = SDL_GetWindowTitle(window);
-        return (vstring *)hl_to_utf16(title);
+        return alloc_string(title);
     }
 
     void window_destroy()
@@ -374,14 +219,10 @@ namespace tuna
         SDL_DestroyWindow(window);
     }
 
-    HL_PRIM void HL_NAME(hl_window_destroy)()
-    {
-        SDL_GL_DestroyContext(context);
-        SDL_DestroyWindow(window);
-    }
-
-    DEFINE_PRIM(init, 6);
-    DEFINE_PRIM(set_bg, 6);
+    DEFINE_PRIM(window_enableDepthBuffer, 1);
+    DEFINE_PRIM(window_enableStencilBuffer, 1);
+    DEFINE_PRIM(window_init, 4);
+    DEFINE_PRIM(set_bg, 3);
     DEFINE_PRIM(clear, 0);
     DEFINE_PRIM(render, 0);
     DEFINE_PRIM(set_fullscreen, 1);
@@ -405,30 +246,4 @@ namespace tuna
     DEFINE_PRIM(set_title, 1);
     DEFINE_PRIM(get_title, 0);
     DEFINE_PRIM(window_destroy, 0);
-
-    DEFINE_HL_PRIM(_VOID, hl_init, _I32 _I32 _STRING _BOOL _BOOL _BOOL);
-    DEFINE_HL_PRIM(_VOID, hl_set_bg, _I32 _I32 _I32);
-    DEFINE_HL_PRIM(_VOID, hl_clear, _NO_ARG);
-    DEFINE_HL_PRIM(_VOID, hl_render, _NO_ARG);
-    DEFINE_HL_PRIM(_BOOL, hl_set_fullscreen, _BOOL);
-    DEFINE_HL_PRIM(_BOOL, hl_get_fullscreen, _NO_ARG);
-    DEFINE_HL_PRIM(_BOOL, hl_set_maximized, _BOOL);
-    DEFINE_HL_PRIM(_BOOL, hl_get_maximized, _NO_ARG);
-    DEFINE_HL_PRIM(_BOOL, hl_set_borderless, _BOOL);
-    DEFINE_HL_PRIM(_BOOL, hl_get_borderless, _NO_ARG);
-    DEFINE_HL_PRIM(_BOOL, hl_set_resizable, _BOOL);
-    DEFINE_HL_PRIM(_BOOL, hl_get_resizable, _NO_ARG);
-    DEFINE_HL_PRIM(_BOOL, hl_set_visibility, _BOOL);
-    DEFINE_HL_PRIM(_BOOL, hl_get_visibility, _NO_ARG);
-    DEFINE_HL_PRIM(_I32, hl_set_width, _I32);
-    DEFINE_HL_PRIM(_I32, hl_get_width, _NO_ARG);
-    DEFINE_HL_PRIM(_I32, hl_set_height, _I32);
-    DEFINE_HL_PRIM(_I32, hl_get_height, _NO_ARG);
-    DEFINE_HL_PRIM(_I32, hl_set_x, _I32);
-    DEFINE_HL_PRIM(_I32, hl_get_x, _NO_ARG);
-    DEFINE_HL_PRIM(_I32, hl_set_y, _I32);
-    DEFINE_HL_PRIM(_I32, hl_get_y, _NO_ARG);
-    DEFINE_HL_PRIM(_STRING, hl_set_title, _STRING);
-    DEFINE_HL_PRIM(_STRING, hl_get_title, _NO_ARG);
-    DEFINE_HL_PRIM(_VOID, hl_window_destroy, _NO_ARG);
 }

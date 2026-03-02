@@ -70,6 +70,8 @@ class DisplayCommand {
 			case "html5":
 				configurationFile.add("-D html5\n");
 				configurationFile.add("--js " + Path.join([userPath, Configuration.build.output, target, "main.js"]) + "\n");
+			case "hl", "hashlink":
+				configurationFile.add("--hl " + Path.join([userPath, Configuration.build.output, target, "native", "main.hl"]) + "\n");
 			default:
 				throw 'Target $target isnt supported';
 		}

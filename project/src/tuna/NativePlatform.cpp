@@ -1,49 +1,116 @@
 #include "tuna/NativePlatform.hpp"
+#include <stdio.h>
 
 namespace tuna
 {
-    void init()
+    static int lastMouseX = 0;
+    static int lastMouseY = 0;
+    static int mouseDeltaX = 0;
+    static int mouseDeltaY = 0;
+    static int lastMouseButton = 0;
+    static int lastMouseWheel = 0;
+
+    static SDL_Event event;
+    static bool sdl_initialized = false;
+
+    static void updateMouseState()
     {
-        SDL_Init(SDL_INIT_AUDIO | SDL_INIT_CAMERA | SDL_INIT_CAMERA | SDL_INIT_EVENTS | SDL_INIT_GAMEPAD | SDL_INIT_HAPTIC | SDL_INIT_JOYSTICK | SDL_INIT_SENSOR);
+        float currentX, currentY;
+        SDL_GetMouseState(&currentX, &currentY);
+
+        mouseDeltaX = currentX - lastMouseX;
+        mouseDeltaY = currentY - lastMouseY;
+
+        lastMouseX = currentX;
+        lastMouseY = currentY;
     }
 
-    HL_PRIM void HL_NAME(hl_init)()
+    static void updateMouseEvents(SDL_Event *evt)
     {
-        init();
+        if (evt->type == SDL_EVENT_MOUSE_BUTTON_DOWN || evt->type == SDL_EVENT_MOUSE_BUTTON_UP)
+        {
+            lastMouseButton = evt->button.button;
+        }
+        if (evt->type == SDL_EVENT_MOUSE_WHEEL)
+        {
+            lastMouseWheel = evt->wheel.y;
+        }
+    }
+
+    void init()
+    {
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_CAMERA | SDL_INIT_EVENTS | SDL_INIT_GAMEPAD | SDL_INIT_HAPTIC | SDL_INIT_JOYSTICK | SDL_INIT_SENSOR) != 0)
+        {
+            fprintf(stderr, "[C++] SDL_Init Error: %s\n", SDL_GetError());
+            fflush(stderr);
+            return;
+        }
+
+        sdl_initialized = true;
     }
 
     void quit()
     {
         SDL_Quit();
+        sdl_initialized = false;
     }
-    HL_PRIM void HL_NAME(hl_quit)()
+
+    void preLoop(){
+        updateMouseState();
+    } 
+
+    value hasEvent()
     {
-        SDL_Quit();
+        if (!sdl_initialized)
+        {
+            return alloc_bool(false);
+        }
+
+        int result = SDL_PollEvent(&event);
+        if (result != 0)
+        {
+            updateMouseEvents(&event);
+        }
+        return alloc_bool(result != 0);
     }
 
-    bool hasEvent() {
-        return SDL_PollEvent(event);
-    }
-
-    HL_PRIM bool HL_NAME(hl_hasEvent)()
+    value getEventType()
     {
-        return SDL_PollEvent(event);
+        return alloc_int(event.type);
     }
 
-    int getEventType() {
-        return event->type;
+    value getKeyboardState()
+    {
+        value val = alloc_empty_object();
+        alloc_field(val, val_id("key"), alloc_int(event.key.key));
+
+        return val;
     }
-    HL_PRIM int HL_NAME(hl_getEventType)() {
-        return event->type;
+
+    value getMouseState()
+    {
+        float x, y;
+        Uint32 mouseState = SDL_GetMouseState(&x, &y);
+
+        value val = alloc_empty_object();
+        alloc_field(val, val_id("x"), alloc_int(x));
+        alloc_field(val, val_id("y"), alloc_int(y));
+        alloc_field(val, val_id("delX"), alloc_int(mouseDeltaX));
+        alloc_field(val, val_id("delY"), alloc_int(mouseDeltaY));
+        alloc_field(val, val_id("button"), alloc_int(lastMouseButton));
+        alloc_field(val, val_id("wheel"), alloc_int(lastMouseWheel));
+        alloc_field(val, val_id("leftButton"), alloc_bool(mouseState & SDL_BUTTON_MASK(SDL_BUTTON_LEFT)));
+        alloc_field(val, val_id("rightButton"), alloc_bool(mouseState & SDL_BUTTON_MASK(SDL_BUTTON_RIGHT)));
+        alloc_field(val, val_id("middleButton"), alloc_bool(mouseState & SDL_BUTTON_MASK(SDL_BUTTON_MIDDLE)));
+
+        return val;
     }
 
     DEFINE_PRIM(init, 0);
     DEFINE_PRIM(quit, 0);
+    DEFINE_PRIM(preLoop, 0);
     DEFINE_PRIM(hasEvent, 0);
     DEFINE_PRIM(getEventType, 0);
-
-    DEFINE_HL_PRIM(_VOID, hl_init, _NO_ARG);
-    DEFINE_HL_PRIM(_VOID, hl_quit, _NO_ARG);
-    DEFINE_HL_PRIM(_BOOL, hl_hasEvent, _NO_ARG);
-    DEFINE_HL_PRIM(_I32, hl_getEventType, _NO_ARG);
+    DEFINE_PRIM(getKeyboardState, 0);
+    DEFINE_PRIM(getMouseState, 0);
 }

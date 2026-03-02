@@ -56,7 +56,7 @@ abstract Vec4(BasicVec4) from BasicVec4 to BasicVec4 {
 	}
 
 	@:to
-	public function toArray():Array<Float32> {
+	public function toArray():Array<Float> {
 		return [this.x, this.y, this.z, this.w];
 	}
 

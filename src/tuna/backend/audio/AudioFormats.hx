@@ -84,11 +84,11 @@ class AudioFormats {
 }
 
 typedef AudioData = {
-	var audioFormat:UInt16;
-	var numChannels:UInt16;
+	var audioFormat:UInt;
+	var numChannels:UInt;
 	var sampleRate:Int32;
-	var bitsPerSample:UInt16;
-	var size:UInt64;
+	var bitsPerSample:UInt;
+	var size:UInt;
 
 	var data:Bytes;
 }

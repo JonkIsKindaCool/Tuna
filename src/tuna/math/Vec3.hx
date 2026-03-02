@@ -49,7 +49,7 @@ abstract Vec3(BasicVec3) from BasicVec3 to BasicVec3 {
 	}
 
 	@:to
-	public function toArray():Array<Float32> {
+	public function toArray():Array<Float> {
 		return [this.x, this.y, this.z];
 	}
 

@@ -1,7 +1,7 @@
 package tuna.math;
 
-abstract Mat4(Array<Float32>) from Array<Float32> to Array<Float32> {
-	public function new(?data:Array<Float32>) {
+abstract Mat4(Array<Float>) from Array<Float> to Array<Float> {
+	public function new(?data:Array<Float>) {
 		if (data == null)
 			this = identity();
 		else
@@ -10,7 +10,7 @@ abstract Mat4(Array<Float32>) from Array<Float32> to Array<Float32> {
 
 	@:op(A * B)
 	public function multiply(m:Mat4) {
-		var data:Array<Float32> = this;
+		var data:Array<Float> = this;
 
 		for (i => v in data) {
 			data[i] = data[i] * m[i];
@@ -39,7 +39,7 @@ abstract Mat4(Array<Float32>) from Array<Float32> to Array<Float32> {
 	public static function ortho(left:Float, right:Float, bottom:Float, top:Float, near:Float, far:Float):Mat4 {
 		var rl:Float = right - left;
 		var tb:Float = top - bottom;
-		var fn:Float32 = far - near;
+		var fn:Float = far - near;
 
 		if (rl == 0 || tb == 0 || fn == 0) {
 			return identity();

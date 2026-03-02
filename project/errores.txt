@@ -1,0 +1,996 @@
+[jonk@archlinux project]$ haxelib run hxcpp Build.xml
+
+Compiling group: tuna
+g++ -Iinclude -Ilibs/glad/include/ -fPIC -c -fvisibility=hidden -O2 -fpic -fPIC -Wno-overflow -Wno-inconsistent-missing-override -DHX_LINUX -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_API_LEVEL=0(haxe) -m64 -DHXCPP_M64 -I/home/jonk/Documentos/haxelib/hxcpp/git/include ... tags=[haxe,static]
+ - src/tuna/NativePlatform.cpp 
+ - src/tuna/cffi/CFFI.cpp 
+ - src/tuna/opengl/OpenGL.cpp 
+ - src/tuna/NativeWindow.cpp 
+
+Compiling group: toolkit-glad
+g++ -Ilibs/glad/include/ -c -fvisibility=hidden -O2 -fpic -fPIC -Wno-overflow -Wno-inconsistent-missing-override -DHX_LINUX -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_API_LEVEL=0(haxe) -m64 -DHXCPP_M64 -I/home/jonk/Documentos/haxelib/hxcpp/git/include ... tags=[haxe,static]
+ - libs/glad/src/gl.c 
+
+Compiling group: toolkit-sdl3
+g++ -Ilibs/custom/SDL/include/ -Ilibs/SDL/include/ -Ilibs/SDL/src/ -c -fvisibility=hidden -O2 -fpic -fPIC -Wno-overflow -Wno-inconsistent-missing-override -DHX_LINUX -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_API_LEVEL=0(haxe) -m64 -DHXCPP_M64 -I/home/jonk/Documentos/haxelib/hxcpp/git/include ... tags=[]
+ - libs/SDL/src/video/SDL_blit_auto.c 
+ - libs/SDL/src/stdlib/SDL_crc32.c 
+ - libs/SDL/src/audio/SDL_audiotypecvt.c 
+ - libs/SDL/src/video/SDL_pixels.c 
+ - libs/SDL/src/video/yuv2rgb/yuv_rgb_std.c 
+ - libs/SDL/src/filesystem/unix/SDL_sysfilesystem.c 
+ - libs/SDL/src/haptic/SDL_haptic.c 
+ - libs/SDL/src/joystick/SDL_gamepad.c 
+ - libs/SDL/src/events/SDL_quit.c 
+ - libs/SDL/src/video/SDL_blit_N.c 
+ - libs/SDL/src/render/software/SDL_blendline.c 
+ - libs/SDL/src/events/SDL_mouse.c 
+ - libs/SDL/src/process/SDL_process.c 
+ - libs/SDL/src/SDL_list.c 
+ - libs/SDL/src/atomic/SDL_spinlock.c 
+ - libs/SDL/src/video/SDL_blit.c 
+ - libs/SDL/src/video/SDL_stretch.c 
+ - libs/SDL/src/video/SDL_rect.c 
+ - libs/SDL/src/events/SDL_scancode_tables.c 
+ - libs/SDL/src/stdlib/SDL_iconv.c 
+ - libs/SDL/src/video/SDL_blit_A.c 
+ - libs/SDL/src/SDL_error.c 
+ - libs/SDL/src/joystick/controller_type.c 
+ - libs/SDL/src/thread/pthread/SDL_sysmutex.c 
+ - libs/SDL/src/video/wayland/SDL_waylandvideo.c 
+ - libs/SDL/src/thread/pthread/SDL_syscond.c 
+ - libs/SDL/src/storage/generic/SDL_genericstorage.c 
+ - libs/SDL/src/render/software/SDL_render_sw.c 
+ - libs/SDL/src/events/SDL_events.c 
+ - libs/SDL/src/camera/SDL_camera.c 
+ - libs/SDL/src/video/SDL_clipboard.c 
+ - libs/SDL/src/joystick/virtual/SDL_virtualjoystick.c 
+ - libs/SDL/src/render/software/SDL_triangle.c 
+ - libs/SDL/src/joystick/SDL_joystick.c 
+ - libs/SDL/src/power/SDL_power.c 
+ - libs/SDL/src/cpuinfo/SDL_cpuinfo.c 
+ - libs/SDL/src/events/SDL_touch.c 
+ - libs/SDL/src/audio/SDL_audioresample.c 
+ - libs/SDL/src/video/SDL_yuv.c 
+ - libs/SDL/src/atomic/SDL_atomic.c 
+ - libs/SDL/src/video/SDL_blit_copy.c 
+ - libs/SDL/src/SDL_log.c 
+ - libs/SDL/src/stdlib/SDL_qsort.c 
+ - libs/SDL/src/events/SDL_keyboard.c 
+ - libs/SDL/src/events/SDL_clipboardevents.c 
+ - libs/SDL/src/dialog/SDL_dialog.c 
+ - libs/SDL/src/thread/SDL_thread.c 
+ - libs/SDL/src/render/SDL_yuv_sw.c 
+ - libs/SDL/src/events/SDL_dropevents.c 
+ - libs/SDL/src/video/SDL_video.c 
+ - libs/SDL/src/video/SDL_blit_slow.c 
+ - libs/SDL/src/filesystem/SDL_filesystem.c 
+ - libs/SDL/src/time/SDL_time.c 
+ - libs/SDL/src/core/linux/SDL_dbus.c 
+ - libs/SDL/src/render/software/SDL_blendpoint.c 
+ - libs/SDL/src/video/SDL_RLEaccel.c 
+ - libs/SDL/src/video/SDL_surface.c 
+ - libs/SDL/src/render/software/SDL_drawpoint.c 
+ - libs/SDL/src/gpu/SDL_gpu.c 
+ - libs/SDL/src/stdlib/SDL_mslibc.c 
+ - libs/SDL/src/stdlib/SDL_string.c 
+ - libs/SDL/src/SDL_properties.c 
+ - libs/SDL/src/sensor/SDL_sensor.c 
+ - libs/SDL/src/loadso/dlopen/SDL_sysloadso.c 
+ - libs/SDL/src/core/unix/SDL_poll.c 
+ - libs/SDL/src/thread/pthread/SDL_syssem.c 
+ - libs/SDL/src/SDL_utils.c 
+ - libs/SDL/src/video/SDL_bmp.c 
+ - libs/SDL/src/timer/unix/SDL_systimer.c 
+ - libs/SDL/src/stdlib/SDL_crc16.c 
+ - libs/SDL/src/SDL_hashtable.c 
+ - libs/SDL/src/video/x11/SDL_x11video.c 
+ - libs/SDL/src/SDL_guid.c 
+ - libs/SDL/src/render/software/SDL_blendfillrect.c 
+ - libs/SDL/src/stdlib/SDL_malloc.c 
+ - libs/SDL/src/video/x11/SDL_x11window.c 
+ - libs/SDL/src/core/linux/SDL_evdev.c 
+ - libs/SDL/src/misc/SDL_url.c 
+ - libs/SDL/src/render/SDL_render.c 
+ - libs/SDL/src/render/software/SDL_drawline.c 
+ - libs/SDL/src/timer/SDL_timer.c 
+ - libs/SDL/src/SDL_assert.c 
+ - libs/SDL/src/audio/dummy/SDL_dummyaudio.c 
+ - libs/SDL/src/video/SDL_blit_0.c 
+ - libs/SDL/src/audio/SDL_audio.c 
+ - libs/SDL/src/video/SDL_vulkan_utils.c 
+ - libs/SDL/src/thread/pthread/SDL_systhread.c 
+ - libs/SDL/src/audio/SDL_audiocvt.c 
+ - libs/SDL/src/audio/SDL_audiodev.c 
+ - libs/SDL/src/SDL.c 
+ - libs/SDL/src/video/SDL_fillrect.c 
+ - libs/SDL/src/events/SDL_windowevents.c 
+ - libs/SDL/src/storage/SDL_storage.c 
+ - libs/SDL/src/core/linux/SDL_udev.c 
+ - libs/SDL/src/SDL_hints.c 
+ - libs/SDL/src/stdlib/SDL_getenv.c 
+ - libs/SDL/src/events/SDL_displayevents.c 
+ - libs/SDL/src/video/SDL_blit_1.c 
+ - libs/SDL/src/stdlib/SDL_stdlib.c 
+Link: ../ndll/Linux64/tuna.ndll
+/usr/bin/ld: obj/linux64/7fc05de8_NativeWindow.o: en la función `tuna::window_destroy()':
+NativeWindow.cpp:(.text+0x5fc): referencia a `SDL_GL_DeleteContext' sin definir
+/usr/bin/ld: obj/linux64/58de5bb9_SDL_render_sw.o: en la función `SW_RunCommandQueue':
+SDL_render_sw.c:(.text+0x1f51): referencia a `SDLgfx_rotozoomSurfaceSizeTrig' sin definir
+/usr/bin/ld: SDL_render_sw.c:(.text+0x1f93): referencia a `SDLgfx_rotateSurface' sin definir
+/usr/bin/ld: SDL_render_sw.c:(.text+0x243c): referencia a `SDLgfx_rotateSurface' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_surface.o: en la función `SDL_RotateSurface':
+SDL_surface.c:(.text+0x4de2): referencia a `SDLgfx_rotozoomSurfaceSizeTrig' sin definir
+/usr/bin/ld: SDL_surface.c:(.text+0x4e30): referencia a `SDLgfx_rotateSurface' sin definir
+/usr/bin/ld: SDL_surface.c:(.text+0x4f65): referencia a `SDLgfx_rotateSurface' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_surface.o: en la función `SDL_LoadSurface_IO':
+SDL_surface.c:(.text+0x76c8): referencia a `SDL_IsPNG' sin definir
+/usr/bin/ld: SDL_surface.c:(.text+0x7724): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_surface.o: en la función `SDL_LoadSurface':
+SDL_surface.c:(.text+0x773c): referencia a `SDL_IOFromFile' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_surface.o: en la función `SDL_ConvertPixelsAndColorspace':
+SDL_surface.c:(.text+0x2726): referencia a `SDL_ConvertPixels_STB' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_surface.o: en la función `SDL_LoadSurface_IO':
+SDL_surface.c:(.text+0x76de): referencia a `SDL_LoadPNG_IO' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_gamepad.o: en la función `SDL_AddGamepadMappingsFromIO':
+SDL_gamepad.c:(.text+0x6896): referencia a `SDL_LoadFile_IO' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_gamepad.o: en la función `SDL_AddGamepadMappingsFromFile':
+SDL_gamepad.c:(.text+0x69ec): referencia a `SDL_IOFromFile' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_GetHaptics':
+SDL_haptic.c:(.text+0x1e): referencia a `SDL_SYS_NumHaptics' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0x53): referencia a `SDL_SYS_HapticInstanceID' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_GetHapticNameForID':
+SDL_haptic.c:(.text+0x9b): referencia a `SDL_SYS_NumHaptics' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xbb): referencia a `SDL_SYS_HapticInstanceID' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xc6): referencia a `SDL_SYS_HapticName' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_IsMouseHaptic':
+SDL_haptic.c:(.text+0x1f5): referencia a `SDL_SYS_HapticMouse' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_IsJoystickHaptic':
+SDL_haptic.c:(.text+0x247): referencia a `SDL_SYS_JoystickIsHaptic' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_CreateHapticEffect':
+SDL_haptic.c:(.text+0x4ec): referencia a `SDL_SYS_HapticNewEffect' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_UpdateHapticEffect':
+SDL_haptic.c:(.text+0x635): referencia a `SDL_SYS_HapticUpdateEffect' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_CloseHaptic':
+SDL_haptic.c:(.text+0x96b): referencia a `SDL_SYS_HapticClose' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_GetHapticEffectStatus':
+SDL_haptic.c:(.text+0xab8): referencia a `SDL_SYS_HapticGetEffectStatus' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_OpenHaptic':
+SDL_haptic.c:(.text+0xcbc): referencia a `SDL_SYS_NumHaptics' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xcda): referencia a `SDL_SYS_HapticInstanceID' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xd65): referencia a `SDL_SYS_HapticOpen' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xde5): referencia a `SDL_SYS_HapticName' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_OpenHapticFromMouse':
+SDL_haptic.c:(.text+0xe25): referencia a `SDL_SYS_HapticMouse' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_OpenHapticFromJoystick':
+SDL_haptic.c:(.text+0xebc): referencia a `SDL_SYS_JoystickSameHaptic' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xf35): referencia a `SDL_SYS_HapticOpenFromJoystick' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_InitHaptics':
+SDL_haptic.c:(.text+0x1): referencia a `SDL_SYS_HapticInit' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_RunHapticEffect':
+SDL_haptic.c:(.text+0x752): referencia a `SDL_SYS_HapticRunEffect' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_StopHapticEffect':
+SDL_haptic.c:(.text+0x7f2): referencia a `SDL_SYS_HapticStopEffect' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_DestroyHapticEffect':
+SDL_haptic.c:(.text+0x899): referencia a `SDL_SYS_HapticDestroyEffect' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_QuitHaptics':
+SDL_haptic.c:(.text+0xa56): referencia a `SDL_SYS_HapticQuit' sin definir
+/usr/bin/ld: SDL_haptic.c:(.text+0xa61): referencia a `SDL_SYS_HapticQuit' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_SetHapticGain':
+SDL_haptic.c:(.text+0xbba): referencia a `SDL_SYS_HapticSetGain' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_SetHapticAutocenter':
+SDL_haptic.c:(.text+0xc39): referencia a `SDL_SYS_HapticSetAutocenter' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_PauseHaptic':
+SDL_haptic.c:(.text+0x1230): referencia a `SDL_SYS_HapticPause' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_ResumeHaptic':
+SDL_haptic.c:(.text+0x12f5): referencia a `SDL_SYS_HapticResume' sin definir
+/usr/bin/ld: obj/linux64/0d1bfadb_SDL_haptic.o: en la función `SDL_StopHapticEffects':
+SDL_haptic.c:(.text+0x131a): referencia a `SDL_SYS_HapticStopAll' sin definir
+/usr/bin/ld: obj/linux64/68fe3bbb_SDL_process.o: en la función `SDL_WaitProcess':
+SDL_process.c:(.text+0x1a6): referencia a `SDL_SYS_WaitProcess' sin definir
+/usr/bin/ld: obj/linux64/68fe3bbb_SDL_process.o: en la función `SDL_ReadProcess':
+SDL_process.c:(.text+0x25a): referencia a `SDL_LoadFile_IO' sin definir
+/usr/bin/ld: obj/linux64/68fe3bbb_SDL_process.o: en la función `SDL_DestroyProcess':
+SDL_process.c:(.text+0x2c2): referencia a `SDL_SYS_DestroyProcess' sin definir
+/usr/bin/ld: obj/linux64/68fe3bbb_SDL_process.o: en la función `SDL_CreateProcessWithProperties':
+SDL_process.c:(.text+0x376): referencia a `SDL_SYS_CreateProcessWithProperties' sin definir
+/usr/bin/ld: obj/linux64/68fe3bbb_SDL_process.o: en la función `SDL_KillProcess':
+SDL_process.c:(.text+0x12f): referencia a `SDL_SYS_KillProcess' sin definir
+/usr/bin/ld: obj/linux64/2a8d8348_SDL_genericstorage.o: en la función `GENERIC_ReadStorageFile':
+SDL_genericstorage.c:(.text+0x5bc): referencia a `SDL_IOFromFile' sin definir
+/usr/bin/ld: SDL_genericstorage.c:(.text+0x5d4): referencia a `SDL_ReadIO' sin definir
+/usr/bin/ld: SDL_genericstorage.c:(.text+0x5eb): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: SDL_genericstorage.c:(.text+0x631): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: obj/linux64/2a8d8348_SDL_genericstorage.o: en la función `GENERIC_WriteStorageFile':
+SDL_genericstorage.c:(.text+0x6ac): referencia a `SDL_IOFromFile' sin definir
+/usr/bin/ld: SDL_genericstorage.c:(.text+0x6c4): referencia a `SDL_WriteIO' sin definir
+/usr/bin/ld: SDL_genericstorage.c:(.text+0x6db): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: SDL_genericstorage.c:(.text+0x721): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_StopEventLoop':
+SDL_events.c:(.text+0x38a1): referencia a `SDL_QuitEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_StartEventLoop':
+SDL_events.c:(.text+0x391d): referencia a `SDL_InitEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_PumpEventMaintenance':
+SDL_events.c:(.text+0x3c31): referencia a `SDL_SendPendingPenProximity' sin definir
+/usr/bin/ld: SDL_events.c:(.text+0x3c3b): referencia a `SDL_UpdateTrays' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_PushEvent':
+SDL_events.c:(.text+0x3c92): referencia a `SDL_DispatchEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_PumpEventsInternal':
+SDL_events.c:(.text+0x4167): referencia a `SDL_SendPendingPenProximity' sin definir
+/usr/bin/ld: SDL_events.c:(.text+0x4171): referencia a `SDL_UpdateTrays' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_WaitEventTimeoutNS':
+SDL_events.c:(.text+0x43df): referencia a `SDL_HasActiveTrays' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_SendAppEvent':
+SDL_events.c:(.text+0x47f3): referencia a `SDL_DispatchEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_AddEventWatch':
+SDL_events.c:(.text+0x3dfe): referencia a `SDL_AddEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_events.o: en la función `SDL_RemoveEventWatch':
+SDL_events.c:(.text+0x3e1e): referencia a `SDL_RemoveEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `UnrefPhysicalCamera.part.0':
+SDL_camera.c:(.text+0x20c): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_QuitCamera.part.0':
+SDL_camera.c:(.text+0x25e): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x2ad): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x2e7): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_CameraDisconnected.part.0':
+SDL_camera.c:(.text+0x864): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x887): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `ObtainPhysicalCamera':
+SDL_camera.c:(.text+0xbb4): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0xbd3): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_AddCamera':
+SDL_camera.c:(.text+0xdc7): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0xde1): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0xe9f): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0xee7): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_CameraPermissionOutcome':
+SDL_camera.c:(.text+0x10cb): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x10ee): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_FindPhysicalCameraByCallback':
+SDL_camera.c:(.text+0x11bf): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x11e3): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_GetCameras':
+SDL_camera.c:(.text+0x146a): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x14cd): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_CameraInit':
+SDL_camera.c:(.text+0x2757): referencia a `SDL_CreateRWLock' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x280a): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x2854): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `SDL_UpdateCamera':
+SDL_camera.c:(.text+0x2886): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x2899): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x28ae): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x28dd): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/998d69bb_SDL_camera.o: en la función `UnrefPhysicalCamera.part.0':
+SDL_camera.c:(.text+0x22c): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_camera.c:(.text+0x24a): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_GetDriverAndJoystickIndex':
+SDL_joystick.c:(.text+0x37): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_LoadVIDPIDListFromHint':
+SDL_joystick.c:(.text+0x1e7): referencia a `SDL_LoadFile' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_JoystickHandledByAnotherDriver':
+SDL_joystick.c:(.text+0x94d): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_HasJoystick':
+SDL_joystick.c:(.text+0x999): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_GetJoysticks':
+SDL_joystick.c:(.text+0x9c5): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_GetJoystickVirtualGamepadInfoForID':
+SDL_joystick.c:(.text+0xa56): referencia a `SDL_SteamVirtualGamepadEnabled' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_UpdateJoysticks':
+SDL_joystick.c:(.text+0x2db6): referencia a `SDL_UpdateSteamVirtualGamepadInfo' sin definir
+/usr/bin/ld: SDL_joystick.c:(.text+0x2f33): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_QuitJoysticks':
+SDL_joystick.c:(.text+0x54ce): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: SDL_joystick.c:(.text+0x5509): referencia a `SDL_QuitSteamVirtualGamepadInfo' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_InitJoysticks':
+SDL_joystick.c:(.text+0x56bb): referencia a `SDL_InitSteamVirtualGamepadInfo' sin definir
+/usr/bin/ld: SDL_joystick.c:(.text+0x56c2): referencia a `SDL_LINUX_JoystickDriver' sin definir
+/usr/bin/ld: obj/linux64/cdcdb594_SDL_joystick.o: en la función `SDL_GetJoystickVirtualGamepadInfoForID':
+SDL_joystick.c:(.text+0xa97): referencia a `SDL_GetSteamVirtualGamepadInfo' sin definir
+/usr/bin/ld: obj/linux64/4b2a2aa7_SDL_power.o:(.data.rel.ro+0x0): referencia a `SDL_GetPowerInfo_Linux_org_freedesktop_upower' sin definir
+/usr/bin/ld: obj/linux64/4b2a2aa7_SDL_power.o:(.data.rel.ro+0x8): referencia a `SDL_GetPowerInfo_Linux_sys_class_power_supply' sin definir
+/usr/bin/ld: obj/linux64/4b2a2aa7_SDL_power.o:(.data.rel.ro+0x10): referencia a `SDL_GetPowerInfo_Linux_proc_acpi' sin definir
+/usr/bin/ld: obj/linux64/4b2a2aa7_SDL_power.o:(.data.rel.ro+0x18): referencia a `SDL_GetPowerInfo_Linux_proc_apm' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_yuv.o: en la función `SDL_ConvertPixels_YUV_to_RGB':
+SDL_yuv.c:(.text+0x4595): referencia a `yuv420_rgb565_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x46c2): referencia a `yuvnv12_abgr_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4729): referencia a `yuv422_rgb565_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x478b): referencia a `yuv420_abgr_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x47eb): referencia a `yuv422_abgr_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4a5b): referencia a `yuv420_rgb24_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4aa8): referencia a `yuv420_rgba_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4ade): referencia a `yuv420_bgra_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4b1c): referencia a `yuv420_argb_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4b68): referencia a `yuv422_rgba_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4bab): referencia a `yuv422_rgb24_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4bfc): referencia a `yuvnv12_rgb565_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4da3): referencia a `yuv422_bgra_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x4dd4): referencia a `yuv422_argb_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x50d9): referencia a `yuvnv12_rgb24_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x511c): referencia a `yuvnv12_rgba_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x5156): referencia a `yuvnv12_argb_sseu' sin definir
+/usr/bin/ld: SDL_yuv.c:(.text+0x51b0): referencia a `yuvnv12_bgra_sseu' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_SetKeymap':
+SDL_keyboard.c:(.text+0x518): referencia a `SDL_GetKeymapKeycode' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0x536): referencia a `SDL_GetKeymapKeycode' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0x560): referencia a `SDL_GetKeymapKeycode' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0x591): referencia a `SDL_DestroyKeymap' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_GetKeyFromScancode':
+SDL_keyboard.c:(.text+0x645): referencia a `SDL_GetKeymapKeycode' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_SendKeyboardUnicodeKey':
+SDL_keyboard.c:(.text+0xec6): referencia a `SDL_GetKeymapScancode' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0xf51): referencia a `SDL_GetKeymapNextReservedScancode' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0xf76): referencia a `SDL_SetKeymapEntry' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0xfe6): referencia a `SDL_CreateKeymap' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0x1006): referencia a `SDL_CreateKeymap' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_QuitKeyboard':
+SDL_keyboard.c:(.text+0x1551): referencia a `SDL_DestroyKeymap' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_SendKeyboardKeyAndKeycode':
+SDL_keyboard.c:(.text+0x1615): referencia a `SDL_SetKeymapEntry' sin definir
+/usr/bin/ld: SDL_keyboard.c:(.text+0x162a): referencia a `SDL_CreateKeymap' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_GetKeyFromScancode':
+SDL_keyboard.c:(.text+0x696): referencia a `SDL_GetKeymapKeycode' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_keyboard.o: en la función `SDL_GetScancodeFromKey':
+SDL_keyboard.c:(.text+0xe6d): referencia a `SDL_GetKeymapScancode' sin definir
+/usr/bin/ld: obj/linux64/306d94e4_SDL_dialog.o: en la función `SDL_ShowFileDialogWithProperties':
+SDL_dialog.c:(.text+0x7c): referencia a `validate_filters' sin definir
+/usr/bin/ld: SDL_dialog.c:(.text+0xc1): referencia a `SDL_SYS_ShowFileDialogWithProperties' sin definir
+/usr/bin/ld: obj/linux64/4e6cd904_SDL_thread.o: en la función `SDL_GetTLS':
+SDL_thread.c:(.text+0x3f): referencia a `SDL_SYS_GetTLSData' sin definir
+/usr/bin/ld: obj/linux64/4e6cd904_SDL_thread.o: en la función `SDL_SetTLS':
+SDL_thread.c:(.text+0x9f): referencia a `SDL_SYS_InitTLSData' sin definir
+/usr/bin/ld: SDL_thread.c:(.text+0xe2): referencia a `SDL_SYS_GetTLSData' sin definir
+/usr/bin/ld: SDL_thread.c:(.text+0x17c): referencia a `SDL_SYS_SetTLSData' sin definir
+/usr/bin/ld: SDL_thread.c:(.text+0x1e9): referencia a `SDL_SYS_GetTLSData' sin definir
+/usr/bin/ld: obj/linux64/4e6cd904_SDL_thread.o: en la función `SDL_CleanupTLS':
+SDL_thread.c:(.text+0x237): referencia a `SDL_SYS_GetTLSData' sin definir
+/usr/bin/ld: SDL_thread.c:(.text+0x274): referencia a `SDL_SYS_SetTLSData' sin definir
+/usr/bin/ld: obj/linux64/4e6cd904_SDL_thread.o: en la función `SDL_InitTLSData':
+SDL_thread.c:(.text+0x21): referencia a `SDL_SYS_InitTLSData' sin definir
+/usr/bin/ld: obj/linux64/4e6cd904_SDL_thread.o: en la función `SDL_QuitTLSData':
+SDL_thread.c:(.text+0x2d5): referencia a `SDL_SYS_QuitTLSData' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_video.o: en la función `SDL_OnWindowLiveResizeUpdate':
+SDL_video.c:(.text+0x7c05): referencia a `SDL_HasMainCallbacks' sin definir
+/usr/bin/ld: SDL_video.c:(.text+0x7c10): referencia a `SDL_IterateMainCallbacks' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_video.o: en la función `SDL_VideoInit':
+SDL_video.c:(.text+0xc176): referencia a `SDL_InitPen' sin definir
+/usr/bin/ld: SDL_video.c:(.text+0xc349): referencia a `SDL_QuitPen' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_video.o: en la función `SDL_VideoQuit.part.0':
+SDL_video.c:(.text+0xc06e): referencia a `SDL_QuitPen' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_video.o:(.data.rel.ro+0x8): referencia a `DUMMY_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_video.o:(.data.rel.ro+0x10): referencia a `DUMMY_evdev_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `GlobDirectoryCallback':
+SDL_filesystem.c:(.text+0x460): referencia a `SDL_WriteIO' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_CreateDirectory':
+SDL_filesystem.c:(.text+0x562): referencia a `SDL_SYS_CreateDirectory' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x5e2): referencia a `SDL_SYS_CreateDirectory' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x61d): referencia a `SDL_SYS_CreateDirectory' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x64a): referencia a `SDL_SYS_CreateDirectory' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_GetPathInfo':
+SDL_filesystem.c:(.text+0x6e8): referencia a `SDL_SYS_GetPathInfo' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_InternalGlobDirectory':
+SDL_filesystem.c:(.text+0x7ec): referencia a `SDL_IOFromDynamicMem' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x847): referencia a `SDL_IOFromDynamicMem' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x8bc): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x906): referencia a `SDL_GetIOSize' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x99d): referencia a `SDL_IOFromDynamicMem' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x9ca): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_filesystem.c:(.text+0x9e4): referencia a `SDL_ReadIO' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_RemovePath':
+SDL_filesystem.c:(.text+0x4a6): referencia a `SDL_SYS_RemovePath' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_RenamePath':
+SDL_filesystem.c:(.text+0x4db): referencia a `SDL_SYS_RenamePath' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_CopyFile':
+SDL_filesystem.c:(.text+0x51b): referencia a `SDL_SYS_CopyFile' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_EnumerateDirectory':
+SDL_filesystem.c:(.text+0x66b): referencia a `SDL_SYS_EnumerateDirectory' sin definir
+/usr/bin/ld: obj/linux64/575c9dc3_SDL_filesystem.o: en la función `SDL_GetCurrentDirectory':
+SDL_filesystem.c:(.text+0xbc1): referencia a `SDL_SYS_GetCurrentDirectory' sin definir
+/usr/bin/ld: obj/linux64/c766894f_SDL_time.o: en la función `SDL_GetDateTimeLocalePreferences':
+SDL_time.c:(.text+0x1db): referencia a `SDL_GetSystemTimeLocalePreferences' sin definir
+/usr/bin/ld: obj/linux64/0c668eef_SDL_sensor.o: en la función `SDL_GetDriverAndSensorIndex':
+SDL_sensor.c:(.text+0x17): referencia a `SDL_DUMMY_SensorDriver' sin definir
+/usr/bin/ld: obj/linux64/0c668eef_SDL_sensor.o: en la función `SDL_GetSensors':
+SDL_sensor.c:(.text+0x21e): referencia a `SDL_DUMMY_SensorDriver' sin definir
+/usr/bin/ld: obj/linux64/0c668eef_SDL_sensor.o: en la función `SDL_QuitSensors':
+SDL_sensor.c:(.text+0xc8b): referencia a `SDL_DUMMY_SensorDriver' sin definir
+/usr/bin/ld: obj/linux64/0c668eef_SDL_sensor.o: en la función `SDL_InitSensors':
+SDL_sensor.c:(.text+0xd11): referencia a `SDL_DUMMY_SensorDriver' sin definir
+/usr/bin/ld: obj/linux64/0c668eef_SDL_sensor.o: en la función `SDL_UpdateSensors':
+SDL_sensor.c:(.text+0x10a6): referencia a `SDL_DUMMY_SensorDriver' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_SaveBMP_IO_Internal':
+SDL_bmp.c:(.text+0x7c): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xa8): referencia a `SDL_TellIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xc2): referencia a `SDL_WriteIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd6): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xe8): referencia a `SDL_WriteU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xfa): referencia a `SDL_WriteU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x10c): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1ab): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1be): referencia a `SDL_WriteS32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1d6): referencia a `SDL_WriteS32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1eb): referencia a `SDL_WriteU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x200): referencia a `SDL_WriteU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x214): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x22e): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x240): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x252): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x266): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o:SDL_bmp.c:(.text+0x278): más referencias a `SDL_WriteU32LE' sin definir a continuación
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_SaveBMP_IO_Internal':
+SDL_bmp.c:(.text+0x2cf): referencia a `SDL_WriteU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x2e4): referencia a `SDL_WriteU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x2f9): referencia a `SDL_WriteU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x312): referencia a `SDL_WriteU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x333): referencia a `SDL_TellIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x344): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x361): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x37b): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x3f1): referencia a `SDL_WriteIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x412): referencia a `SDL_WriteU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x482): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x496): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x4aa): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x4be): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x4d2): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o:SDL_bmp.c:(.text+0x4ef): más referencias a `SDL_WriteU32LE' sin definir a continuación
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_SaveBMP_IO_Internal':
+SDL_bmp.c:(.text+0x5a5): referencia a `SDL_TellIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x5c0): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x5dd): referencia a `SDL_WriteU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x5f6): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_IsBMP':
+SDL_bmp.c:(.text+0x8ba): referencia a `SDL_TellIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x8f3): referencia a `SDL_ReadIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x90b): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_LoadBMP_IO':
+SDL_bmp.c:(.text+0x9b1): referencia a `SDL_TellIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x9dc): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x9ee): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xa00): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xa12): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xa27): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xa3c): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xb22): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xbcd): referencia a `SDL_ReadIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xcbc): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xcd4): referencia a `SDL_CloseIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd39): referencia a `SDL_ReadS32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd4e): referencia a `SDL_ReadS32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd60): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd75): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd8d): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xd9f): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xdb1): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xdc3): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xddb): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o:SDL_bmp.c:(.text+0xded): más referencias a `SDL_ReadU32LE' sin definir a continuación
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_LoadBMP_IO':
+SDL_bmp.c:(.text+0xe1d): referencia a `SDL_TellIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xe3f): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xed1): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xee6): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xef8): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0xf0d): referencia a `SDL_ReadU16LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1007): referencia a `SDL_ReadU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1098): referencia a `SDL_SeekIO' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x113c): referencia a `SDL_ReadU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1154): referencia a `SDL_ReadU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1170): referencia a `SDL_ReadU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1198): referencia a `SDL_ReadU8' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x120f): referencia a `SDL_ReadU8' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o:SDL_bmp.c:(.text+0x1229): más referencias a `SDL_ReadU8' sin definir a continuación
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_LoadBMP_IO':
+SDL_bmp.c:(.text+0x153b): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x154d): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x155f): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x157c): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: SDL_bmp.c:(.text+0x1596): referencia a `SDL_ReadU32LE' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o:SDL_bmp.c:(.text+0x15ab): más referencias a `SDL_ReadU32LE' sin definir a continuación
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_LoadBMP':
+SDL_bmp.c:(.text+0x164c): referencia a `SDL_IOFromFile' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_bmp.o: en la función `SDL_SaveBMP':
+SDL_bmp.c:(.text+0x1773): referencia a `SDL_IOFromFile' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_CreateHashTable':
+SDL_hashtable.c:(.text+0x3a9): referencia a `SDL_CreateRWLock' sin definir
+/usr/bin/ld: SDL_hashtable.c:(.text+0x3c8): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_InsertIntoHashTable':
+SDL_hashtable.c:(.text+0x435): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_hashtable.c:(.text+0x4e4): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_FindInHashTable':
+SDL_hashtable.c:(.text+0x616): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_hashtable.c:(.text+0x652): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_RemoveFromHashTable':
+SDL_hashtable.c:(.text+0x6a5): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_hashtable.c:(.text+0x6df): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_IterateHashTable':
+SDL_hashtable.c:(.text+0x73d): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_hashtable.c:(.text+0x792): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_HashTableEmpty':
+SDL_hashtable.c:(.text+0x7f2): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_hashtable.c:(.text+0x803): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_ClearHashTable':
+SDL_hashtable.c:(.text+0x83d): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_DestroyHashTable':
+SDL_hashtable.c:(.text+0x897): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_HashPointer':
+SDL_hashtable.c:(.text+0x8d6): referencia a `SDL_murmur3_32' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL_hashtable.o: en la función `SDL_ClearHashTable':
+SDL_hashtable.c:(.text+0x86e): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o: en la función `X11_DeleteDevice':
+SDL_x11video.c:(.text+0x2c): referencia a `X11_XCloseDisplay' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x3e): referencia a `X11_XCloseDisplay' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o: en la función `X11_VideoQuit':
+SDL_x11video.c:(.text+0x8c): referencia a `X11_XDestroyWindow' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xa5): referencia a `X11_XDestroyWindow' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xbb): referencia a `X11_XCloseIM' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xc5): referencia a `X11_QuitXinput2' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xcd): referencia a `X11_QuitModes' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xd5): referencia a `X11_QuitKeyboard' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xdd): referencia a `X11_QuitMouse' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xe5): referencia a `X11_QuitTouch' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xed): referencia a `X11_QuitPen' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf5): referencia a `X11_QuitClipboard' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o: en la función `X11_CreateDevice':
+SDL_x11video.c:(.text+0x12f): referencia a `SDL_X11_LoadSymbols' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x13e): referencia a `X11_XInitThreads' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x147): referencia a `X11_XOpenDisplay' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x1a7): referencia a `X11_XOpenDisplay' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x1cf): referencia a `X11_SetPrimarySelectionText' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x1dd): referencia a `X11_GetPrimarySelectionText' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x1e9): referencia a `X11_GetTextMimeTypes' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x1f5): referencia a `X11_SetClipboardData' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x1fd): referencia a `X11_GetClipboardData' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x205): referencia a `X11_HasScreenKeyboardSupport' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x20c): referencia a `X11_HasClipboardData' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x213): referencia a `X11_ShowScreenKeyboard' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x220): referencia a `X11_WaitEventTimeout' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x22c): referencia a `X11_SendWakeupEvent' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x234): referencia a `X11_PumpEvents' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x23c): referencia a `X11_StartTextInput' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x243): referencia a `X11_SuspendScreenSaver' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x24a): referencia a `X11_StopTextInput' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x258): referencia a `X11_GL_LoadLibrary' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x265): referencia a `X11_GL_GetProcAddress' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x26e): referencia a `X11_GL_UnloadLibrary' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x277): referencia a `X11_GL_SetSwapInterval' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x27f): referencia a `X11_GL_CreateContext' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x28c): referencia a `X11_GL_GetSwapInterval' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x2b5): referencia a `X11_GL_SwapWindow' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x2be): referencia a `X11_UpdateWindowShape' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x2c6): referencia a `X11_GL_DestroyContext' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x2e0): referencia a `X11_UpdateWindowFramebuffer' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x2f1): referencia a `X11_DestroyWindowFramebuffer' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x31c): referencia a `X11_CreateWindowFramebuffer' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x3dc): referencia a `X11_GetDisplayBounds' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x3ec): referencia a `X11_GetDisplayUsableBounds' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x3fe): referencia a `X11_GetDisplayModes' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x406): referencia a `X11_SetDisplayMode' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x4c4): referencia a `X11_ResetTouch' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x62a): referencia a `X11_GL_MakeCurrent' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x6b0): referencia a `X11_HasPrimarySelectionText' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x6d4): referencia a `X11_UpdateTextInputArea' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x6f5): referencia a `X11_HideScreenKeyboard' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x718): referencia a `X11_XQueryExtension' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x7bb): referencia a `X11_XCloseDisplay' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x7da): referencia a `SDL_X11_UnloadSymbols' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0x7e9): referencia a `SDL_X11_UnloadSymbols' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o: en la función `X11_VideoInit':
+SDL_x11video.c:(.text+0x863): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xce7): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xd12): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xd63): referencia a `X11_XGetWindowProperty' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xda2): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xdb0): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xdc1): referencia a `X11_InitModes' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xe0f): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xe3c): referencia a `X11_XGetWindowProperty' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xe8e): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xe97): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xeae): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xec8): referencia a `X11_InitModes' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xed8): referencia a `X11_InitXinput2' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xee8): referencia a `X11_InitXsettings' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xef0): referencia a `X11_InitKeyboard' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf02): referencia a `X11_InitMouse' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf0a): referencia a `X11_InitTouch' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf12): referencia a `X11_InitPen' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf19): referencia a `X11_XConvertSelection' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf24): referencia a `GetWindow' sin definir
+/usr/bin/ld: SDL_x11video.c:(.text+0xf5c): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o: en la función `X11_DeleteDevice':
+SDL_x11video.c:(.text+0x68): referencia a `SDL_X11_UnloadSymbols' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o: en la función `X11_VideoQuit':
+SDL_x11video.c:(.text+0x103): referencia a `X11_QuitXsettings' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11video.o:(.data.rel+0x18): referencia a `X11_ShowMessageBox' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `SetWindowBordered':
+SDL_x11window.c:(.text+0x5e): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xc9): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x118): referencia a `X11_XSetTransientForHint' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `SetupWindowInput':
+SDL_x11window.c:(.text+0x150): referencia a `SDL_X11_HAVE_UTF8' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x18a): referencia a `X11_XGetICValues' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1a6): referencia a `X11_Xinput2Select' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1b1): referencia a `X11_Xinput2SelectMouseAndKeyboard' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1da): referencia a `X11_XSelectInput' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowActive.isra.0':
+SDL_x11window.c:(.text+0x424): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x4f7): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x500): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetNetWMState':
+SDL_x11window.c:(.text+0x63a): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x671): referencia a `X11_XDeleteProperty' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowMaximized.isra.0':
+SDL_x11window.c:(.text+0x773): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x8a6): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x8db): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_GetNetWMState':
+SDL_x11window.c:(.text+0xa30): referencia a `X11_XGetWindowProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xad5): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xafa): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_GetWindowTitle':
+SDL_x11window.c:(.text+0xbfa): referencia a `X11_XGetWindowProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xc27): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xc35): referencia a `X11_XGetWindowProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xca0): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `SetupWindowData':
+SDL_x11window.c:(.text+0xd8b): referencia a `X11_CreateInputContext' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xdbf): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xe48): referencia a `X11_XGetInputFocus' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0xfa4): referencia a `X11_DestroyInputContext' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_CreateWindow':
+SDL_x11window.c:(.text+0x1100): referencia a `X11_GL_GetVisual' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x111e): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1196): referencia a `X11_XCreateColormap' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x122c): referencia a `X11_XCreateWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x126d): referencia a `X11_XAllocSizeHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x12c8): referencia a `X11_XAllocWMHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x12f9): referencia a `X11_XAllocClassHint' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1303): referencia a `SDL_GetExeName' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x130b): referencia a `SDL_GetAppID' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1320): referencia a `X11_XSetWMProperties' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1343): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1355): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1361): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1379): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1394): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1493): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x149a): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x14f8): referencia a `X11_XGetVisualInfo' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1524): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x167c): referencia a `X11_XSetWMProtocols' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x16de): referencia a `X11_XSetTransientForHint' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x170b): referencia a `X11_XCreateRegion' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1726): referencia a `X11_XShapeCombineRegion' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1739): referencia a `X11_XDestroyRegion' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x176e): referencia a `X11_XSelectInput' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1777): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1920): referencia a `X11_XStoreColors' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1963): referencia a `X11_XDestroyWindow' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowIcon':
+SDL_x11window.c:(.text+0x1a8c): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1a9c): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1c0b): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1c3a): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1c52): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1c73): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_UpdateWindowPosition':
+SDL_x11window.c:(.text+0x1d23): referencia a `X11_XMoveWindow' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowMinMax':
+SDL_x11window.c:(.text+0x1d84): referencia a `X11_XAllocSizeHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1da1): referencia a `X11_XGetWMNormalHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1e47): referencia a `X11_XSetWMNormalHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1e5a): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowOpacity':
+SDL_x11window.c:(.text+0x1f8c): referencia a `X11_XDeleteProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x1fde): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowParent':
+SDL_x11window.c:(.text+0x201d): referencia a `X11_XSetTransientForHint' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2042): referencia a `X11_XDeleteProperty' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowModal':
+SDL_x11window.c:(.text+0x20fe): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x21ac): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x21b5): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x21f3): referencia a `X11_XDeleteProperty' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowAlwaysOnTop':
+SDL_x11window.c:(.text+0x22ae): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2359): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2375): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_ShowWindow':
+SDL_x11window.c:(.text+0x2438): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x244b): referencia a `X11_XMapRaised' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x246c): referencia a `X11_XIfEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x248b): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x24af): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x24c7): referencia a `X11_XSetInputFocus' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x24db): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2561): referencia a `X11_XMoveWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2594): referencia a `X11_PumpEvents' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2634): referencia a `X11_GetBorderValues' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2694): referencia a `X11_PumpEvents' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x275a): referencia a `X11_XResizeWindow' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_HideWindow':
+SDL_x11window.c:(.text+0x2838): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2849): referencia a `X11_XWithdrawWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2862): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x287f): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x288e): referencia a `X11_PumpEvents' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x28ce): referencia a `X11_XIfEvent' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_RaiseWindow':
+SDL_x11window.c:(.text+0x299a): referencia a `X11_XRaiseWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x29ab): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_MinimizeWindow':
+SDL_x11window.c:(.text+0x2aae): referencia a `X11_XIconifyWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2ac0): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_GetWindowICCProfile':
+SDL_x11window.c:(.text+0x2c04): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2c45): referencia a `X11_XScreenNumberOfScreen' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2cb1): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2d13): referencia a `X11_XGetWindowProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2d59): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2da7): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowMouseGrab':
+SDL_x11window.c:(.text+0x2e60): referencia a `X11_XUngrabPointer' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2e72): referencia a `X11_Xinput2UngrabTouch' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2e79): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2ecc): referencia a `X11_XGrabPointer' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2f2c): referencia a `X11_Xinput2GrabTouch' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x2f33): referencia a `X11_XRaiseWindow' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowKeyboardGrab':
+SDL_x11window.c:(.text+0x2ff4): referencia a `X11_XUngrabKeyboard' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3002): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x304d): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x30c7): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x30d0): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x30e1): referencia a `X11_XGrabKeyboard' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_DestroyWindow':
+SDL_x11window.c:(.text+0x319a): referencia a `X11_DestroyInputContext' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x31c3): referencia a `X11_XDestroyWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x31d3): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x31fd): referencia a `X11_DestroyInputContext' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_AcceptDragAndDrop':
+SDL_x11window.c:(.text+0x3264): referencia a `X11_XChangeProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x32ab): referencia a `X11_XDeleteProperty' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_FlashWindow':
+SDL_x11window.c:(.text+0x32e6): referencia a `X11_XGetWMHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3329): referencia a `X11_XSetWMHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x333c): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `SDL_X11_SetWindowTitle':
+SDL_x11window.c:(.text+0x33de): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3411): referencia a `X11_XmbTextListToTextProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3425): referencia a `X11_XSupportsLocale' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3440): referencia a `X11_XSetTextProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3457): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3472): referencia a `X11_Xutf8TextListToTextProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x348d): referencia a `X11_XSetTextProperty' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x34ab): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_ShowWindowSystemMenu':
+SDL_x11window.c:(.text+0x35f3): referencia a `X11_XTranslateCoordinates' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3622): referencia a `X11_XInternAtom' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3665): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x366e): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SyncWindow':
+SDL_x11window.c:(.text+0x3701): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x37a4): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3822): referencia a `X11_PumpEvents' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3964): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3994): referencia a `X11_PumpEvents' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x39b7): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x39d3): referencia a `X11_XQueryTree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x39eb): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3a92): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3ab7): referencia a `X11_XTranslateCoordinates' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3be8): referencia a `X11_XSetErrorHandler' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowSize':
+SDL_x11window.c:(.text+0x3d84): referencia a `X11_XResizeWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3de3): referencia a `X11_XAllocSizeHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3dfe): referencia a `X11_XGetWMNormalHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3e3d): referencia a `X11_XSetWMNormalHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3e52): referencia a `X11_XResizeWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3ea4): referencia a `X11_XMoveWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3eb1): referencia a `X11_XRaiseWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x3ec1): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowBordered':
+SDL_x11window.c:(.text+0x40c2): referencia a `X11_XFlush' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x40d1): referencia a `X11_XSync' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x40df): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x411a): referencia a `X11_XSetInputFocus' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x413a): referencia a `X11_XCheckIfEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x4159): referencia a `X11_XCheckIfEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x4179): referencia a `X11_GetBorderValues' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x4180): referencia a `X11_XResizeWindow' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowFullscreenViaWM':
+SDL_x11window.c:(.text+0x42d9): referencia a `X11_XGetWindowAttributes' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x432b): referencia a `X11_XAllocSizeHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x434c): referencia a `X11_XGetWMNormalHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x435d): referencia a `X11_XSetWMNormalHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x4374): referencia a `X11_XFree' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x4434): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x44e6): referencia a `X11_XMoveWindow' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x452e): referencia a `X11_XInstallColormap' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x468e): referencia a `X11_XSendEvent' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x46a5): referencia a `X11_XUninstallColormap' sin definir
+/usr/bin/ld: obj/linux64/dc0bb1a3_SDL_x11window.o: en la función `X11_SetWindowFocusable':
+SDL_x11window.c:(.text+0x4885): referencia a `X11_XGetWMHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x48b4): referencia a `X11_XSetWMHints' sin definir
+/usr/bin/ld: SDL_x11window.c:(.text+0x48c7): referencia a `X11_XFree' sin definir
+/usr/bin/ld: obj/linux64/55ddcc29_SDL_evdev.o: en la función `SDL_EVDEV_Init':
+SDL_evdev.c:(.text+0x40d): referencia a `SDL_strtok_r' sin definir
+/usr/bin/ld: SDL_evdev.c:(.text+0x578): referencia a `SDL_EVDEV_kbd_init' sin definir
+/usr/bin/ld: obj/linux64/55ddcc29_SDL_evdev.o: en la función `SDL_EVDEV_Quit':
+SDL_evdev.c:(.text+0x993): referencia a `SDL_EVDEV_kbd_quit' sin definir
+/usr/bin/ld: obj/linux64/55ddcc29_SDL_evdev.o: en la función `SDL_EVDEV_Poll':
+SDL_evdev.c:(.text+0xb87): referencia a `SDL_EVDEV_kbd_update' sin definir
+/usr/bin/ld: SDL_evdev.c:(.text+0xcaa): referencia a `SDL_EVDEV_kbd_keycode' sin definir
+/usr/bin/ld: obj/linux64/55ddcc29_SDL_evdev.o: en la función `SDL_EVDEV_UpdateKeyboardMute':
+SDL_evdev.c:(.text+0x323): referencia a `SDL_EVDEV_kbd_set_muted' sin definir
+/usr/bin/ld: SDL_evdev.c:(.text+0x337): referencia a `SDL_EVDEV_kbd_set_muted' sin definir
+/usr/bin/ld: obj/linux64/55ddcc29_SDL_evdev.o: en la función `SDL_EVDEV_SetVTSwitchCallbacks':
+SDL_evdev.c:(.text+0xaab): referencia a `SDL_EVDEV_kbd_set_vt_switch_callbacks' sin definir
+/usr/bin/ld: obj/linux64/445739ce_SDL_url.o: en la función `SDL_OpenURL':
+SDL_url.c:(.text+0x6): referencia a `SDL_SYS_OpenURL' sin definir
+/usr/bin/ld: obj/linux64/3d08a326_SDL_render.o: en la función `SDL_CreateRendererWithProperties':
+SDL_render.c:(.text+0xde33): referencia a `GL_RenderDriver' sin definir
+/usr/bin/ld: SDL_render.c:(.text+0xdf68): referencia a `GL_RenderDriver' sin definir
+/usr/bin/ld: obj/linux64/3d08a326_SDL_render.o:(.data.rel.ro+0x0): referencia a `GL_RenderDriver' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `DestroyLogicalAudioDevice':
+SDL_audio.c:(.text+0x47b): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x496): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_GetNumAudioDrivers':
+SDL_audio.c:(.text+0x5b3): referencia a `PULSEAUDIO_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `GetAudioDevices':
+SDL_audio.c:(.text+0x6d3): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x74f): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x7ac): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `OnAudioStreamCreated':
+SDL_audio.c:(.text+0x889): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `OnAudioStreamDestroy':
+SDL_audio.c:(.text+0x8f9): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_QuitAudio':
+SDL_audio.c:(.text+0xb30): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0xb94): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0xbd0): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_InitAudio':
+SDL_audio.c:(.text+0xc70): referencia a `SDL_CreateRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0xee3): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x10f9): referencia a `PULSEAUDIO_bootstrap' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x1217): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x122e): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x1257): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x127b): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x12b5): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x12d9): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x1317): referencia a `SDL_DestroyRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_PlaybackAudioThreadIterate':
+SDL_audio.c:(.text+0x15b6): referencia a `SDL_MixAudio' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x1605): referencia a `SDL_MixAudio' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_FindPhysicalAudioDeviceByCallback':
+SDL_audio.c:(.text+0x1d9f): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x1dc3): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_GetAudioDeviceName':
+SDL_audio.c:(.text+0x1e74): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x1ec1): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `UnrefPhysicalAudioDevice.part.0':
+SDL_audio.c:(.text+0x248c): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x24cb): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `ObtainLogicalAudioDevice.constprop.0':
+SDL_audio.c:(.text+0x2590): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x25cb): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `ObtainPhysicalAudioDevice':
+SDL_audio.c:(.text+0x2a22): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x2a3f): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `ObtainPhysicalAudioDeviceDefaultAllowed':
+SDL_audio.c:(.text+0x2ac8): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x2ae7): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x2b10): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x2b2b): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x2b6a): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_AudioDeviceDisconnected_OnMainThread':
+SDL_audio.c:(.text+0x3229): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x324d): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x335e): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x3381): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `CreatePhysicalAudioDevice':
+SDL_audio.c:(.text+0x3594): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x35ae): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x36df): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x3710): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_AddAudioDevice':
+SDL_audio.c:(.text+0x3849): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x386c): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_OpenAudioDevice':
+SDL_audio.c:(.text+0x40b4): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x40d6): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_DefaultAudioDeviceChanged':
+SDL_audio.c:(.text+0x435a): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4386): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x44e1): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4504): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4541): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4622): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x467f): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_AudioDeviceFormatChangedAlreadyLocked':
+SDL_audio.c:(.text+0x48e2): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4905): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_UpdateAudio':
+SDL_audio.c:(.text+0x4b26): referencia a `SDL_LockRWLockForReading' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4b39): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4b4e): referencia a `SDL_LockRWLockForWriting' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x4b7d): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `OnAudioStreamCreated':
+SDL_audio.c:(.text+0x8ca): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `OnAudioStreamDestroy':
+SDL_audio.c:(.text+0x944): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: SDL_audio.c:(.text+0x96b): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o: en la función `SDL_DefaultAudioDeviceChanged':
+SDL_audio.c:(.text+0x4573): referencia a `SDL_UnlockRWLock' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o:(.data.rel.ro+0x0): referencia a `PULSEAUDIO_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o:(.data.rel.ro+0x8): referencia a `ALSA_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o:(.data.rel.ro+0x10): referencia a `DSP_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audio.o:(.data.rel.ro+0x18): referencia a `DISKAUDIO_bootstrap' sin definir
+/usr/bin/ld: obj/linux64/d1763ade_SDL_systhread.o: en la función `SDL_SYS_SetThreadPriority':
+SDL_systhread.c:(.text+0x1fb): referencia a `SDL_SetLinuxThreadPriorityAndPolicy' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `NextAudioStreamIter':
+SDL_audiocvt.c:(.text+0x32df): referencia a `SDL_NextAudioQueueIter' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `GetAudioStreamAvailableFrames':
+SDL_audiocvt.c:(.text+0x3435): referencia a `SDL_BeginAudioQueueIter' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `SDL_FlushAudioStream':
+SDL_audiocvt.c:(.text+0x3e36): referencia a `SDL_FlushAudioQueue' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `SDL_GetAudioStreamDataAdjustGain':
+SDL_audiocvt.c:(.text+0x405d): referencia a `SDL_BeginAudioQueueIter' sin definir
+/usr/bin/ld: SDL_audiocvt.c:(.text+0x42e5): referencia a `SDL_ReadFromAudioQueue' sin definir
+/usr/bin/ld: SDL_audiocvt.c:(.text+0x43ad): referencia a `SDL_ResetAudioQueueHistory' sin definir
+/usr/bin/ld: SDL_audiocvt.c:(.text+0x4485): referencia a `SDL_ReadFromAudioQueue' sin definir
+/usr/bin/ld: SDL_audiocvt.c:(.text+0x44de): referencia a `SDL_PopAudioQueueHead' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `PutAudioStreamBufferInternal':
+SDL_audiocvt.c:(.text+0x47df): referencia a `SDL_CreateAudioTrack' sin definir
+/usr/bin/ld: SDL_audiocvt.c:(.text+0x4811): referencia a `SDL_AddTrackToAudioQueue' sin definir
+/usr/bin/ld: SDL_audiocvt.c:(.text+0x487b): referencia a `SDL_WriteToAudioQueue' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `SDL_GetAudioStreamQueued':
+SDL_audiocvt.c:(.text+0x519b): referencia a `SDL_GetAudioQueueQueued' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `SDL_ClearAudioStream':
+SDL_audiocvt.c:(.text+0x51f6): referencia a `SDL_ClearAudioQueue' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `SDL_DestroyAudioStream':
+SDL_audiocvt.c:(.text+0x5296): referencia a `SDL_DestroyAudioQueue' sin definir
+/usr/bin/ld: obj/linux64/4e0e76f1_SDL_audiocvt.o: en la función `SDL_CreateAudioStream':
+SDL_audiocvt.c:(.text+0x5315): referencia a `SDL_CreateAudioQueue' sin definir
+/usr/bin/ld: obj/linux64/2d50a93a_SDL.o: en la función `SDL_Quit':
+SDL.c:(.text+0xde6): referencia a `SDL_CleanupTrays' sin definir
+/usr/bin/ld: SDL.c:(.text+0xdeb): referencia a `SDL_Gtk_Quit' sin definir
+/usr/bin/ld: SDL.c:(.text+0xdf5): referencia a `SDL_QuitAsyncIO' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_fillrect.o: en la función `SDL_FillSurfaceRect4':
+SDL_fillrect.c:(.text+0x1fd): referencia a `SDL_memset4' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_fillrect.o: en la función `SDL_FillSurfaceRect2':
+SDL_fillrect.c:(.text+0x26b): referencia a `SDL_memset4' sin definir
+/usr/bin/ld: obj/linux64/ecc7e461_SDL_fillrect.o: en la función `SDL_FillSurfaceRect1':
+SDL_fillrect.c:(.text+0x359): referencia a `SDL_memset4' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_InitWindowEventWatch':
+SDL_windowevents.c:(.text+0x2c): referencia a `SDL_InitEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_QuitWindowEventWatch':
+SDL_windowevents.c:(.text+0x4c): referencia a `SDL_QuitEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_SendWindowEvent':
+SDL_windowevents.c:(.text+0x1af): referencia a `SDL_DispatchEventWatchList' sin definir
+/usr/bin/ld: SDL_windowevents.c:(.text+0x1be): referencia a `SDL_DispatchEventWatchList' sin definir
+/usr/bin/ld: SDL_windowevents.c:(.text+0x212): referencia a `SDL_HasActiveTrays' sin definir
+/usr/bin/ld: SDL_windowevents.c:(.text+0x707): referencia a `SDL_DispatchEventWatchList' sin definir
+/usr/bin/ld: SDL_windowevents.c:(.text+0x718): referencia a `SDL_DispatchEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_InitWindowEventWatch':
+SDL_windowevents.c:(.text+0x3c): referencia a `SDL_InitEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_QuitWindowEventWatch':
+SDL_windowevents.c:(.text+0x5c): referencia a `SDL_QuitEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_AddWindowEventWatch':
+SDL_windowevents.c:(.text+0x75): referencia a `SDL_AddEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/a110a3bd_SDL_windowevents.o: en la función `SDL_RemoveWindowEventWatch':
+SDL_windowevents.c:(.text+0x95): referencia a `SDL_RemoveEventWatchList' sin definir
+/usr/bin/ld: obj/linux64/b9739382_SDL_stdlib.o: en la función `SDL_isinf':
+SDL_stdlib.c:(.text+0x261): referencia a `SDL_uclibc_isinf' sin definir
+/usr/bin/ld: obj/linux64/b9739382_SDL_stdlib.o: en la función `SDL_isinff':
+SDL_stdlib.c:(.text+0x271): referencia a `SDL_uclibc_isinff' sin definir
+/usr/bin/ld: obj/linux64/b9739382_SDL_stdlib.o: en la función `SDL_isnan':
+SDL_stdlib.c:(.text+0x281): referencia a `SDL_uclibc_isnan' sin definir
+/usr/bin/ld: obj/linux64/b9739382_SDL_stdlib.o: en la función `SDL_isnanf':
+SDL_stdlib.c:(.text+0x291): referencia a `SDL_uclibc_isnanf' sin definir
+/usr/bin/ld: obj/linux64/b9739382_SDL_stdlib.o: en la función `SDL_modf':
+SDL_stdlib.c:(.text+0x2e1): referencia a `SDL_uclibc_modf' sin definir
+collect2: error: ld devolvió el estado de salida 1
+[jonk@archlinux project]$ 

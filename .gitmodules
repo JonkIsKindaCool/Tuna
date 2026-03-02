@@ -1,6 +1,6 @@
 [submodule "project/libs/SDL"]
 	path = project/libs/SDL
-	url = https://github.com/libsdl-org/SDL
+	url = https://github.com/libsdl-org/SDL/tree/release-2.30.0
 	shallow = true
 [submodule "project/libs/openal-soft"]
 	path = project/libs/openal-soft

@@ -7,7 +7,7 @@ import tuna.backend.audio.AudioFormats.AudioData;
 import haxe.io.Bytes;
 
 class NativeAudioBuffer implements AudioBuffer {
-	public var data:UInt32;
+	public var data:Int;
 	public var duration(get, never):Float;
 	public var information:AudioData;
 

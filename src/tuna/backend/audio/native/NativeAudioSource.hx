@@ -18,7 +18,7 @@ class NativeAudioSource implements AudioSource {
 	@:isVar public var positionY(get, set):Float;
 	@:isVar public var positionZ(get, set):Float;
 
-	private var _alSource:UInt32;
+	private var _alSource:Int;
 
 	public function new(buffer:AudioBuffer) {
 		this.buffer = buffer;

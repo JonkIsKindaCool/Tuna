@@ -33,7 +33,7 @@ class ApplicationMain {
 	static function onAssetsLoaded() {
 		var main = initApp();
 
-		#if cpp
+		#if (cpp || hl)
 		tuna.backend.platform.native.NativeWindow.hardware = window.hardware;
 		tuna.backend.platform.native.NativeWindow.depthBuffer = window.depthBuffer;
 		tuna.backend.platform.native.NativeWindow.stencilBuffer = window.stencilBuffer;

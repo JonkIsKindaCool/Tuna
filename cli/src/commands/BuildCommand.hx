@@ -28,6 +28,8 @@ class BuildCommand {
 		switch target {
 			case "cpp":
 				targetPath = Path.join([targetPath, "bin"]);
+			case "hl", "hashlink":
+				targetPath = Path.join([targetPath, "native"]);
 			default:
 		}
 
@@ -38,20 +40,54 @@ class BuildCommand {
 		manifest = [];
 
 		if (target == "cpp") {
+			var os = Sys.systemName();
+			var isWindows = (new EReg("window", "i")).match(os);
+			var isMac = (new EReg("mac", "i")).match(os);
+			var isLinux = (new EReg("linux", "i")).match(os);
+
 			var srcBinary:String = Path.join([userPath, Configuration.build.output, target, "native", "ApplicationMain"]);
 			var destBinary:String = Path.join([targetPath, Configuration.app.name]);
 
-			var srcNdll:String = Path.join([haxelibPath, "native", "ndll", "libtuna.ndll"]);
+			var srcNdll:String = Path.join([
+				haxelibPath,
+				"ndll",
+				isWindows ? "Windows64" : isMac ? "Mac64" : isLinux ? "Linux64" : null,
+				"tuna.ndll"
+			]);
 			var destNdll:String = Path.join([targetPath, "tuna.ndll"]);
+
+			if (!FileSystem.exists(srcNdll)) {
+				Sys.println('Binary not found: $srcNdll');
+				Sys.exit(1);
+			}
 
 			if (!FileSystem.exists(srcBinary)) {
 				Sys.println('Binary not found: $srcBinary');
 				Sys.exit(1);
 			}
 
-			Sys.println(Sys.systemName());
-
+			File.saveBytes(destNdll, File.getBytes(srcNdll));
 			File.saveBytes(destBinary, File.getBytes(srcBinary));
+		} else if (target == "hashlink" || target == "hl") {
+			var os = Sys.systemName();
+			var isWindows = (new EReg("window", "i")).match(os);
+			var isMac = (new EReg("mac", "i")).match(os);
+			var isLinux = (new EReg("linux", "i")).match(os);
+
+			var srcNdll:String = Path.join([
+				haxelibPath,
+				"hdll",
+				isWindows ? "Windows64" : isMac ? "Mac64" : isLinux ? "Linux64" : null,
+				"tuna.hdll"
+			]);
+			var destNdll:String = Path.join([targetPath, "tuna.hdll"]);
+
+			if (!FileSystem.exists(srcNdll)) {
+				Sys.println('Binary not found: $srcNdll');
+				Sys.exit(1);
+			}
+
+			File.saveBytes(destNdll, File.getBytes(srcNdll));
 		} else if (target == "html5") {
 			File.saveContent(Path.join([targetPath, "index.html"]), File.getContent(Path.join([haxelibPath, "cli", "templates", "index.html"])));
 		}

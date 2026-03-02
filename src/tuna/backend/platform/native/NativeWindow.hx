@@ -1,11 +1,8 @@
 package tuna.backend.platform.native;
 
-import tuna.backend.opengl.GL;
-#if cpp
-import native.sdl.Types;
-import native.sdl.SDL;
+#if (cpp || hl)
+import tuna.backend.cffi.NativeWindowCFFI;
 import tuna.utils.Color;
-import native.glad.Glad;
 
 class NativeWindow implements IWindow {
 	public var title(get, set):String;
@@ -25,53 +22,10 @@ class NativeWindow implements IWindow {
 	public static var stencilBuffer:Bool = false;
 	public static var allowHighDPI:Bool = false;
 
-	private var native:SDLWindow;
-	private var context:SDLGlContext;
-
 	public function new(width:Int, height:Int, title:String) {
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_CONTEXT_MAJOR_VERSION"), 3);
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_CONTEXT_MINOR_VERSION"), 3);
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_CONTEXT_PROFILE_MASK"), SDLGlProfile.CORE);
-
-		if (depthBuffer) {
-			untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_DEPTH_SIZE"), 24);
-		}
-		if (stencilBuffer) {
-			untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_STENCIL_SIZE"), 8);
-		}
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_RED_SIZE"), 8);
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_GREEN_SIZE"), 8);
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_BLUE_SIZE"), 8);
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_ALPHA_SIZE"), 8);
-
-		untyped __cpp__("SDL_GL_SetAttribute({0}, {1})", untyped __cpp__("SDL_GL_DOUBLEBUFFER"), 1);
-
-		var flags:UInt = SDLWindowInitFlags.OPENGL | SDLWindowInitFlags.SHOWN;
-
-		if (allowHighDPI) {
-			flags |= SDLWindowInitFlags.ALLOW_HIGHDPI;
-		}
-
-		native = SDL.createWindow(title, SDLWindowPos.CENTERED, SDLWindowPos.CENTERED, width, height, flags);
-
-		if (native == null) {
-			throw 'Couldnt create sdl window: ${SDL.getError()}';
-		}
-
-		context = SDL.glCreateContext(native);
-		if (context == null) {
-			throw 'Couldnt create opengl context: ${SDL.getError()}';
-		}
-
-		if (untyped __cpp__("gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)") != Glad.TRUE) {
-			throw "Couldnt load opengl with glad";
-		}
-
-		GL.enable(GL.BLEND);
-		GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
-
-		SDL.glMakeCurrent(native, context);
-
+		NativeWindowCFFI.window_enableDepthBuffer(depthBuffer);
+		NativeWindowCFFI.window_enableStencilBuffer(stencilBuffer);
+		NativeWindowCFFI.window_init(width, height, title, allowHighDPI);
 		this.resizable = true;
 		this.borderless = false;
 		this.fullscreen = false;
@@ -80,124 +34,105 @@ class NativeWindow implements IWindow {
 	}
 
 	public function clear() {
-		GL.clearColor(background.r / 255, background.g / 255, background.b / 255, 1);
-		GL.clear(GL.COLOR_BUFFER_BIT);
+		NativeWindowCFFI.clear();
 	}
 
 	public function render() {
-		SDL.glSwapWindow(native);
+		NativeWindowCFFI.render();
 	}
 
 	public function set_fullscreen(value:Bool):Bool {
-		var flags = value ? SDLWindowInitFlags.FULLSCREEN_DESKTOP : 0;
-		SDL.setWindowFullscreen(native, flags);
-		return value;
+		return NativeWindowCFFI.set_fullscreen(value);
 	}
 
 	public function get_fullscreen():Bool {
-		var flags = SDL.getWindowFlags(native);
-		return (flags & SDLWindowInitFlags.FULLSCREEN) != 0 || (flags & SDLWindowInitFlags.FULLSCREEN_DESKTOP) != 0;
+		return NativeWindowCFFI.get_fullscreen();
 	}
 
 	public function set_maximized(value:Bool):Bool {
-		if (value) {
-			SDL.maximizeWindow(native);
-		} else {
-			SDL.restoreWindow(native);
-		}
-		return value;
+		return NativeWindowCFFI.set_maximized(value);
 	}
 
 	public function get_maximized():Bool {
-		var flags = SDL.getWindowFlags(native);
-		return (flags & SDLWindowInitFlags.MAXIMIZED) != 0;
+		return NativeWindowCFFI.get_maximized();
 	}
 
 	public function set_borderless(value:Bool):Bool {
-		SDL.setWindowBordered(native, !value);
-		return value;
+		return NativeWindowCFFI.set_borderless(!value);
 	}
 
 	public function get_borderless():Bool {
-		var flags = SDL.getWindowFlags(native);
-		return (flags & SDLWindowInitFlags.BORDERLESS) != 0;
+		return NativeWindowCFFI.get_borderless();
 	}
 
 	public function set_resizable(value:Bool):Bool {
-		SDL.setWindowResizable(native, value);
-		return value;
+		return NativeWindowCFFI.set_resizable(value);
 	}
 
 	public function get_resizable():Bool {
-		var flags = SDL.getWindowFlags(native);
-		return (flags & SDLWindowInitFlags.RESIZABLE) != 0;
+		return NativeWindowCFFI.get_resizable();
 	}
 
 	public function set_visibility(value:Bool):Bool {
-		if (value) {
-			SDL.showWindow(native);
-		} else {
-			SDL.hideWindow(native);
-		}
-		return value;
+		return NativeWindowCFFI.set_visibility(value);
 	}
 
 	public function get_visibility():Bool {
-		var flags = SDL.getWindowFlags(native);
-		return (flags & SDLWindowInitFlags.HIDDEN) == 0;
+		return NativeWindowCFFI.get_visibility();
 	}
 
 	public function set_width(value:Int):Int {
-		var h = get_height();
-		SDL.setWindowSize(native, value, h);
-		return value;
+		return NativeWindowCFFI.set_width(value);
 	}
 
 	public function get_width():Int {
-		var size:SDLPoint = SDL.getWindowSize(native);
-		return size.x;
+		return NativeWindowCFFI.get_width();
 	}
 
 	public function set_height(value:Int):Int {
-		var w = get_width();
-		SDL.setWindowSize(native, w, value);
-		return value;
+		return NativeWindowCFFI.set_height(value);
 	}
 
 	public function get_height():Int {
-		var size:SDLPoint = SDL.getWindowSize(native);
-		return size.y;
+		return NativeWindowCFFI.get_height();
 	}
 
 	public function set_x(value:Int):Int {
-		var yPos = get_y();
-		SDL.setWindowPosition(native, value, yPos);
-		return value;
+		return NativeWindowCFFI.set_x(value);
 	}
 
 	public function get_x():Int {
-		var pos:SDLPoint = SDL.getWindowPosition(native);
-		return pos.x;
+		return NativeWindowCFFI.get_x();
 	}
 
 	public function set_y(value:Int):Int {
-		var xPos = get_x();
-		SDL.setWindowPosition(native, xPos, value);
-		return value;
+		return NativeWindowCFFI.set_y(value);
 	}
 
 	public function get_y():Int {
-		var pos:SDLPoint = SDL.getWindowPosition(native);
-		return pos.y;
+		return NativeWindowCFFI.get_y();
 	}
 
 	public function set_title(value:String):String {
-		SDL.setWindowTitle(native, value);
-		return value;
+		return NativeWindowCFFI.set_title(value);
 	}
 
 	public function get_title():String {
-		return SDL.getWindowTitle(native);
+		#if hl
+		var bytes:hl.Bytes = NativeWindowCFFI.get_title();
+		var len:Int = 0;
+		while (bytes[len] != 0)
+			len++;
+
+		var haxeBytes = bytes.toBytes(len);
+		return haxeBytes.toString();
+		#else
+		return NativeWindowCFFI.get_title();
+		#end
+	}
+
+	public function destroy():Void {
+		NativeWindowCFFI.window_destroy();
 	}
 }
 #end

@@ -16,9 +16,10 @@ interface IWindow {
 	public var borderless(get, set):Bool;
 	public var maximized(get, set):Bool;
 	public var fullscreen(get, set):Bool;
-	
+
 	public var background:Color;
 
 	public function clear():Void;
 	public function render():Void;
+	public function destroy():Void;
 }

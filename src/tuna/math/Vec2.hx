@@ -51,7 +51,7 @@ abstract Vec2(BasicVec2) from BasicVec2 to BasicVec2 {
 	}
 
 	@:to
-	public function toArray():Array<Float32> {
+	public function toArray():Array<Float> {
 		return [this.x, this.y];
 	}
 

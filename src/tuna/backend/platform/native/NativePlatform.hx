@@ -1,31 +1,30 @@
 package tuna.backend.platform.native;
 
-#if cpp
-import tuna.input.Keyboard;
-import tuna.input.Mouse;
+#if (cpp || hl)
 import tuna.input.KeyCode;
-import native.sdl.Types;
-import native.sdl.SDL;
-import haxe.io.Bytes;
+import tuna.events.types.MouseEvent;
+import tuna.events.types.KeyboardEvent;
+import tuna.events.types.Event;
+import tuna.events.EventDispatcher;
+import tuna.backend.cffi.NativePlatformCFFI;
 
 class NativePlatform implements IPlatform {
 	public var window:IWindow;
 	public var mainLoop:Void->Void;
 
 	private var quitRequested:Bool = false;
-	private var event:SDLEvent;
 
 	public function new() {}
 
 	public function init(width:Int, height:Int, title:String):Void {
-		SDL.init(EVERYTHING);
-		event = SDL.makeEvent();
+		NativePlatformCFFI.init();
 
 		window = new NativeWindow(width, height, title);
 	}
 
 	public function initLoop() {
 		while (!shouldQuit()) {
+			NativePlatformCFFI.preLoop();
 			if (mainLoop != null)
 				mainLoop();
 		}
@@ -33,8 +32,8 @@ class NativePlatform implements IPlatform {
 
 	public function shutdown():Void {
 		@:privateAccess
-		SDL.destroyWindow(cast(window, NativeWindow).native);
-		SDL.quit();
+		window.destroy();
+		NativePlatformCFFI.quit();
 	}
 
 	public function shouldQuit() {
@@ -42,37 +41,134 @@ class NativePlatform implements IPlatform {
 	}
 
 	public function pumpEvents():Void {
-		while (SDL.pollEvent(event) != SDLBoolean.FALSE) {
-			switch (event.ref.type) {
-				case QUIT:
-					quitRequested = true;
-				case KEYDOWN:
-					Keyboard.onKeyDown(KeyCode.fromSDL2(event.ref.key.keysym.sym));
-				case KEYUP:
-					Keyboard.onKeyUp(KeyCode.fromSDL2(event.ref.key.keysym.sym));
-				case MOUSEMOTION:
-					var deltaX:Float = event.ref.motion.xRel;
-					var deltaY:Float = event.ref.motion.yRel;
-					Mouse.onMove(event.ref.motion.x, event.ref.motion.y, deltaX, deltaY);
-				case MOUSEBUTTONDOWN:
-					Mouse.onClickDown(switch (event.ref.button.button) {
-						case 0: 0;
-						case 1: 3;
+		while (NativePlatformCFFI.hasEvent()) {
+			var eventType:Int = NativePlatformCFFI.getEventType();
+
+			switch (eventType) {
+				case SDLEventType.QUIT:
+					var ev:Event = new Event();
+					EventDispatcher.dispatch(Event.WINDOW_QUIT, ev);
+
+					if (!ev.cancelled)
+						quitRequested = true;
+				case SDLEventType.KEYDOWN:
+					var keyEv:KeyboardEvent = new KeyboardEvent();
+					keyEv.keyId = KeyCode.fromSDL2(NativePlatformCFFI.getKeyboardState().key);
+
+					EventDispatcher.dispatch(Event.KEY_DOWN, keyEv);
+				case SDLEventType.KEYUP:
+					var keyEv:KeyboardEvent = new KeyboardEvent();
+					keyEv.keyId = KeyCode.fromSDL2(NativePlatformCFFI.getKeyboardState().key);
+
+					EventDispatcher.dispatch(Event.KEY_UP, keyEv);
+				case SDLEventType.MOUSEMOTION:
+					var state = NativePlatformCFFI.getMouseState();
+					var ev = new MouseMoveEvent();
+					ev.x = state.x;
+					ev.y = state.y;
+					ev.delX = state.delX;
+					ev.delY = state.delY;
+
+					EventDispatcher.dispatch(Event.MOUSE_MOVE, ev);
+
+				case SDLEventType.MOUSEBUTTONDOWN:
+					var state = NativePlatformCFFI.getMouseState();
+					var ev = new MouseClickEvent();
+
+					ev.button = switch (state.button) {
+						case 1: 0;
 						case 2: 2;
-						default: cast event.ref.button.button;
-					});
-				case MOUSEBUTTONUP:
-					Mouse.onClickUp(switch (event.ref.button.button) {
-						case 0: 0;
-						case 1: 3;
+						case 3: 1; 
+						default: state.button;
+					};
+
+					EventDispatcher.dispatch(Event.MOUSE_CLICK_DOWN, ev);
+
+				case SDLEventType.MOUSEBUTTONUP:
+					var state = NativePlatformCFFI.getMouseState();
+					var ev = new MouseClickEvent();
+
+					ev.button = switch (state.button) {
+						case 1: 0; 
 						case 2: 2;
-						default: cast event.ref.button.button;
-					});
-				case MOUSEWHEEL:
-					Mouse.onScroll(event.ref.wheel.y);
-				default:
+						case 3: 1;
+						default: state.button;
+					};
+
+					EventDispatcher.dispatch(Event.MOUSE_CLICK_UP, ev);
+
+				case SDLEventType.MOUSEWHEEL:
+					var state = NativePlatformCFFI.getMouseState();
+					var ev = new MouseScrollEvent();
+
+					ev.scroll = state.wheel > 0 ? 1 : (state.wheel < 0 ? -1 : 0);
+
+					EventDispatcher.dispatch(Event.MOUSE_SCROLL, ev); 
 			}
 		}
 	}
+}
+
+private enum abstract SDLEventType(Int) from Int to Int {
+	var QUIT = 0x100;
+	var APP_TERMINATING;
+	var APP_LOWMEMORY;
+	var APP_WILLENTERBACKGROUND;
+	var APP_DIDENTERBACKGROUND;
+	var APP_WILLENTERFOREGROUND;
+	var APP_DIDENTERFOREGROUND;
+	var LOCALECHANGED;
+	var DISPLAYEVENT = 0x150;
+	var WINDOWEVENT = 0x200;
+	var SYSWMEVENT;
+	var KEYDOWN = 0x300;
+	var KEYUP;
+	var TEXTEDITING;
+	var TEXTINPUT;
+	var KEYMAPCHANGED;
+	var TEXTEDITING_EXT;
+	var MOUSEMOTION = 0x400;
+	var MOUSEBUTTONDOWN;
+	var MOUSEBUTTONUP;
+	var MOUSEWHEEL;
+	var JOYAXISMOTION = 0x600;
+	var JOYBALLMOTION;
+	var JOYHATMOTION;
+	var JOYBUTTONDOWN;
+	var JOYBUTTONUP;
+	var JOYDEVICEADDED;
+	var JOYDEVICEREMOVED;
+	var JOYBATTERYUPDATED;
+	var CONTROLLERAXISMOTION = 0x650;
+	var CONTROLLERBUTTONDOWN;
+	var CONTROLLERBUTTONUP;
+	var CONTROLLERDEVICEADDED;
+	var CONTROLLERDEVICEREMOVED;
+	var CONTROLLERDEVICEREMAPPED;
+	var CONTROLLERTOUCHPADDOWN;
+	var CONTROLLERTOUCHPADMOTION;
+	var CONTROLLERTOUCHPADUP;
+	var CONTROLLERSENSORUPDATE;
+	var CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3;
+	var CONTROLLERSTEAMHANDLEUPDATED;
+	var FINGERDOWN = 0x700;
+	var FINGERUP;
+	var FINGERMOTION;
+	var DOLLARGESTURE = 0x800;
+	var DOLLARRECORD;
+	var MULTIGESTURE;
+	var CLIPBOARDUPDATE = 0x900;
+	var DROPFILE = 0x1000;
+	var DROPTEXT;
+	var DROPBEGIN;
+	var DROPCOMPLETE;
+	var AUDIODEVICEADDED = 0x1100;
+	var AUDIODEVICEREMOVED;
+	var SENSORUPDATE = 0x1200;
+	var RENDER_TARGETS_RESET = 0x2000;
+	var RENDER_DEVICE_RESET;
+	var POLLSENTINEL = 0x7F00;
+	var USEREVENT = 0x8000;
+	var LASTEVENT = 0xFFFF;
 }
 #end

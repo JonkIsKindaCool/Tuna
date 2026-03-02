@@ -5,19 +5,19 @@
 
 namespace tuna
 {
-    SDL_Event *event;
-
     void init();
-    HL_PRIM void HL_NAME(hl_init)();
 
     void quit();
-    HL_PRIM void HL_NAME(hl_quit)();
 
-    bool hasEvent();
-    HL_PRIM bool HL_NAME(hl_hasEvent)();
+    void preLoop();
 
-    int getEventType();
-    HL_PRIM int HL_NAME(hl_getEventType)();
+    value hasEvent();
+
+    value getEventType();
+
+    value getKeyboardState();
+
+    value getMouseState();
 }
 
 #endif
