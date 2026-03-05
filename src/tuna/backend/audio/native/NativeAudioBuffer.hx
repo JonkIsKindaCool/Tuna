@@ -26,13 +26,13 @@ class NativeAudioBuffer implements AudioBuffer {
 
 		#if cpp
 		data = 0;
-		var data:Int = AL.genBuffers(1)[0];
+		var data:Int = AL.genBuffer();
 		AL.bufferData(data, getOpenALFormat(information.numChannels, information.bitsPerSample), information.data, information.size, information.sampleRate);
 		#end
 	}
 
 	public function destroy() {
-		AL.deleteBuffers(1, [data]);
+		AL.deleteBuffer(data);
 	}
 
 	public static function getOpenALFormat(channels:Int, bitsPerSample:Int):Int {

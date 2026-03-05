@@ -23,7 +23,7 @@ class NativeAudioSource implements AudioSource {
 	public function new(buffer:AudioBuffer) {
 		this.buffer = buffer;
 		_alSource = 0;
-		_alSource = AL.genSources(1)[0];
+		_alSource = AL.genSource();
 		AL.sourcei(_alSource, AL.BUFFER, cast(buffer, NativeAudioBuffer).data);
 		AL.source3f(_alSource, AL.POSITION, 0, 0, 0);
 
@@ -49,7 +49,7 @@ class NativeAudioSource implements AudioSource {
 
 	public function destroy() {
 		AL.sourcei(_alSource, AL.BUFFER, 0);
-		AL.deleteSources(1, [_alSource]);
+		AL.deleteSource(_alSource);
 	}
 
 	private function set_volume(value:Float):Float {

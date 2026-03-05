@@ -163,11 +163,24 @@ class AL {
 	public static inline function getListeneriv(param:Int, size:Int):Array<Int>
 		return NativeOpenALCFFI.al_getListeneriv(param, size);
 
-	public static inline function genSources(n:Int):Array<Int>
-		return NativeOpenALCFFI.al_genSources(n);
+	public static inline function genSource():Int
+		return NativeOpenALCFFI.al_genSource();
 
-	public static inline function deleteSources(n:Int, sources:Array<Int>):Void
-		NativeOpenALCFFI.al_deleteSources(n, sources);
+	public static inline function genSources(n:Int):Array<Int> {
+		var arr:Array<Int> = [];
+		for (i in 0...n)
+			arr.push(genSource());
+
+		return arr;
+	}
+
+	public static inline function deleteSource(n:Int):Void
+		NativeOpenALCFFI.al_deleteSource(n);
+
+	public static inline function deleteSources(arr:Array<Int>):Void{
+		for (v in arr)
+			deleteSource(v);
+	}
 
 	public static inline function isSource(source:Int):Bool
 		return NativeOpenALCFFI.al_isSource(source);
@@ -238,17 +251,30 @@ class AL {
 	public static inline function sourceUnqueueBuffers(source:Int, nb:Int, buffers:Array<Int>):Void
 		NativeOpenALCFFI.al_sourceUnqueueBuffers(source, nb, buffers);
 
-	public static inline function genBuffers(n:Int):Array<Int>
-		return NativeOpenALCFFI.al_genBuffers(n);
+	public static inline function genBuffer():Int
+		return NativeOpenALCFFI.al_genBuffer();
 
-	public static inline function deleteBuffers(n:Int, buffers:Array<Int>):Void
-		NativeOpenALCFFI.al_deleteBuffers(n, buffers);
+	public static inline function genBuffers(n:Int):Array<Int> {
+		var arr:Array<Int> = [];
+		for (i in 0...n)
+			arr.push(genBuffer());
+
+		return arr;
+	}
+
+	public static inline function deleteBuffer(n:Int):Void
+		NativeOpenALCFFI.al_deleteBuffer(n);
+
+	public static inline function deleteBuffers(arr:Array<Int>):Void{
+		for (v in arr)
+			deleteBuffer(v);
+	}
 
 	public static inline function isBuffer(buffer:Int):Bool
 		return NativeOpenALCFFI.al_isBuffer(buffer);
 
 	public static inline function bufferData(buffer:Int, format:Int, data:Bytes, size:Int, sampleRate:Int):Void {
-		NativeOpenALCFFI.al_bufferData(buffer, format, cast data.getData(), size, sampleRate);
+		NativeOpenALCFFI.al_bufferData(buffer, format, data.getData(), size, sampleRate);
 	}
 
 	public static inline function bufferf(buffer:Int, param:Int, value:Float):Void

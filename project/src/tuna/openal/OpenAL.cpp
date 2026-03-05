@@ -88,7 +88,7 @@ namespace tuna
     value al_getListenerfv(int parameter, int size)
     {
         std::vector<float> v(size);
-        alGetListenerfv(parameter, &v[0]);
+        alGetListenerfv(parameter, v.data());
         value arr = alloc_array(size);
         for (int i = 0; i < size; i++)
             val_array_set_i(arr, i, alloc_float(v[i]));
@@ -116,26 +116,23 @@ namespace tuna
     value al_getListeneriv(int parameter, int size)
     {
         std::vector<int> v(size);
-        alGetListeneriv(parameter, &v[0]);
+        alGetListeneriv(parameter, v.data());
         value arr = alloc_array(size);
         for (int i = 0; i < size; i++)
             val_array_set_i(arr, i, alloc_int(v[i]));
         return arr;
     }
 
-    value al_genSources(int n)
+    value al_genSource()
     {
-        std::vector<ALuint> s(n);
-        alGenSources(n, &s[0]);
-        value arr = alloc_array(n);
-        for (int i = 0; i < n; i++)
-            val_array_set_i(arr, i, alloc_int(s[i]));
-        return arr;
+        ALuint n = 0;
+        alGenSources(1, &n);
+        return alloc_int(n);
     }
 
-    void al_deleteSources(int n, value sources)
+    void al_deleteSource(ALuint n)
     {
-        alDeleteSources(n, (const ALuint *)val_array_int(sources));
+        alDeleteSources(1, &n);
     }
 
     value al_isSource(unsigned int source) { return alloc_bool(alIsSource(source)); }
@@ -176,7 +173,7 @@ namespace tuna
     value al_getSourcefv(unsigned int source, int parameter, int size)
     {
         std::vector<float> v(size);
-        alGetSourcefv(source, parameter, &v[0]);
+        alGetSourcefv(source, parameter, v.data());
         value arr = alloc_array(size);
         for (int i = 0; i < size; i++)
             val_array_set_i(arr, i, alloc_float(v[i]));
@@ -204,7 +201,7 @@ namespace tuna
     value al_getSourceiv(unsigned int source, int parameter, int size)
     {
         std::vector<int> v(size);
-        alGetSourceiv(source, parameter, &v[0]);
+        alGetSourceiv(source, parameter, v.data());
         value arr = alloc_array(size);
         for (int i = 0; i < size; i++)
             val_array_set_i(arr, i, alloc_int(v[i]));
@@ -243,26 +240,28 @@ namespace tuna
         alSourceUnqueueBuffers(source, nb, (ALuint *)val_array_int(buffers));
     }
 
-    value al_genBuffers(int n)
+    value al_genBuffer()
     {
-        std::vector<ALuint> b(n);
-        alGenBuffers(n, &b[0]);
-        value arr = alloc_array(n);
-        for (int i = 0; i < n; i++)
-            val_array_set_i(arr, i, alloc_int(b[i]));
-        return arr;
+        ALuint n = 0;
+        alGenBuffers(1, &n);
+        return alloc_int(n);
     }
 
-    void al_deleteBuffers(int n, value buffers)
+    void al_deleteBuffer(ALuint n)
     {
-        alDeleteBuffers(n, (const ALuint *)val_array_int(buffers));
+        alDeleteBuffers(1, &n);
     }
 
     value al_isBuffer(unsigned int buffer) { return alloc_bool(alIsBuffer(buffer)); }
 
     void al_bufferData(unsigned int buffer, int format, value data, int size, int sampleRate)
     {
-        alBufferData(buffer, format, val_array_int(data), size, sampleRate);
+        int len = val_array_size(data);
+
+        std::vector<char> native(size);
+        memcpy(native.data(), val_array_int(data), size);
+
+        alBufferData(buffer, format, native.data(), size, sampleRate);
     }
 
     void al_bufferf(unsigned int buffer, int parameter, float value) { alBufferf(buffer, parameter, value); }
@@ -302,7 +301,7 @@ namespace tuna
     value al_getBufferfv(unsigned int buffer, int parameter, int size)
     {
         std::vector<float> v(size);
-        alGetBufferfv(buffer, parameter, &v[0]);
+        alGetBufferfv(buffer, parameter, v.data());
         value arr = alloc_array(size);
         for (int i = 0; i < size; i++)
             val_array_set_i(arr, i, alloc_float(v[i]));
@@ -330,7 +329,7 @@ namespace tuna
     value al_getBufferiv(unsigned int buffer, int parameter, int size)
     {
         std::vector<int> v(size);
-        alGetBufferiv(buffer, parameter, &v[0]);
+        alGetBufferiv(buffer, parameter, v.data());
         value arr = alloc_array(size);
         for (int i = 0; i < size; i++)
             val_array_set_i(arr, i, alloc_int(v[i]));
@@ -369,8 +368,8 @@ namespace tuna
     DEFINE_PRIM(al_getListeneri, 1);
     DEFINE_PRIM(al_getListener3i, 1);
     DEFINE_PRIM(al_getListeneriv, 2);
-    DEFINE_PRIM(al_genSources, 1);
-    DEFINE_PRIM(al_deleteSources, 2);
+    DEFINE_PRIM(al_genSource, 0);
+    DEFINE_PRIM(al_deleteSource, 1);
     DEFINE_PRIM(al_isSource, 1);
     DEFINE_PRIM(al_sourcef, 3);
     DEFINE_PRIM(al_source3f, 5);
@@ -394,8 +393,8 @@ namespace tuna
     DEFINE_PRIM(al_sourcePausev, 2);
     DEFINE_PRIM(al_sourceQueueBuffers, 3);
     DEFINE_PRIM(al_sourceUnqueueBuffers, 3);
-    DEFINE_PRIM(al_genBuffers, 1);
-    DEFINE_PRIM(al_deleteBuffers, 2);
+    DEFINE_PRIM(al_genBuffer, 0);
+    DEFINE_PRIM(al_deleteBuffer, 1);
     DEFINE_PRIM(al_isBuffer, 1);
     DEFINE_PRIM(al_bufferData, 5);
     DEFINE_PRIM(al_bufferf, 3);

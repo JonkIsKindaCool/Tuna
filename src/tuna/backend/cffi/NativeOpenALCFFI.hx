@@ -1,5 +1,7 @@
 package tuna.backend.cffi;
 
+import haxe.io.BytesData;
+
 @:build(tuna.backend.macro.CFFIMacro.build("tuna"))
 class NativeOpenALCFFI {
     public static function al_getError():Int;
@@ -38,8 +40,8 @@ class NativeOpenALCFFI {
     public static function al_getListener3i(parameter:Int):Array<Int>;
     public static function al_getListeneriv(parameter:Int, size:Int):Array<Int>;
 
-    public static function al_genSources(n:Int):Array<Int>;
-    public static function al_deleteSources(n:Int, sources:Array<Int>):Void;
+    public static function al_genSource():Int;
+    public static function al_deleteSource(n:Int):Void;
     public static function al_isSource(source:Int):Bool;
     public static function al_sourcef(source:Int, parameter:Int, value:Float):Void;
     public static function al_source3f(source:Int, parameter:Int, v1:Float, v2:Float, v3:Float):Void;
@@ -66,10 +68,10 @@ class NativeOpenALCFFI {
     public static function al_sourceQueueBuffers(source:Int, nb:Int, buffers:Array<Int>):Void;
     public static function al_sourceUnqueueBuffers(source:Int, nb:Int, buffers:Array<Int>):Void;
 
-    public static function al_genBuffers(n:Int):Array<Int>;
-    public static function al_deleteBuffers(n:Int, buffers:Array<Int>):Void;
+    public static function al_genBuffer():Int;
+    public static function al_deleteBuffer(n:Int):Void;
     public static function al_isBuffer(buffer:Int):Bool;
-    public static function al_bufferData(buffer:Int, format:Int, data:Array<Int>, size:Int, sampleRate:Int):Void;
+    public static function al_bufferData(buffer:Int, format:Int, data:BytesData, size:Int, sampleRate:Int):Void;
     public static function al_bufferf(buffer:Int, parameter:Int, value:Float):Void;
     public static function al_buffer3f(buffer:Int, parameter:Int, v1:Float, v2:Float, v3:Float):Void;
     public static function al_bufferfv(buffer:Int, parameter:Int, values:Array<Float>):Void;
